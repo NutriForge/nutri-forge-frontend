@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import RecipeList from './components/RecipeList';
-import RecipePage from './components/RecipePage';
+import RecipeList from './components/Recipe/RecipeList';
+import RecipePage from './components/Recipe/RecipePage';
 import Layout from './components/Layout/Layout';
 
 function App() {
