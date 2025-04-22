@@ -2,7 +2,7 @@ import StarRating from "./StarRating";
 
 export default function RecipeCard(props) {
   return (
-    <div className="overflow-hidden rounded-lg shadow-sm transition ">
+    <div className="overflow-hidden rounded-lg transition ">
       <img
         alt=""
         src="https://images.unsplash.com/photo-1668283653825-37b80f055b05?q=80&w=2942&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"

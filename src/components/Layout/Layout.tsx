@@ -7,7 +7,7 @@ export default function Layout() {
     <div className="flex min-h-screen flex-col">
       <Header />
       <main className="bg-white flex-1 overflow-x-auto">
-        <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-10 mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
           <Outlet />
         </div>
       </main>
