@@ -1,3 +1,5 @@
+import StarRating from "./StarRating";
+
 export default function RecipeCard(props) {
   return (
     <div className="overflow-hidden rounded-lg shadow-sm transition ">
@@ -8,23 +10,30 @@ export default function RecipeCard(props) {
       />
 
       <div className="bg-white p-4 sm:p-6">
-        <time dateTime="2022-10-10" className="block text-xs text-gray-500">
-          {" "}
-          10th Oct 2022{" "}
-        </time>
+        <StarRating rating={props.rating} />
+        <h3 className="mt-0.5 text-lg text-gray-900">{props.name}</h3>
+        
 
-          <h3 className="mt-0.5 text-lg text-gray-900">
-            {props.name}
-          </h3>
+        <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-500">Порція {props.portion} г</p>
+        <div className="mt-2 grid grid-cols-4 text-xs text-gray-500">
+      <div>
+        <div className="text-xs">Ккал</div>
+        <div className="text-orange-600 font-medium">350</div>
+      </div>
+      <div>
+        <div className="text-xs">Б</div>
+        <div className="text-green-600 font-medium">26</div>
+      </div>
+      <div>
+        <div className="text-xs">Ж</div>
+        <div className="text-blue-600 font-medium">13</div>
+      </div>
+      <div>
+        <div className="text-xs">В</div>
+        <div className="text-purple-600 font-medium">33</div>
+      </div>
+    </div>
 
-
-        <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-500">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae
-          dolores, possimus pariatur animi temporibus nesciunt praesentium
-          dolore sed nulla ipsum eveniet corporis quidem, mollitia itaque minus
-          soluta, voluptates neque explicabo tempora nisi culpa eius atque
-          dignissimos. Molestias explicabo corporis voluptatem?
-        </p>
       </div>
     </div>
   );
