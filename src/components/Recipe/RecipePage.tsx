@@ -1,8 +1,17 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
+import IngredientsCard from "./IngredientsCard";
 
 const recipes = {
-  1: { id: 1, name: "Омлет із овочами", ingredients: ["яйця", "помідор", "сир"] },
-  2: { id: 2, name: "Гречка з грибами", ingredients: ["гречка", "гриби", "цибуля"] },
+  1: {
+    id: 1,
+    name: "Омлет із овочами",
+    ingredients: ["яйця", "помідор", "сир"],
+  },
+  2: {
+    id: 2,
+    name: "Гречка з грибами",
+    ingredients: ["гречка", "гриби", "цибуля"],
+  },
 };
 
 function RecipePage() {
@@ -13,12 +22,33 @@ function RecipePage() {
 
   return (
     <div>
-      <h1>{recipe.name}</h1>
-      <ul>
-        {recipe.ingredients.map((ing, index) => (
-          <li key={index}>{ing}</li>
-        ))}
-      </ul>
+      <section className="overflow-hidden bg-gray-50 sm:grid sm:grid-cols-2">
+        <div className="p-8 md:p-12 lg:px-16 lg:py-24">
+          <div className="mx-auto max-w-xl text-center ltr:sm:text-left rtl:sm:text-right">
+            <h2 className="text-2xl font-åbold text-gray-900 md:text-3xl">
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit
+            </h2>
+
+            <p className="hidden text-gray-500 md:mt-4 md:block">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et,
+              egestas tempus tellus etiam sed. Quam a scelerisque amet
+              ullamcorper eu enim et fermentum, augue. Aliquet amet volutpat
+              quisque ut interdum tincidunt duis.
+            </p>
+          </div>
+        </div>
+
+        <img
+          alt=""
+          src="https://images.unsplash.com/photo-1668283653825-37b80f055b05?q=80&w=2942&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          className="h-56 w-full object-cover sm:h-full"
+        />
+      </section>
+      <div className="mt-10 overflow-hidden sm:grid sm:grid-cols-2">
+      <div>
+        <IngredientsCard /></div>
+      <div><h2 className="text-xl font-bold text-gray-900 sm:text-3xl pb-4">Кроки</h2></div>
+      </div>
     </div>
   );
 }
