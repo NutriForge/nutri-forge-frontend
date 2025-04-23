@@ -7,6 +7,10 @@ export default function IngredientsCard() {
   const recipe = recipes.find((r) => r.id === Number(id));
   console.log(recipe)
 
+  const totalWeight = recipe?.ingredients.reduce((sum, ingredient) => {
+    return sum + ingredient.weight_in_g;
+  }, 0);
+
   return (
     <div className="w-full max-w-md border-black mx-auto rounded-xl border overflow-hidden">
       <div className="flex border-b  bg-gray-50">
@@ -22,6 +26,9 @@ export default function IngredientsCard() {
             </li>
           ))}
         </ul>
+        <div className="text-right font-semibold text-sm text-gray-900 mt-3">
+          Загальна вага: {totalWeight} г
+        </div>
       </div>
     </div>
   );
