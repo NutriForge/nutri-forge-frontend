@@ -8,6 +8,11 @@ export interface Ingredient {
   weight_in_g: number;
 }
 
+export interface Step {
+  id: number;
+  description: string;
+}
+
 // Тип для одного рецепту
 export interface Recipe {
   id: number;
@@ -16,7 +21,7 @@ export interface Recipe {
   weight_per_portion: number;
   rating: number;
   ingredients: Ingredient[];
-  description: string;
+  steps: Step[];
 }
 
 // Контекст очікує масив рецептів

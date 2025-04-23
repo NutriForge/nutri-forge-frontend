@@ -1,7 +1,8 @@
 import { useParams } from "react-router-dom";
-import { useRecipes } from '../../../context/RecipeContext';
+import { useRecipes } from "../../../context/RecipeContext";
 
 import IngredientsCard from "./IngredientsCard";
+import StepsCard from "./StepsCard";
 
 function RecipePage() {
   const { id } = useParams();
@@ -35,9 +36,15 @@ function RecipePage() {
         />
       </section>
       <div className="mt-10 overflow-hidden sm:grid sm:grid-cols-2">
-      <div>
-        <IngredientsCard /></div>
-      <div><h2 className="text-xl font-bold text-gray-900 sm:text-3xl pb-4">Кроки</h2></div>
+        <div>
+          <IngredientsCard />
+        </div>
+        <div>
+          <h2 className="text-xl font-bold text-gray-900 sm:text-3xl pb-4">
+            Кроки
+          </h2>
+          <StepsCard />
+        </div>
       </div>
     </div>
   );
