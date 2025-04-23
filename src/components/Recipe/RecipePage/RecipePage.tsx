@@ -1,22 +1,12 @@
 import { useParams } from "react-router-dom";
-import IngredientsCard from "./IngredientsCard";
+import { useRecipes } from '../../../context/RecipeContext';
 
-const recipes = {
-  1: {
-    id: 1,
-    name: "Омлет із овочами",
-    ingredients: ["яйця", "помідор", "сир"],
-  },
-  2: {
-    id: 2,
-    name: "Гречка з грибами",
-    ingredients: ["гречка", "гриби", "цибуля"],
-  },
-};
+import IngredientsCard from "./IngredientsCard";
 
 function RecipePage() {
   const { id } = useParams();
-  const recipe = recipes[Number(id)];
+  const recipes = useRecipes();
+  const recipe = recipes.find((r) => r.id === Number(id));
 
   if (!recipe) return <div>Рецепт не знайдено</div>;
 
@@ -26,7 +16,7 @@ function RecipePage() {
         <div className="p-8 md:p-12 lg:px-16 lg:py-24">
           <div className="mx-auto max-w-xl text-center ltr:sm:text-left rtl:sm:text-right">
             <h2 className="text-2xl font-åbold text-gray-900 md:text-3xl">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit
+              {recipe.name}
             </h2>
 
             <p className="hidden text-gray-500 md:mt-4 md:block">

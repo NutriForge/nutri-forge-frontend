@@ -3,8 +3,11 @@ import RecipeList from './components/Recipe/RecipeList';
 import RecipePage from './components/Recipe/RecipePage/RecipePage';
 import Layout from './components/Layout/Layout';
 
+import { RecipeProvider } from './context/RecipeContext'; 
+
 function App() {
   return (
+    <RecipeProvider>
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
@@ -13,6 +16,7 @@ function App() {
         </Route>
       </Routes>
     </Router>
+    </RecipeProvider>
   );
 }
 

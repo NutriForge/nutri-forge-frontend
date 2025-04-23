@@ -1,19 +1,11 @@
-const groupedIngredients = [
-  {
-    title: 'Hoagie roll of choice',
-    items: ['sesame roll', 'homemade hoagie', 'bakery sub roll', 'bolillo'],
-  },
-  {
-    title: 'Lean cold cuts (2 parts)',
-    items: ['rosemary ham', 'cooked prosciutto', 'deli ham'],
-  },
-  {
-    title: 'Fatty cold cuts (1 part)',
-    items: ['salami', 'mortadella', 'soppressata', 'fennel soppressata', 'prosciutto'],
-  },
-];
+import { useParams } from "react-router-dom";
+import { useRecipes } from '../../../context/RecipeContext';
 
 export default function IngredientsCard() {
+  const { id } = useParams();
+  const recipes = useRecipes();
+  const recipe = recipes.find((r) => r.id === Number(id));
+  console.log(recipe)
 
   return (
     <div className="w-full max-w-md border-black mx-auto rounded-xl border overflow-hidden">
@@ -22,16 +14,14 @@ export default function IngredientsCard() {
       </div>
 
       <div className="p-4">
-        {groupedIngredients.map((group) => (
-          <div key={group.title} className="mb-4">
-            <h3 className="font-semibold text-black text-sm">{group.title}</h3>
-            <ul className="mt-1 text-sm text-gray-600 space-y-1 pl-2">
-              {group.items.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </div>
-        ))}
+        <ul className="space-y-2 text-sm text-gray-700">
+          {recipe.ingredients.map((ingredient, index) => (
+            <li key={index} className="flex justify-between border-b pb-1">
+              <span>{ingredient.name}</span>
+              <span>{ingredient.weight_in_g} г</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

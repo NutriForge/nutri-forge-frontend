@@ -1,17 +1,11 @@
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import RecipeCard from './RecipeCard/RecipeCard';
 
-import { getRecipes } from '../../services/recipeService';
+import { useRecipes } from '../../context/RecipeContext';
 
 function RecipeList() {
-  const [recipes, setRecipes] = useState([]);
-
-  useEffect(() => {
-    getRecipes()
-      .then(setRecipes);
-  }, []);
+  const recipes = useRecipes();
   return (
     <div>
       <h2 className="text-xl font-bold text-gray-900 sm:text-3xl pb-4">Рецепти</h2>
