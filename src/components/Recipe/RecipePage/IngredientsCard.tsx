@@ -8,7 +8,7 @@ export default function IngredientsCard() {
   const recipes = useRecipes();
   const recipe = recipes.find((r) => r.id === Number(id));
 
-  //To draw ungredients
+  //To draw ingredients
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
 
   //This is for calculation proportion
@@ -18,8 +18,6 @@ export default function IngredientsCard() {
 
   //This is to preserved weight
   const [desiredTotalWeight, setDesiredTotalWeight] = useState<string>("");
-
-  console.log(recipe);
 
   useEffect(() => {
     if (recipe) {
@@ -36,7 +34,14 @@ export default function IngredientsCard() {
   const handleChange = (index: number, newWeight: number) => {
     const updated = [...ingredients];
     updated[index].weight_in_g = newWeight;
+  
+    const total = updated.reduce(
+      (sum, ing) => sum + ing.weight_in_g,
+      0
+    );
+  
     setIngredients(updated);
+    setDesiredTotalWeight(String(total)); // <-- тут виправлено
   };
 
   const recalculateByTotalWeight = (newTotalWeight: number) => {
@@ -55,13 +60,17 @@ export default function IngredientsCard() {
     setIngredients(updated);
   };
 
+  function handleLockStateChange(isLocked) {
+    console.log("State: " + isLocked);
+  }
+
   return (
     <div className="w-full max-w-md border-black mx-auto rounded-xl border overflow-hidden">
       <div className="flex items-center justify-between border-b bg-gray-50 px-4 py-2">
         <div className="flex-1 text-center">
           <h2 className="font-semibold text-black">Інгридієнти</h2>
         </div>
-        <LockToggleButton />
+        <LockToggleButton onChangeLock={handleLockStateChange} />
       </div>
 
       <div className="p-4">
