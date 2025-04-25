@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useRecipes } from "../../../context/RecipeContext";
+import { LockToggleButton } from "./LockToggleButton";
 
 export default function IngredientsCard() {
   const { id } = useParams();
@@ -56,10 +57,11 @@ export default function IngredientsCard() {
 
   return (
     <div className="w-full max-w-md border-black mx-auto rounded-xl border overflow-hidden">
-      <div className="flex border-b  bg-gray-50">
-        <h2 className="flex-1 py-2 text-m text-center font-semibold border-b-2 border-black text-black">
-          Інгридієнти
-        </h2>
+      <div className="flex items-center justify-between border-b bg-gray-50 px-4 py-2">
+        <div className="flex-1 text-center">
+          <h2 className="font-semibold text-black">Інгридієнти</h2>
+        </div>
+        <LockToggleButton />
       </div>
 
       <div className="p-4">
