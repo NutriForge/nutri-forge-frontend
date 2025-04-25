@@ -8,21 +8,17 @@ export default function IngredientsCard() {
   const recipes = useRecipes();
   const recipe = recipes.find((r) => r.id === Number(id));
 
-  //To draw ingredients
+  //To change ingredients
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
 
-  //This is for calculation proportion
-  const [originalIngredients, setOriginalIngredients] = useState<Ingredient[]>(
-    []
-  );
-
-  //This is to preserved weight
+  //To change total weight
   const [desiredTotalWeight, setDesiredTotalWeight] = useState<string>("");
+
+  const [isLocked, setIsLocked] = useState(true);
 
   useEffect(() => {
     if (recipe) {
       setIngredients(recipe.ingredients);
-      setOriginalIngredients(recipe.ingredients);
       const total = recipe.ingredients.reduce(
         (sum, ing) => sum + ing.weight_in_g,
         0
@@ -31,9 +27,23 @@ export default function IngredientsCard() {
     }
   }, [recipe]);
 
-  const handleChange = (index: number, newWeight: number) => {
-    const updated = [...ingredients];
-    updated[index].weight_in_g = newWeight;
+  function recalculateIngredients (index: number, newWeight: number) {
+    let updated = [...ingredients];
+
+    const originalIngredients = recipe.ingredients;
+    const originalWeight = originalIngredients[index].weight_in_g;
+
+    if(isLocked) {
+      const ratio = newWeight / originalWeight;
+
+      updated = originalIngredients.map((ing) => ({
+        ...ing,
+        weight_in_g: Math.round(ing.weight_in_g * ratio),
+      }));
+    } else {
+      updated[index].weight_in_g = newWeight;
+    }
+
   
     const total = updated.reduce(
       (sum, ing) => sum + ing.weight_in_g,
@@ -44,15 +54,15 @@ export default function IngredientsCard() {
     setDesiredTotalWeight(String(total)); // <-- тут виправлено
   };
 
-  const recalculateByTotalWeight = (newTotalWeight: number) => {
-    const originalTotal = originalIngredients.reduce(
+  function recalculateByTotalWeight (newTotalWeight: number) {
+    const originalTotal = recipe.ingredients.reduce(
       (sum, ing) => sum + ing.weight_in_g,
       0
     );
 
     const ratio = newTotalWeight / originalTotal;
 
-    const updated = originalIngredients.map((ing) => ({
+    const updated = recipe.ingredients.map((ing) => ({
       ...ing,
       weight_in_g: Math.round(ing.weight_in_g * ratio),
     }));
@@ -62,6 +72,7 @@ export default function IngredientsCard() {
 
   function handleLockStateChange(isLocked) {
     console.log("State: " + isLocked);
+    setIsLocked(isLocked);
   }
 
   return (
@@ -85,7 +96,7 @@ export default function IngredientsCard() {
                 <input
                   type="number"
                   value={ingredient.weight_in_g}
-                  onChange={(e) => handleChange(index, Number(e.target.value))}
+                  onChange={(e) => recalculateIngredients(index, Number(e.target.value))}
                   className="w-15 border rounded px-1 py-0.5 justify-end"
                 />
                 <span className="ml-2">г</span>

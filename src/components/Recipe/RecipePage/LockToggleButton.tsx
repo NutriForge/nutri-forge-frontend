@@ -6,7 +6,7 @@ export function LockToggleButton({onChangeLock}) {
   return (
     <button onClick={() => {
       setIsLocked(isLocked => !isLocked);
-      onChangeLock(isLocked);
+      onChangeLock(!isLocked);
     }
       } className="p-2">
       {isLocked  ? (
