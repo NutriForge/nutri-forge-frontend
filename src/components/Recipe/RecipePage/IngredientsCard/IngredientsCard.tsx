@@ -4,7 +4,7 @@ import { useRecipes } from "../../../../context/RecipeContext";
 import { TotalBlock } from "./IngredientsFooter/TotalBlock";
 import { IngredientList } from "./IngredientsList/IngredientsList";
 import { IngredientsHeader } from "./IngredientsHeader/IngredientsHeader";
-import { calculateTotalWeight, scaleIngredients } from "@/util/recipeCalculations";
+import { calculateTotalMacros, calculateTotalWeight, scaleIngredients } from "@/util/recipeCalculations";
 import {getAllIngredients} from "../../../../services/recipeService.js"
 
 export default function IngredientsCard() {
@@ -17,6 +17,13 @@ export default function IngredientsCard() {
 
   //To change total weight
   const [totalWeight, setTotalWeight] = useState<string>("");
+
+  const [totalMacros, setTotalMacros] = useState<TotalMacrosProps>({
+    proteins: 0,
+    carbs: 0,
+    fats: 0,
+    kcal: 0
+  });
 
   const [isLocked, setIsLocked] = useState(true);
 
@@ -46,7 +53,10 @@ export default function IngredientsCard() {
             return i.name.toLowerCase() === ing.name.toLowerCase();
           });
   
-          if (!info) return ing;
+          if (!info) {
+            console.warn("⚠️ No match for", ing.name);
+            return ing;
+          }
   
           const factor = ing.weight_in_g / 100;
   
@@ -60,8 +70,10 @@ export default function IngredientsCard() {
         });
   
         setIngredients(enriched);
-        const total = calculateTotalWeight(ingredients);
+        const total = calculateTotalWeight(enriched);
+        const totalMacros = calculateTotalMacros(enriched);
         setTotalWeight(String(total));
+        setTotalMacros(totalMacros);
       } catch (error) {
         console.error("Failed to load ingredient info:", error);
       }
@@ -87,9 +99,10 @@ export default function IngredientsCard() {
     }
   
     const total = calculateTotalWeight(updated);
-  
-    setIngredients(updated);
+    const totalMacros = calculateTotalMacros(updated);
     setTotalWeight(String(total));
+    setTotalMacros(totalMacros);
+    setIngredients(updated);
   }
 
   function handleTotalWeight(newTotalWeight: number) {
@@ -115,6 +128,7 @@ export default function IngredientsCard() {
         />
         <TotalBlock
           totalWeight={totalWeight}
+          totalMacros={totalMacros}
           setTotalWeight={setTotalWeight}
           handleTotalWeight={handleTotalWeight}
         />

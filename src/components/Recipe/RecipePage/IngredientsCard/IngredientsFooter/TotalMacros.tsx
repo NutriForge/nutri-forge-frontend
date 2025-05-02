@@ -1,7 +1,9 @@
 export function TotalMacros({
   isOpen,
+  totalMacros,
 }: {
   isOpen: boolean;
+  totalMacros: TotalMacrosProps;
 }) {
   return (
     <div
@@ -10,10 +12,10 @@ export function TotalMacros({
       } text-sm text-gray-700`}
     >
       <div className="text-right">
-        <div>Білки: 10 г</div>
-        <div>Жири: 10 г</div>
-        <div>Вуглеводи: 10 г</div>
-        <div>Калорії: 10 ккал</div>
+        <div>Білки: {(totalMacros.proteins).toFixed(2)} г</div>
+        <div>Жири: {(totalMacros.fats).toFixed(2)} г</div>
+        <div>Вуглеводи: {(totalMacros.carbs).toFixed(2)} г</div>
+        <div>Калорії: {(totalMacros.kcal).toFixed(2)} ккал</div>
       </div>
     </div>
   );

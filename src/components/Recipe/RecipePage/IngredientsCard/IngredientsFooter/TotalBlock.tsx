@@ -3,12 +3,24 @@ import { ChevronToggle } from "./ChevronToggle";
 import { TotalWeightInput } from "./TotalWeightInput";
 import { TotalMacros } from "./TotalMacros";
 
+interface TotalMacrosProps {
+  isOpen: boolean;
+  totalMacros: {
+    proteins: number;
+    carbs: number;
+    fats: number;
+    kcal: number;
+  };
+}
+
 export function TotalBlock({
   totalWeight,
+  totalMacros,
   setTotalWeight,
   handleTotalWeight
 }: {
   totalWeight: string;
+  totalMacros: TotalMacrosProps;
   setTotalWeight: (val: string) => void;
   handleTotalWeight: (val: number) => void;
 }) {
@@ -24,7 +36,7 @@ export function TotalBlock({
           handleTotalWeight={handleTotalWeight}
         />
       </div>
-      <TotalMacros isOpen={isOpen} />
+      <TotalMacros isOpen={isOpen} totalMacros={totalMacros} />
     </div>
   );
 }
