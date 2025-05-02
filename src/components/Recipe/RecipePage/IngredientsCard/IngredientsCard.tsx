@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useRecipes } from "../../../../context/RecipeContext";
-import { LockToggleButton } from "./LockToggleButton";
-import ProductMacros from "./ProductMacros";
-import { TotalWeightInput } from "./TotalWeightInput";
-import { TotalMacros } from "./TotalMacros";
-import { TotalBlock } from "./TotalBlock";
+import { TotalBlock } from "./IngredientsFooter/TotalBlock";
+import { IngredientList } from "./IngredientsList";
+import { IngredientsHeader } from "./IngredientsHeader";
 
 export default function IngredientsCard() {
   const { id } = useParams();
@@ -20,9 +18,7 @@ export default function IngredientsCard() {
 
   const [isLocked, setIsLocked] = useState(true);
 
-  const [isMacrosHidden, setIsMacrosHidden] = useState(true);
-
-  const [isTotalMacrosHidden, setIsTotalMacrosHidden] = useState(true);
+  const [isMacrosOpen, setIsMacrosOpen] = useState(false);
 
   useEffect(() => {
     if (recipe) {
@@ -80,41 +76,22 @@ export default function IngredientsCard() {
   }
 
   function handleRowClick() {
-    setIsMacrosHidden((prev) => !prev);
+    setIsMacrosOpen((prev) => !prev);
   }
 
   return (
     <div className="w-full max-w-md border-black mx-auto rounded-xl border overflow-hidden">
-      <div className="flex items-center justify-between border-b bg-gray-50 px-4 py-2">
-        <div className="flex-1 text-center" onClick={handleRowClick}>
-          <h2 className="font-semibold text-black">Інгридієнти</h2>
-        </div>
-        <LockToggleButton onChangeLock={handleLockStateChange} />
-      </div>
+      <IngredientsHeader
+        onTitleClick={handleRowClick}
+        onChangeLock={handleLockStateChange}
+      />
 
       <div className="p-4">
-        <ul className="space-y-2 text-sm text-gray-700">
-          {ingredients.map((ingredient, index) => (
-            <li
-              key={index}
-              className="flex justify-between items-center border-b pb-1 gap-2"
-            >
-              <span className="w-1/3">{ingredient.name}</span>
-              {isMacrosHidden && <ProductMacros />}
-              <div className="flex items-center gap-1">
-                <input
-                  type="number"
-                  value={ingredient.weight_in_g}
-                  onChange={(e) =>
-                    handleIngredientChange(index, Number(e.target.value))
-                  }
-                  className="w-15 border rounded px-1 py-0.5 justify-end"
-                />
-                <span className="ml-2">г</span>
-              </div>
-            </li>
-          ))}
-        </ul>
+        <IngredientList
+          ingredients={ingredients}
+          onChange={handleIngredientChange}
+          showMacros={isMacrosOpen}
+        />
         <TotalBlock
           totalWeight={totalWeight}
           setTotalWeight={setTotalWeight}

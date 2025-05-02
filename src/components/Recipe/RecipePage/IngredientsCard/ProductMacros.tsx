@@ -1,9 +1,24 @@
-export default function ProductMacros() {
+export function ProductMacros({
+  protein,
+  fat,
+  carbs,
+  kcal,
+  weight,
+}: {
+  protein?: number;
+  fat?: number;
+  carbs?: number;
+  kcal?: number;
+  weight: number;
+}) {
+  const ratio = weight / 100;
+
   return (
-    <div className="grid grid-cols-4 text-xs text-gray-500 pl-2 mt-1">
-      <span> Б: 10 г</span>
-      <span> Ж: 10 г </span>
-      <span> В: 10 г </span>
-      <span> Ккал: 100 </span>
+    <div className="grid grid-cols-4 text-xs text-gray-500">
+      <span>Б: {(protein || 0) * ratio}</span>
+      <span>Ж: {(fat || 0) * ratio}</span>
+      <span>В: {(carbs || 0) * ratio}</span>
+      <span>Ккал: {(kcal || 0) * ratio}</span>
     </div>
-  )}
+  );
+}
