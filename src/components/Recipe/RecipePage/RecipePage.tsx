@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useRecipes } from "../../../context/RecipeContext";
 
-import IngredientsCard from "./IngredientsCard";
+import IngredientsCard from "./IngredientsCard/IngredientsCard";
 import StepsCard from "./StepsCard";
 
 function RecipePage() {
