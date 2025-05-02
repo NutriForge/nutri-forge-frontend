@@ -2,10 +2,8 @@ import { createContext, useContext, useEffect, useState, ReactNode } from 'react
 import { getAllRecipes } from '../services/recipeService';
 import { Recipe } from '../types/recipe';
 
-// Контекст очікує масив рецептів
 const RecipeContext = createContext<Recipe[] | undefined>(undefined);
 
-// Тип пропсів для провайдера
 interface RecipeProviderProps {
   children: ReactNode;
 }

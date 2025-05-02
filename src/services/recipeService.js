@@ -5,3 +5,11 @@ export async function getAllRecipes() {
   }
   return response.json();
 }
+
+export async function getAllIngredients() {
+  const response = await fetch('/data/ingredients.json');
+  if (!response.ok) {
+    throw new Error('Failed to fetch ingredients');
+  }
+  return response.json();
+}

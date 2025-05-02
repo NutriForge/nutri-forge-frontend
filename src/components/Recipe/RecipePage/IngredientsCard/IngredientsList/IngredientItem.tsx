@@ -18,10 +18,10 @@ export function IngredientItem({
         {showMacros && (
         <ProductMacros
           weight={ingredient.weight_in_g}
-          protein={ingredient.protein_per_100g}
-          fat={ingredient.fat_per_100g}
-          carbs={ingredient.carbs_per_100g}
-          kcal={ingredient.kcal_per_100g}
+          proteins={ingredient.proteins}
+          fats={ingredient.fats}
+          carbs={ingredient.carbs}
+          kcal={ingredient.kcal}
         />
       )}
         <div className="flex items-center gap-1">

@@ -5,6 +5,7 @@ import { TotalBlock } from "./IngredientsFooter/TotalBlock";
 import { IngredientList } from "./IngredientsList/IngredientsList";
 import { IngredientsHeader } from "./IngredientsHeader/IngredientsHeader";
 import { calculateTotalWeight, scaleIngredients } from "@/util/recipeCalculations";
+import {getAllIngredients} from "../../../../services/recipeService.js"
 
 export default function IngredientsCard() {
   const { id } = useParams();
@@ -22,17 +23,52 @@ export default function IngredientsCard() {
   const [isMacrosOpen, setIsMacrosOpen] = useState(false);
 
   useEffect(() => {
-    if (recipe) {
-      setIngredients(recipe.ingredients);
-      const total = calculateTotalWeight(recipe.ingredients);
-      setTotalWeight(String(total));
-    }
-  }, [recipe]);
+    async function enrichIngredients() {
+      if (!recipe) return;
+  
+      try {
+        const ingredientsInfo = await getAllIngredients();
 
-  function handleLockStateChange(isLocked) {
-    console.log("State: " + isLocked);
-    setIsLocked(isLocked);
-  }
+        const enriched = recipe.ingredients.map((ing) => {
+          console.log("ingredientsInfo", ingredientsInfo);
+          console.log("looking for:", ing.name);
+          const info = ingredientsInfo.find((i) => {
+            if (!i.name) return false;
+          
+            // якщо name — масив синонімів
+            if (Array.isArray(i.name)) {
+              return i.name.some((syn) =>
+                syn.toLowerCase() === ing.name.toLowerCase()
+              );
+            }
+          
+            // fallback: якщо name — звичайний рядок
+            return i.name.toLowerCase() === ing.name.toLowerCase();
+          });
+  
+          if (!info) return ing;
+  
+          const factor = ing.weight_in_g / 100;
+  
+          return {
+            ...ing,
+            proteins: +(info.proteins * factor).toFixed(2),
+            carbs: +(info.carbs * factor).toFixed(2),
+            fats: +(info.fats * factor).toFixed(2),
+            kcal: +(info.kcal * factor).toFixed(2),
+          };
+        });
+  
+        setIngredients(enriched);
+        const total = calculateTotalWeight(ingredients);
+        setTotalWeight(String(total));
+      } catch (error) {
+        console.error("Failed to load ingredient info:", error);
+      }
+    }
+  
+    enrichIngredients();
+  }, [recipe]);
 
   function handleRowClick() {
     setIsMacrosOpen((prev) => !prev);
@@ -41,7 +77,7 @@ export default function IngredientsCard() {
   function handleIngredientChange(index: number, newWeight: number) {
     let updated = [...ingredients];
 
-    const originalIngredients = recipe.ingredients;
+    const originalIngredients = ingredients;
     const originalWeight = originalIngredients[index].weight_in_g;
   
     if (isLocked) {
@@ -57,9 +93,9 @@ export default function IngredientsCard() {
   }
 
   function handleTotalWeight(newTotalWeight: number) {
-    const originalTotal = calculateTotalWeight(recipe.ingredients);
+    const originalTotal = calculateTotalWeight(ingredients);
 
-    const updated = scaleIngredients(recipe.ingredients, originalTotal, newTotalWeight);
+    const updated = scaleIngredients(ingredients, originalTotal, newTotalWeight);
 
     setIngredients(updated);
   }
@@ -68,7 +104,7 @@ export default function IngredientsCard() {
     <div className="w-full max-w-md border-black mx-auto rounded-xl border overflow-hidden">
       <IngredientsHeader
         onTitleClick={handleRowClick}
-        onChangeLock={handleLockStateChange}
+        onChangeLock={setIsLocked}
       />
 
       <div className="p-4">
