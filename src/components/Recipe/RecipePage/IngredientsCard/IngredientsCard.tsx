@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useRecipes } from "../../../../context/RecipeContext";
 import { TotalBlock } from "./IngredientsFooter/TotalBlock";
-import { IngredientList } from "./IngredientsList";
-import { IngredientsHeader } from "./IngredientsHeader";
+import { IngredientList } from "./IngredientsList/IngredientsList";
+import { IngredientsHeader } from "./IngredientsHeader/IngredientsHeader";
+import { calculateTotalWeight, scaleIngredients } from "@/util/recipeCalculations";
 
 export default function IngredientsCard() {
   const { id } = useParams();
@@ -23,52 +24,10 @@ export default function IngredientsCard() {
   useEffect(() => {
     if (recipe) {
       setIngredients(recipe.ingredients);
-      const total = recipe.ingredients.reduce(
-        (sum, ing) => sum + ing.weight_in_g,
-        0
-      );
+      const total = calculateTotalWeight(recipe.ingredients);
       setTotalWeight(String(total));
     }
   }, [recipe]);
-
-  function handleIngredientChange(index: number, newWeight: number) {
-    let updated = [...ingredients];
-
-    const originalIngredients = recipe.ingredients;
-    const originalWeight = originalIngredients[index].weight_in_g;
-
-    if (isLocked) {
-      const ratio = newWeight / originalWeight;
-
-      updated = originalIngredients.map((ing) => ({
-        ...ing,
-        weight_in_g: Math.round(ing.weight_in_g * ratio),
-      }));
-    } else {
-      updated[index].weight_in_g = newWeight;
-    }
-
-    const total = updated.reduce((sum, ing) => sum + ing.weight_in_g, 0);
-
-    setIngredients(updated);
-    setTotalWeight(String(total));
-  }
-
-  function handleTotalWeight(newTotalWeight: number) {
-    const originalTotal = recipe.ingredients.reduce(
-      (sum, ing) => sum + ing.weight_in_g,
-      0
-    );
-
-    const ratio = newTotalWeight / originalTotal;
-
-    const updated = recipe.ingredients.map((ing) => ({
-      ...ing,
-      weight_in_g: Math.round(ing.weight_in_g * ratio),
-    }));
-
-    setIngredients(updated);
-  }
 
   function handleLockStateChange(isLocked) {
     console.log("State: " + isLocked);
@@ -77,6 +36,32 @@ export default function IngredientsCard() {
 
   function handleRowClick() {
     setIsMacrosOpen((prev) => !prev);
+  }
+
+  function handleIngredientChange(index: number, newWeight: number) {
+    let updated = [...ingredients];
+
+    const originalIngredients = recipe.ingredients;
+    const originalWeight = originalIngredients[index].weight_in_g;
+  
+    if (isLocked) {
+      updated = scaleIngredients(originalIngredients, originalWeight, newWeight);
+    } else {
+      updated[index] = { ...updated[index], weight_in_g: newWeight };
+    }
+  
+    const total = calculateTotalWeight(updated);
+  
+    setIngredients(updated);
+    setTotalWeight(String(total));
+  }
+
+  function handleTotalWeight(newTotalWeight: number) {
+    const originalTotal = calculateTotalWeight(recipe.ingredients);
+
+    const updated = scaleIngredients(recipe.ingredients, originalTotal, newTotalWeight);
+
+    setIngredients(updated);
   }
 
   return (

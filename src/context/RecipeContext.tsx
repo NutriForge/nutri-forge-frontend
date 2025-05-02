@@ -1,28 +1,6 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { getAllRecipes } from '../services/recipeService';
-
-// Тип для одного інгредієнта
-export interface Ingredient {
-  name: string;
-  number: number;
-  weight_in_g: number;
-}
-
-export interface Step {
-  id: number;
-  description: string;
-}
-
-// Тип для одного рецепту
-export interface Recipe {
-  id: number;
-  name: string;
-  type: string;
-  weight_per_portion: number;
-  rating: number;
-  ingredients: Ingredient[];
-  steps: Step[];
-}
+import { Recipe } from '../types/recipe';
 
 // Контекст очікує масив рецептів
 const RecipeContext = createContext<Recipe[] | undefined>(undefined);
