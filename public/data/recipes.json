@@ -3,7 +3,7 @@
         "id": 1,
         "name": "Омлет із свіжими овочами та хлібцями",
         "type": "Вегетеріанські",
-        "weight_per_portion": 419,
+        "weight_per_portion": 578,
         "rating": 0,
         "img": "https://images.unsplash.com/photo-1680486083087-a5a91db03a69?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         "ingredients": [
@@ -87,6 +87,7 @@
         "type": "Вегетеріанські",
         "weight_per_portion": 169,
         "rating": 0,
+        "img": "https://images.unsplash.com/photo-1738643122161-38be55bab387?q=80&w=2960&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         "ingredients": [
             {
                 "name": "вівсяні пластівці",
@@ -185,6 +186,7 @@
         "type": "Вегетеріанські",
         "weight_per_portion": 203,
         "rating": 0,
+        "img": "https://images.unsplash.com/photo-1553530666-ba11a7da3888?q=80&w=3086&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         "ingredients": [
             {
                 "name": "ягоди сезонні",
@@ -220,6 +222,7 @@
         "type": "Веганські",
         "weight_per_portion": 385,
         "rating": 0,
+        "img": "https://plus.unsplash.com/premium_photo-1675011652759-2259e7bc45eb?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         "ingredients": [
             {
                 "name": "кріп",
