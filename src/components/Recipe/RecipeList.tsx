@@ -16,7 +16,8 @@ function RecipeList() {
               <RecipeCard 
                 name={recipe.name} 
                 rating={recipe.rating}
-                portion={recipe.weight_per_portion} />
+                portion={recipe.weight_per_portion}
+                img={recipe.img} />
             </Link>
           </li>
         ))}

@@ -26,6 +26,7 @@ export interface Recipe {
   type: string;
   weight_per_portion: number;
   rating: number;
+  img: string;
   ingredients: Ingredient[];
   steps: Step[];
 }
