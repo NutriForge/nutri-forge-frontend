@@ -39,31 +39,33 @@ export default function MealPlanner() {
 
   return (
     <div className="min-h-screen bg-gray-50 p-8">
-      <h1 className="text-3xl font-bold mb-8">Your Meal Plan</h1>
+      <h1 className="text-3xl font-bold mb-8">Раціон</h1>
 
-      <DragDropContext onDragEnd={onDragEnd}>
+      
         <div className="flex">
+        <DragDropContext onDragEnd={onDragEnd}>
           <div className="flex-1 mr-8 grid grid-cols-1 gap-6">
-            <MealSection title="🥣 Breakfast" droppableId="breakfast" recipes={meals.breakfast} />
-            <MealSection title="🍛 Lunch" droppableId="lunch" recipes={meals.lunch} />
-            <MealSection title="🍲 Dinner" droppableId="dinner" recipes={meals.dinner} />
+            <MealSection title="🥣 Сніданок" droppableId="breakfast" recipes={meals.breakfast} />
+            <MealSection title="🍛 Обід" droppableId="lunch" recipes={meals.lunch} />
+            <MealSection title="🍲 Вечеря" droppableId="dinner" recipes={meals.dinner} />
           </div>
+          </DragDropContext>
 
           <aside className="w-80 bg-white shadow-md rounded-lg p-6 h-fit">
             <h2 className="text-lg font-semibold mb-4">Summary</h2>
             <div className="text-sm text-gray-700 space-y-2 mb-6">
-              <div>🍽 Calories: <span className="font-medium">1750 kcal</span></div>
-              <div>🥚 Protein: <span className="font-medium">110 g</span></div>
-              <div>🥑 Fat: <span className="font-medium">65 g</span></div>
-              <div>🍞 Carbs: <span className="font-medium">180 g</span></div>
+              <div>🍽 Калорійність: <span className="font-medium">1750 ккал</span></div>
+              <div>🥚 Білки: <span className="font-medium">110 г</span></div>
+              <div>🥑 Жири: <span className="font-medium">65 г</span></div>
+              <div>🍞 Вуглеводи: <span className="font-medium">180 г</span></div>
             </div>
 
             <button className="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg transition">
-              Print Meal Plan
+              Список продуктів
             </button>
           </aside>
         </div>
-      </DragDropContext>
+
     </div>
   );
 }
@@ -120,7 +122,7 @@ function DraggableRecipeCard({ recipe, index }: { recipe: any; index: number }) 
           <div className="flex-1">
             <div className="text-sm font-semibold text-gray-800">{recipe.name}</div>
             <div className="text-xs text-gray-500">
-              {recipe.kcal} kcal • Б: {recipe.proteins}г • Ж: {recipe.fats}г • В: {recipe.carbs}г
+              {recipe.kcal} ккал • Б: {recipe.proteins}г • Ж: {recipe.fats}г • В: {recipe.carbs}г
             </div>
           </div>
           <button className="text-gray-400 hover:text-red-500 text-sm">✕</button>
