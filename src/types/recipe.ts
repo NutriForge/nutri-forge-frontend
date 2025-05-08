@@ -1,4 +1,4 @@
-type IngredientInfo = {
+export interface IngredientInfo {
   name: string;
   proteins: number;
   carbs: number;
@@ -24,9 +24,13 @@ export interface Recipe {
   id: number;
   name: string;
   type: string;
-  weight_per_portion: number;
   rating: number;
   img: string;
   ingredients: Ingredient[];
   steps: Step[];
+  weight_per_portion?: number;
+  total_proteins?: number;
+  total_fats?: number;
+  total_carbs?: number;
+  total_kcal?: number;
 }

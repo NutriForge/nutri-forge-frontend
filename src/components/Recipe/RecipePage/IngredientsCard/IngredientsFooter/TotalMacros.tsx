@@ -1,9 +1,6 @@
 export function TotalMacros({
   isOpen,
   totalMacros,
-}: {
-  isOpen: boolean;
-  totalMacros: TotalMacrosProps;
 }) {
   return (
     <div

@@ -13,11 +13,7 @@ function RecipeList() {
         {recipes.map((recipe) => (
           <li className="rounded overflow-hidden min-h-0 hover:shadow-lg" key={recipe.id}>
             <Link className="block" to={`/recipe/${recipe.id}`}>
-              <RecipeCard 
-                name={recipe.name} 
-                rating={recipe.rating}
-                portion={recipe.weight_per_portion}
-                img={recipe.img} />
+              <RecipeCard recipe_id={recipe.id} />
             </Link>
           </li>
         ))}

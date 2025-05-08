@@ -1,14 +1,17 @@
+import { useRecipes } from "@/context/RecipeContext";
 import { IngredientItem } from "./IngredientItem";
 
 export function IngredientList({
-  ingredients,
+  recipe_id,
   onChange,
   showMacros,
 }: {
-  ingredients: any[];
+  recipe_id: string;
   onChange: (index: number, newWeight: number) => void;
   showMacros: boolean;
 }) {
+  const ingredients = useRecipes().find((r) => r.id === Number(recipe_id))?.ingredients;
+
   return (
     <ul className="space-y-2 text-sm text-gray-700">
       {ingredients.map((ingredient, index) => (
