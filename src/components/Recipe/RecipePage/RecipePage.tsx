@@ -18,25 +18,41 @@ function RecipePage() {
   if (!recipe) return <div>Рецепт не знайдено</div>;
 
   function handleAddToMealPlan() {
-
-    console.log(recipe)
-    const newRecipe = {
-        id: recipe.id,
-        name: recipe.name,
-        img: recipe.img || "https://placehold.co/80?text=Фотосесія+рецепту+триває",
-        ingredients: ingredients,
-        weight_per_portion: totalMacros,
-        total_proteins: totalMacros.proteins,
-        total_fats: totalMacros.fats,
-        total_carbs: totalMacros.carbs,
-        total_kcal: totalMacros.kcal
-    };
-
     const currentPlan = JSON.parse(localStorage.getItem("mealPlan") || "{}");
+
+    // ✅ Ініціалізувати секцію, якщо вона пуста
     const breakfast = currentPlan.breakfast || [];
-    breakfast.push(newRecipe);
-    localStorage.setItem("mealPlan", JSON.stringify({ ...currentPlan, breakfast }));
+  
+    // ✅ Рецепт, який хочемо додати
+    const newRecipe = {
+      id: recipe.id.toString(),
+      name: recipe.name,
+      image: recipe.img || "https://placehold.co/80",
+      kcal: totalMacros.kcal,
+      proteins: totalMacros.proteins,
+      fats: totalMacros.fats,
+      carbs: totalMacros.carbs,
+      ingredients,
+    };
+  
+    // ✅ Перевірка: чи вже є рецепт з таким id
+    const existingIndex = breakfast.findIndex((r: any) => r.id === newRecipe.id);
+  
+    if (existingIndex !== -1) {
+      // Якщо є — оновлюємо
+      breakfast[existingIndex] = newRecipe;
+    } else {
+      // Інакше додаємо новий
+      breakfast.push(newRecipe);
+    }
+  
+    // ✅ Оновити localStorage
+    const updatedPlan = { ...currentPlan, breakfast };
+    localStorage.setItem("mealPlan", JSON.stringify(updatedPlan));
+  
+    // ✅ Перенаправлення, якщо потрібно
     navigate("/planner");
+  
   };
 
   return (
