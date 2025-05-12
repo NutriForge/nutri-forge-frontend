@@ -2,8 +2,7 @@ export function ProductMacros({
   proteins,
   fats,
   carbs,
-  kcal,
-  weight,
+  kcal
 }: {
   proteins?: number;
   fats?: number;

@@ -5,7 +5,6 @@ export default function IngredientsCard() {
   const { id } = useParams();
   const recipes = useRecipes();
   const recipe = recipes.find((r) => r.id === Number(id));
-  console.log(recipe);
 
   return (
       <div className="p-4">

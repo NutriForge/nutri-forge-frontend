@@ -3,20 +3,46 @@ import { useRecipes } from "../../../context/RecipeContext";
 
 import IngredientsCard from "./IngredientsCard/IngredientsCard";
 import StepsCard from "./StepsCard";
+import { Button } from "@/components/ui/button";
+import { useIngredientsForm } from "@/context/IngredientsFormContext";
 
 function RecipePage() {
   const { id } = useParams();
   const recipes = useRecipes();
   const recipe = recipes.find((r) => r.id === Number(id));
+  const { state } = useIngredientsForm();
+  const { ingredients, totalMacros } = state;
 
   if (!recipe) return <div>Рецепт не знайдено</div>;
+
+  function handleAddToMealPlan() {
+
+    console.log(recipe)
+    const newRecipe = {
+        id: recipe.id,
+        name: recipe.name,
+        img: recipe.img || "https://placehold.co/80?text=Фотосесія+рецепту+триває",
+        ingredients: ingredients,
+        weight_per_portion: totalMacros,
+        total_proteins: totalMacros.proteins,
+        total_fats: totalMacros.fats,
+        total_carbs: totalMacros.carbs,
+        total_kcal: totalMacros.kcal
+    };
+
+    const currentPlan = JSON.parse(localStorage.getItem("mealPlan") || "{}");
+    const breakfast = currentPlan.breakfast || [];
+    breakfast.push(newRecipe);
+    localStorage.setItem("mealPlan", JSON.stringify({ ...currentPlan, breakfast }));
+    //alert("Рецепт додано до сніданку!");
+  };
 
   return (
     <div>
       <section className="overflow-hidden bg-gray-50 sm:grid sm:grid-cols-2">
         <div className="p-8 md:p-12 lg:px-16 lg:py-24">
           <div className="mx-auto max-w-xl text-center ltr:sm:text-left rtl:sm:text-right">
-            <h2 className="text-2xl font-åbold text-gray-900 md:text-3xl">
+            <h2 className="text-2xl font-bold text-gray-900 md:text-3xl">
               {recipe.name}
             </h2>
 
@@ -27,11 +53,17 @@ function RecipePage() {
               quisque ut interdum tincidunt duis.
             </p>
           </div>
+          <button onClick={handleAddToMealPlan} className="mt-4 bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-xl transition">
+            Додати в план
+          </button>
         </div>
 
         <img
           alt=""
-          src={recipe.img || "https://placehold.co/400x300?text=Фотосесія+рецепту+триває"}
+          src={
+            recipe.img ||
+            "https://placehold.co/400x300?text=Фотосесія+рецепту+триває"
+          }
           className="h-56 w-full object-cover sm:h-full"
         />
       </section>
@@ -44,6 +76,9 @@ function RecipePage() {
             Кроки
           </h2>
           <StepsCard />
+          <div className="mt-6 flex justify-end">
+            <Button onClick={handleAddToMealPlan} className="h-12 rounded-xl">Додати в план</Button>
+          </div>
         </div>
       </div>
     </div>
