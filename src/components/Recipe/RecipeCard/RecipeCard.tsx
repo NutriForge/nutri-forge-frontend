@@ -1,8 +1,8 @@
-import { useRecipes } from "@/context/RecipeContext";
+import { useRecipe } from "@/context/RecipeContext";
 import StarRating from "./StarRating";
 
 export default function RecipeCard({recipe_id}) {
-  const recipe = useRecipes().find((r) => r.id === Number(recipe_id));
+  const recipe = useRecipe(Number(recipe_id));
   return (
     <div className="overflow-hidden rounded-lg transition ">
       <img
@@ -20,7 +20,7 @@ export default function RecipeCard({recipe_id}) {
         <div className="mt-2 grid grid-cols-4 text-xs text-gray-500">
       <div>
         <div className="text-xs">Ккал</div>
-        <div className="text-orange-600 font-medium">{recipe?.total_kcal?.toFixed(0)  || 0}</div>
+        <div className="text-orange-600 font-medium">{recipe?.total_kcal.toFixed(0)  || 0}</div>
       </div>
       <div>
         <div className="text-xs">Б</div>

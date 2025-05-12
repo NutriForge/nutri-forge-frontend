@@ -6,25 +6,27 @@ export function enrichRecipesWithMacros(
 ): Recipe[] {
   return recipes.map((recipe) => {
     const enrichedIngredients = recipe.ingredients.map((ing) => {
-      console.log("ingredientsInfo", ingredientsInfo);
-      console.log("looking for:", ing.name);
       const info = ingredientsInfo.find((i) => {
         if (!i.name) return false;
-      
-        // якщо name — масив синонімів
+
         if (Array.isArray(i.name)) {
           return i.name.some((syn) =>
             syn.toLowerCase() === ing.name.toLowerCase()
           );
         }
-      
-        // fallback: якщо name — звичайний рядок
+
         return i.name.toLowerCase() === ing.name.toLowerCase();
       });
 
       if (!info) {
         console.warn("⚠️ No match for", ing.name);
-        return ing;
+        return {
+          ...ing,
+          proteins: 0,
+          carbs: 0,
+          fats: 0,
+          kcal: 0,
+        };
       }
 
       const factor = ing.weight_in_g / 100;
@@ -38,9 +40,25 @@ export function enrichRecipesWithMacros(
       };
     });
 
+    const totals = enrichedIngredients.reduce(
+      (acc, ing) => ({
+        weight: acc.weight + ing.weight_in_g,
+        proteins: acc.proteins + ing.proteins,
+        carbs: acc.carbs + ing.carbs,
+        fats: acc.fats + ing.fats,
+        kcal: acc.kcal + ing.kcal,
+      }),
+      { weight: 0, proteins: 0, carbs: 0, fats: 0, kcal: 0 }
+    );
+
     return {
       ...recipe,
       ingredients: enrichedIngredients,
+      weight_per_portion: totals.weight,
+      total_proteins: +totals.proteins.toFixed(2),
+      total_carbs: +totals.carbs.toFixed(2),
+      total_fats: +totals.fats.toFixed(2),
+      total_kcal: +totals.kcal.toFixed(2),
     };
   });
 }

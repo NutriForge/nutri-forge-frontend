@@ -5,10 +5,12 @@ import Layout from './components/Layout/Layout';
 import MealPlannerPage from './components/MealPlanner/MealPlannerPage';
 
 import { RecipeProvider } from './context/RecipeContext'; 
+import { IngredientsFormProvider } from './context/IngredientsFormContext';
 
 function App() {
   return (
     <RecipeProvider>
+      <IngredientsFormProvider>
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
@@ -18,6 +20,7 @@ function App() {
         </Route>
       </Routes>
     </Router>
+      </IngredientsFormProvider>
     </RecipeProvider>
   );
 }

@@ -1,16 +1,15 @@
-import { useRecipes } from "@/context/RecipeContext";
+import { useIngredientsForm } from "@/context/IngredientsFormContext";
 import { IngredientItem } from "./IngredientItem";
 
 export function IngredientList({
-  recipe_id,
   onChange,
   showMacros,
 }: {
-  recipe_id: string;
   onChange: (index: number, newWeight: number) => void;
   showMacros: boolean;
 }) {
-  const ingredients = useRecipes().find((r) => r.id === Number(recipe_id))?.ingredients;
+  const { state } = useIngredientsForm();
+  const { ingredients } = state;
 
   return (
     <ul className="space-y-2 text-sm text-gray-700">

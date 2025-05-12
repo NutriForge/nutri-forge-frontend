@@ -1,68 +1,39 @@
-import { useState } from "react";
-import { useParams } from "react-router-dom";
-import { TotalBlock } from "./IngredientsFooter/TotalBlock";
-import { IngredientList } from "./IngredientsList/IngredientsList";
-import { IngredientsHeader } from "./IngredientsHeader/IngredientsHeader";
-import { calculateTotalMacros, calculateTotalWeight, scaleIngredients } from "@/util/recipeCalculations";
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useIngredientsForm } from '@/context/IngredientsFormContext';
+import { useRecipes } from '@/context/RecipeContext';
+import {IngredientsHeader} from './IngredientsHeader/IngredientsHeader';
+import {IngredientList} from './IngredientsList/IngredientsList';
+import {TotalBlock} from './IngredientsFooter/TotalBlock';
 
 export default function IngredientsCard() {
   const { id } = useParams();
+  const { state, dispatch } = useIngredientsForm();
+  const { totalMacros, isMacrosOpen } = state;
+  const recipes = useRecipes();
 
-  //To change ingredients
-  const [ingredients, setIngredients] = useState<Ingredient[]>([]);
+  const recipe = recipes.find((r) => r.id === Number(id));
 
-  //To change total weight
-  const [totalWeight, setTotalWeight] = useState<string>("");
-
-  const [totalMacros, setTotalMacros] = useState<TotalMacrosProps>({
-    proteins: 0,
-    carbs: 0,
-    fats: 0,
-    kcal: 0
-  });
-
-  const [isLocked, setIsLocked] = useState(true);
-
-  const [isMacrosOpen, setIsMacrosOpen] = useState(false);
-
-  function handleRowClick() {
-    setIsMacrosOpen((prev) => !prev);
-  }
-
-  function handleIngredientChange(index: number, newWeight: number) {
-    let updated = [...ingredients];
-
-    const originalIngredients = ingredients;
-    const originalWeight = originalIngredients[index].weight_in_g;
-  
-    if (isLocked) {
-      updated = scaleIngredients(originalIngredients, originalWeight, newWeight);
-    } else {
-      updated[index] = { ...updated[index], weight_in_g: newWeight };
+  useEffect(() => {
+    if (recipe) {
+      dispatch({ type: 'SET_INGREDIENTS', payload: recipe.ingredients });
     }
-  
-    const total = calculateTotalWeight(updated);
-    const totalMacros = calculateTotalMacros(updated);
-    setTotalWeight(String(total));
-    setTotalMacros(totalMacros);
-    setIngredients(updated);
-  }
+  }, [recipe]);
 
-  function handleTotalWeight(newTotalWeight: number) {
-    const originalTotal = calculateTotalWeight(ingredients);
+  const handleIngredientChange = (index: number, newWeight: number) => {
+    dispatch({ type: 'UPDATE_INGREDIENT', index, newWeight });
+  };
 
-    const updated = scaleIngredients(ingredients, originalTotal, newTotalWeight);
-
-    setIngredients(updated);
-  }
+  const handleTotalWeight = (newWeight: number) => {
+    dispatch({ type: 'UPDATE_TOTAL_WEIGHT', payload: newWeight });
+  };
 
   return (
     <div className="w-full max-w-md border-black mx-auto rounded-xl border overflow-hidden">
       <IngredientsHeader
-        onTitleClick={handleRowClick}
-        onChangeLock={setIsLocked}
+        onTitleClick={() => dispatch({ type: 'TOGGLE_MACROS_OPEN' })}
+        onChangeLock={() => dispatch({ type: 'TOGGLE_LOCK' })}
       />
-
       <div className="p-4">
         <IngredientList
           recipe_id={id}
@@ -72,7 +43,7 @@ export default function IngredientsCard() {
         <TotalBlock
           recipe_id={id}
           totalMacros={totalMacros}
-          setTotalWeight={setTotalWeight}
+          setTotalWeight={() => {}}
           handleTotalWeight={handleTotalWeight}
         />
       </div>
