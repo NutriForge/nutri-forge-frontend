@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useRecipes } from "../../../context/RecipeContext";
 
 import IngredientsCard from "./IngredientsCard/IngredientsCard";
@@ -12,6 +13,7 @@ function RecipePage() {
   const recipe = recipes.find((r) => r.id === Number(id));
   const { state } = useIngredientsForm();
   const { ingredients, totalMacros } = state;
+  const navigate = useNavigate();
 
   if (!recipe) return <div>Рецепт не знайдено</div>;
 
@@ -34,7 +36,7 @@ function RecipePage() {
     const breakfast = currentPlan.breakfast || [];
     breakfast.push(newRecipe);
     localStorage.setItem("mealPlan", JSON.stringify({ ...currentPlan, breakfast }));
-    //alert("Рецепт додано до сніданку!");
+    navigate("/planner");
   };
 
   return (
