@@ -35,7 +35,7 @@
     "kcal": 159
   },
   {
-    "name": "помідор",
+    "name": ["помідор", "помідори"],
     "proteins": 0.9,
     "carbs": 3.9,
     "fats": 0.2,
@@ -266,7 +266,7 @@
     "kcal": 48
   },
   {
-    "name": "сік лимона",
+    "name": ["сік лимона", "лимонний сік"],
     "proteins": 2,
     "carbs": 1,
     "fats": 0,
@@ -334,5 +334,131 @@
     "carbs": 1.23,
     "fats": 31.48,
     "kcal": 354
-  } 
+  },
+  {
+    "name": "джем",
+    "proteins": 0,
+    "carbs": 57,
+    "fats": 0,
+    "kcal": 231
+  },
+  {
+    "name": "ванільний цукор",
+    "proteins": 0,
+    "carbs": 99.4,
+    "fats": 0,
+    "kcal": 398
+  },
+  {
+    "name": "ксилітол",
+    "proteins": 0,
+    "carbs": 99.8,
+    "fats": 0,
+    "kcal": 240
+  },
+  {
+    "name": "крупа манна",
+    "proteins": 11.3,
+    "carbs": 73.3,
+    "fats": 0.7,
+    "kcal": 326
+  },
+  {
+    "name": "часник",
+    "proteins": 6.21,
+    "carbs": 25.04,
+    "fats": 0.27,
+    "kcal": 130
+  },
+  {
+    "name": "цибуля",
+    "proteins": 1.41,
+    "carbs": 8.91,
+    "fats": 0.25,
+    "kcal": 43.4
+  },
+  {
+    "name": "розмарин свіжий",
+    "proteins": 3.31,
+    "carbs": 6.6,
+    "fats": 5.86,
+    "kcal": 92.2
+  },
+  {
+    "name": "паприка солодка",
+    "proteins": 14.1,
+    "carbs": 19.1,
+    "fats": 12.9,
+    "kcal": 282
+  },
+  {
+    "name": "картопля",
+    "proteins": 2,
+    "carbs": 19,
+    "fats": 0.2,
+    "kcal": 88.4
+  },
+  {
+    "name": "базилік або кріп",
+    "proteins": 0,
+    "carbs": 0,
+    "fats": 0,
+    "kcal": 0
+  },
+  {
+    "name": "томатна паста",
+    "proteins": 2.45,
+    "carbs": 23.71,
+    "fats": 0.5,
+    "kcal": 114
+  },
+  {
+    "name": "паста",
+    "proteins": 11,
+    "carbs": 74.5,
+    "fats": 1.1,
+    "kcal": 362
+  },
+  {
+    "name": "пармезан",
+    "proteins": 34.87,
+    "carbs": 3.24,
+    "fats": 26.33,
+    "kcal": 389
+  },
+  {
+    "name": "морепродукти мікс",
+    "proteins": 18,
+    "carbs": 2.7,
+    "fats": 1.2,
+    "kcal": 93
+  },
+  {
+    "name": "чебрець або розмарин свіжий",
+    "proteins": 0,
+    "carbs": 0,
+    "fats": 0,
+    "kcal": 0
+  },
+  {
+    "name": "цвітна капуста",
+    "proteins": 2.45,
+    "carbs": 4.48,
+    "fats": 0.28,
+    "kcal": 35
+  },
+  {
+    "name": "броколі",
+    "proteins": 3.3,
+    "carbs": 5.7,
+    "fats": 0.2,
+    "kcal": 43.4
+  },
+  {
+    "name": "лосось",
+    "proteins": 18.6,
+    "carbs": 0,
+    "fats": 17.6,
+    "kcal": 233
+  }
 ]

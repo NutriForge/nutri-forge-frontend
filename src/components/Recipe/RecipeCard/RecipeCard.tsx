@@ -7,7 +7,7 @@ export default function RecipeCard({recipe_id}: { recipe_id: number }) {
     <div className="overflow-hidden rounded-lg transition ">
       <img
         alt=""
-        src={recipe?.img || "https://placehold.co/400?text=Фотосесія+рецепту+триває"}
+        src={recipe.img || "https://placehold.co/400?text=Фотосесія+рецепту+триває"}
         className="h-56 w-full object-cover"
       />
 

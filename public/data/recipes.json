@@ -5,7 +5,7 @@
         "type": "Вегетеріанські",
         "weight_per_portion": 578,
         "rating": 0,
-        "img": "https://images.unsplash.com/photo-1680486083087-a5a91db03a69?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "img": "/img/recipe_1.png",
         "ingredients": [
             {
                 "name": "яйце",
@@ -83,64 +83,11 @@
     },
     {
         "id": 2,
-        "name": "Вівсяна каша на молоці",
-        "type": "Вегетеріанські",
-        "weight_per_portion": 169,
-        "rating": 0,
-        "img": "https://images.unsplash.com/photo-1738643122161-38be55bab387?q=80&w=2960&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        "ingredients": [
-            {
-                "name": "вівсяні пластівці",
-                "number": 0,
-                "weight_in_g": 33
-            },
-            {
-                "name": "сіль, щіпка",
-                "number": 0,
-                "weight_in_g": 1
-            },
-            {
-                "name": "молоко 2.5%",
-                "number": 0,
-                "weight_in_g": 100
-            },
-            {
-                "name": "цукор",
-                "number": 0,
-                "weight_in_g": 5
-            },
-            {
-                "name": "сухофрукти",
-                "number": 0,
-                "weight_in_g": 22
-            },
-            {
-                "name": "горіхи",
-                "number": 0,
-                "weight_in_g": 8
-            }
-        ],
-        "steps": [
-            {
-                "id": 1,
-                "description": "В кипячене молоко засипаємо вівсяні пластівці дрібного помолу і варимо 1 -2 хвилини або лише запарюємо під кришкою."
-            },
-            {
-                "id": 2,
-                "description": "Приправляємо сіллю та цукром за смаком."
-            },
-            {
-                "id": 3,
-                "description": "Досмаковуємо горіхами та сухофруктами на Ваш вибір."
-            }
-        ]
-    },
-    {
-        "id": 3,
         "name": "Сир зернистий з фруктовим салатом",
         "type": "Вегетеріанські",
         "weight_per_portion": 362,
         "rating": 0,
+        "img": "/img/recipe_2.png",
         "ingredients": [
             {
                 "name": "сир зернистий 5%",
@@ -181,104 +128,12 @@
         ]
     },
     {
-        "id": 4,
-        "name": "Ягідне смузі з насінням коноплі",
-        "type": "Вегетеріанські",
-        "weight_per_portion": 203,
-        "rating": 0,
-        "img": "https://images.unsplash.com/photo-1553530666-ba11a7da3888?q=80&w=3086&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        "ingredients": [
-            {
-                "name": "ягоди сезонні",
-                "number": 0,
-                "weight_in_g": 68
-            },
-            {
-                "name": "йогурт 1.6%",
-                "number": 0,
-                "weight_in_g": 100
-            },
-            {
-                "name": "банан",
-                "number": 0,
-                "weight_in_g": 27
-            },
-            {
-                "name": "конопляне насіння",
-                "number": 0,
-                "weight_in_g": 8
-            }
-        ],
-        "steps": [
-            {
-                "id": 1,
-                "description": "Всі складники з'єднюємо та взбиваємо до однорідної консистенції."
-            }
-        ]
-    },
-    {
-        "id": 5,
-        "name": "Зелене смузі",
-        "type": "Веганські",
-        "weight_per_portion": 385,
-        "rating": 0,
-        "img": "https://plus.unsplash.com/premium_photo-1675011652759-2259e7bc45eb?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        "ingredients": [
-            {
-                "name": "кріп",
-                "number": 0,
-                "weight_in_g": 20
-            },
-            {
-                "name": "петрушка",
-                "number": 0,
-                "weight_in_g": 20
-            },
-            {
-                "name": "шпинат",
-                "number": 0,
-                "weight_in_g": 30
-            },
-            {
-                "name": "огірок",
-                "number": 0,
-                "weight_in_g": 220
-            },
-            {
-                "name": "імбир",
-                "number": 0,
-                "weight_in_g": 10
-            },
-            {
-                "name": "лайм",
-                "number": 0,
-                "weight_in_g": 14
-            },
-            {
-                "name": "банан",
-                "number": 0,
-                "weight_in_g": 28
-            },
-            {
-                "name": "авокадо",
-                "number": 0,
-                "weight_in_g": 43
-            }
-        ],
-        "steps": [
-            {
-                "id": 1,
-                "description": "Всі складники з'єднюємо та взбиваємо до однорідної консистенції."
-            }
-        ]
-    },
-    {
-        "id": 6,
+        "id": 3,
         "name": "Млинці з цільнозернового борошна з телятиною",
-        "type": "Веганські",
+        "type": "Мʼясні",
         "weight_per_portion": 0,
         "rating": 0,
-        "img": "",
+        "img": "/img/recipe_3.png",
         "ingredients": [
             {
                 "name": "борошно",
@@ -344,169 +199,12 @@
         ]
     },
     {
-        "id": 7,
-        "name": "Домашній майонез",
-        "type": "Веганські",
-        "weight_per_portion": 0,
-        "rating": 0,
-        "img": "https://klopotenko.com/wp-content/uploads/2018/03/Mayonez_siteWEb-Ukr.jpg",
-        "author": "Клопотенко",
-        "ingredients": [
-            {
-                "name": "жовток",
-                "number": 2,
-                "weight_in_g": 34,
-                "units": "шт"
-            },
-            {
-                "name": "олія",
-                "number": 0,
-                "weight_in_g": 125
-            },
-            {
-                "name": "гірчиця",
-                "number": 0,
-                "weight_in_g": 10
-            },
-            {
-                "name": "сік лимона",
-                "number": 1,
-                "weight_in_g": 10,
-                "units": "ст.л."
-            },
-            {
-                "name": "сіль",
-                "number": 1,
-                "weight_in_g": 1
-            }
-        ],
-        "steps": [
-            {
-                "id": 1,
-                "description": "Відокремте білки від жовтків. Покладіть жовтки і гірчицю в скляну або металеву миску, досить велику для того, щоб в ній можна було збити соус віничком."
-            },
-            {
-                "id": 2,
-                "description": "Злегка збийте жовтки з гірчицею за допомогою віничка. Додайте сік лимона, дрібку солі та добре збийте суміш. Вона повинна стати однорідною."
-            },
-            {
-                "id": 3,
-                "description": "В отриману масу тонкою цівкою влийте соняшникову олію, не забуваючи постійно збивати. Трохи додали - збили вінчиком, ще трохи додали - знову збили вінчиком."
-            },
-            {
-                "id": 4,
-                "description": "Коли залишаться останні 5 мл олії і ви додасте її до соусу, добре розмішавши, майонез буде готовий. Додавайте його в абсолютно будь-які страви як холодний соус."
-            }
-        ]
-    },
-    {
-        "id": 8,
-        "name": "Панкейки з цільнозернового борошна з шоколадом, фруктами та горіхами",
-        "type": "Веганські",
-        "weight_per_portion": 0,
-        "rating": 0,
-        "img": "",
-        "author": "Руслан Сорочинський",
-        "ingredients": [
-            {
-                "name": "борошно",
-                "number": 0,
-                "weight_in_g": 33,
-                "units": "г"
-            },
-            {
-                "name": "кефір",
-                "number": 0,
-                "weight_in_g": 100,
-                "units": "г"
-            },
-            {
-                "name": "яйце",
-                "number": 1,
-                "weight_in_g": 53,
-                "units": "шт"
-            },
-            {
-                "name": "сіль",
-                "number": 0,
-                "weight_in_g": 1,
-                "units": "ст.л."
-            },
-            {
-                "name": "олія",
-                "number": 0,
-                "weight_in_g": 8,
-                "units": "г"
-            },
-            {
-                "name": "цукор",
-                "number": 0,
-                "weight_in_g": 5,
-                "units": "г"
-            },
-            {
-                "name": "розпушувач",
-                "number": 0,
-                "weight_in_g": 3,
-                "units": "г"
-            },
-            {
-                "name": "шоколад",
-                "number": 0,
-                "weight_in_g": 40,
-                "units": "г"
-            },
-            {
-                "name": "банан",
-                "number": 0,
-                "weight_in_g": 27,
-                "units": "г"
-            },
-            {
-                "name": "груша",
-                "number": 0,
-                "weight_in_g": 34,
-                "units": "г"
-            },
-            {
-                "name": "ягоди",
-                "number": 0,
-                "weight_in_g": 34,
-                "units": "г"
-            },
-            {
-                "name": "горіхи",
-                "number": 0,
-                "weight_in_g": 8,
-                "units": "г"
-            }
-        ],
-        "steps": [
-            {
-                "id": 1,
-                "description": "Яйце з'єднюємо з сіллю та цукром, добавляємо кефір, олію та борошно"
-            },
-            {
-                "id": 2,
-                "description": "Взбиваємо вінчиком до однорідної маси."
-            },
-            {
-                "id": 3,
-                "description": "Смажимо на сухій сковорідці без олії до готовності."
-            },
-            {
-                "id": 4,
-                "description": "Досмаковуємо розтопленим шоколадом (до шоколаду при топленні додати 1 столову ложку води), фруктами, ягодами та горіхами."
-            }
-        ]
-    },
-    {
-        "id": 9,
+        "id": 4,
         "name": "Відварна гречка з філе індика та яйцем пашот",
-        "type": "Веганські",
+        "type": "Мʼясні",
         "weight_per_portion": 0,
         "rating": 0,
-        "img": "",
+        "img": "/img/recipe_4.png",
         "author": "Руслан Сорочинський",
         "ingredients": [
             {
@@ -582,81 +280,12 @@
         ]
     },
     {
-        "id": 10,
-        "name": "Веган боул",
-        "type": "Веганські",
-        "weight_per_portion": 0,
-        "rating": 0,
-        "img": "",
-        "author": "Руслан Сорочинський",
-        "ingredients": [
-            {
-                "name": "булгур",
-                "number": 0,
-                "weight_in_g": 33,
-                "units": "г"
-            },
-            {
-                "name": "вода",
-                "number": 0,
-                "weight_in_g": 200,
-                "units": "г"
-            },
-            {
-                "name": "масло",
-                "number": 1,
-                "weight_in_g": 20,
-                "units": "г"
-            },
-            {
-                "name": "сіль",
-                "number": 0,
-                "weight_in_g": 1,
-                "units": "г"
-            },
-            {
-                "name": "авокадо",
-                "number": 0,
-                "weight_in_g": 43,
-                "units": "г"
-            },
-            {
-                "name": "мікс салатів",
-                "number": 0,
-                "weight_in_g": 20,
-                "units": "шт"
-            },
-            {
-                "name": "сік лимона",
-                "number": 0,
-                "weight_in_g": 10,
-                "units": "г"
-            },
-            {
-                "name": "овочева суміш",
-                "number": 0,
-                "weight_in_g": 300,
-                "units": "г"
-            }
-        ],
-        "steps": [
-            {
-                "id": 1,
-                "description": "Булгур промиваємо та відварюємо в підсоленій воді, в кінці досмаковуємо вершковим маслом."
-            },
-            {
-                "id": 2,
-                "description": "Подаємо з порізаним авокадо,міксом салатів, овочами на Ваш смак та заправляємо лимонним соком."
-            }
-        ]
-    },
-    {
-        "id": 11,
+        "id": 5,
         "name": "Тост теплий з цільнозерновим хлібом, твердим сиром та овочами гриль",
         "type": "Веганські",
         "weight_per_portion": 0,
         "rating": 0,
-        "img": "",
+        "img": "/img/recipe_5.png",
         "author": "Руслан Сорочинський",
         "ingredients": [
             {
@@ -736,6 +365,565 @@
             {
                 "id": 3,
                 "description": "Всі складники сервіруємо у тарілці."
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "name": "Паровий лосось з овочами",
+        "type": "Рибні",
+        "weight_per_portion": 0,
+        "rating": 0,
+        "img": "/img/recipe_6.png",
+        "author": "Руслан Сорочинський",
+        "ingredients": [
+            {
+                "name": "лосось",
+                "number": 0,
+                "weight_in_g": 100,
+                "units": "г"
+            },
+            {
+                "name": "броколі",
+                "number": 0,
+                "weight_in_g": 150,
+                "units": "г"
+            },
+            {
+                "name": "цвітна капуста",
+                "number": 1,
+                "weight_in_g": 150,
+                "units": "г"
+            },
+            {
+                "name": "сіль",
+                "number": 0,
+                "weight_in_g": 1,
+                "units": "г"
+            },
+            {
+                "name": "лимонний сік",
+                "number": 1,
+                "weight_in_g": 10,
+                "units": "г"
+            },
+            {
+                "name": "олія",
+                "number": 0,
+                "weight_in_g": 8,
+                "units": "шт"
+            }
+        ],
+        "steps": [
+            {
+                "id": 1,
+                "description": "Філе лосося приправляємо сіллю, відварюємо на парі разом з овочами до готовності."
+            },
+            {
+                "id": 2,
+                "description": "Скроплюємо готову страву олією та лимонним соком."
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "name": "Паcта з морепродуктами",
+        "type": "Рибні",
+        "weight_per_portion": 0,
+        "rating": 0,
+        "img": "/img/recipe_7.png",
+        "author": "Руслан Сорочинський",
+        "ingredients": [
+            {
+                "name": "паста",
+                "number": 0,
+                "weight_in_g": 33,
+                "units": "г"
+            },
+            {
+                "name": "помідори",
+                "number": 0,
+                "weight_in_g": 150,
+                "units": "г"
+            },
+            {
+                "name": "цукор",
+                "number": 1,
+                "weight_in_g": 5,
+                "units": "г"
+            },
+            {
+                "name": "сіль",
+                "number": 0,
+                "weight_in_g": 1,
+                "units": "г"
+            },
+            {
+                "name": "чебрець або розмарин свіжий",
+                "number": 1,
+                "weight_in_g": 5,
+                "units": "г"
+            },
+            {
+                "name": "олія",
+                "number": 0,
+                "weight_in_g": 8,
+                "units": "шт"
+            },
+            {
+                "name": "масло",
+                "number": 0,
+                "weight_in_g": 11,
+                "units": "шт"
+            },
+            {
+                "name": "часник",
+                "number": 0,
+                "weight_in_g": 5,
+                "units": "шт"
+            },
+            {
+                "name": "морепродукти мікс",
+                "number": 0,
+                "weight_in_g": 170,
+                "units": "шт"
+            },
+            {
+                "name": "пармезан",
+                "number": 0,
+                "weight_in_g": 11,
+                "units": "шт"
+            }
+        ],
+        "steps": [
+            {
+                "id": 1,
+                "description": "Пасту відварюємо у підсоленій воді до готовності."
+            },
+            {
+                "id": 2,
+                "description": "Помідор очищаємо від шкірки. Нарізати кубиком і підсмажити на сковорідці допоки не випарується лишня рідина."
+            },
+            {
+                "id": 3,
+                "description": "Додаємо мікс морепродуктів, чебрець або розмарин, цукор, сіль, олію,лимонний сік, часник, масло вершкове, та тушкуємо 1-2 хвилини (не більше, щоб морепродукти не стали твердими, та не придатними до вживання!)"
+            }
+            ,
+            {
+                "id": 4,
+                "description": "Пасту з'єднюємо з морепродуктами в томаті та посипаємо натертим сиром пармезан."
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "name": "Макарони по-флотськи",
+        "type": "Мʼясні",
+        "weight_per_portion": 0,
+        "rating": 0,
+        "img": "/img/recipe_8.png",
+        "author": "Народний",
+        "ingredients": [
+            {
+                "name": "паста",
+                "number": 0,
+                "weight_in_g": 33,
+                "units": "г"
+            },
+            {
+                "name": "телятина",
+                "number": 0,
+                "weight_in_g": 70,
+                "units": "г"
+            },
+            {
+                "name": "цибуля",
+                "number": 1,
+                "weight_in_g": 50,
+                "units": "г"
+            },
+            {
+                "name": "сіль",
+                "number": 0,
+                "weight_in_g": 1,
+                "units": "г"
+            },
+            {
+                "name": "томатна паста",
+                "number": 1,
+                "weight_in_g": 20,
+                "units": "г"
+            },
+            {
+                "name": "олія",
+                "number": 0,
+                "weight_in_g": 8,
+                "units": "шт"
+            },
+            {
+                "name": "часник",
+                "number": 0,
+                "weight_in_g": 10,
+                "units": "шт"
+            },
+            {
+                "name": "сік лимона",
+                "number": 0,
+                "weight_in_g": 10,
+                "units": "шт"
+            },
+            {
+                "name": "базилік або кріп",
+                "number": 0,
+                "weight_in_g": 1,
+                "units": "шт"
+            }
+        ],
+        "steps": [
+            {
+                "id": 1,
+                "description": "Пасту відварюємо у підсоленій воді до готовності."
+            },
+            {
+                "id": 2,
+                "description": "Обсмажуємо фарш, дрібно нарізану цибулю і часник протягом 5хв на середньому вогні."
+            },
+            {
+                "id": 3,
+                "description": "Додайте томатну пасту. Якщо вона кисла - лимонний сік не потрібен."
+            }
+            ,
+            {
+                "id": 4,
+                "description": "Візьміть трохи води (близько чашки), в якій вариться паста, і додайте в сковороду."
+            },
+            {
+                "id": 5,
+                "description": "Зменшіть вогонь і тушкуйте 3-5хв. Спробуйте на смак. Якщо сильно кисло - додайте ще води."
+            },
+            {
+                "id": 6,
+                "description": "Якщо смак вас влаштовує, дістаньте пасту і змішайте в сковороді з соусом."
+            },
+            {
+                "id": 7,
+                "description": "Посоліть і поперчіть за смаком. В ідеалі можна додати сиру, але можна і без нього."
+            },
+            {
+                "id": 8,
+                "description": "Прикрасьте базиліком або кропом."
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "name": "Запечена картопля з розмарином",
+        "type": "Веганські",
+        "weight_per_portion": 0,
+        "rating": 0,
+        "img": "/img/recipe_9.png",
+        "author": "Руслан Сорочинський",
+        "ingredients": [
+            {
+                "name": "картопля",
+                "number": 0,
+                "weight_in_g": 110,
+                "units": "г"
+            },
+            {
+                "name": "паприка солодка",
+                "number": 0,
+                "weight_in_g": 1,
+                "units": "г"
+            },
+            {
+                "name": "розмарин свіжий",
+                "number": 1,
+                "weight_in_g": 1,
+                "units": "г"
+            },
+            {
+                "name": "сіль",
+                "number": 0,
+                "weight_in_g": 1,
+                "units": "г"
+            },
+            {
+                "name": "часник",
+                "number": 1,
+                "weight_in_g": 10,
+                "units": "г"
+            },
+            {
+                "name": "олія",
+                "number": 0,
+                "weight_in_g": 8,
+                "units": "шт"
+            },
+            {
+                "name": "печериці",
+                "number": 0,
+                "weight_in_g": 110,
+                "units": "шт"
+            },
+            {
+                "name": "цибуля",
+                "number": 0,
+                "weight_in_g": 30,
+                "units": "шт"
+            }
+        ],
+        "steps": [
+            {
+                "id": 1,
+                "description": "Сиру картоплю нарізаємо скибочками."
+            },
+            {
+                "id": 2,
+                "description": " Нарізаємо цибулю та печериці."
+            },
+            {
+                "id": 3,
+                "description": "Заправляємо всі овочі спеціями, олією та натертим часником."
+            }
+            ,
+            {
+                "id": 4,
+                "description": "Запікаємо до готовності при температурі 180* 20-25 хвилин. "
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "name": "Сирники з джемом",
+        "type": " Вегетеріанські",
+        "weight_per_portion": 0,
+        "rating": 0,
+        "img": "/img/recipe_10.png",
+        "author": "Руслан Сорочинський",
+        "ingredients": [
+            {
+                "name": "сир зернистий 5%",
+                "number": 0,
+                "weight_in_g": 120,
+                "units": "г"
+            },
+            {
+                "name": "яйце",
+                "number": 0,
+                "weight_in_g": 53,
+                "units": "г"
+            },
+            {
+                "name": "крупа манна",
+                "number": 1,
+                "weight_in_g": 11,
+                "units": "г"
+            },
+            {
+                "name": "сіль",
+                "number": 0,
+                "weight_in_g": 1,
+                "units": "г"
+            },
+            {
+                "name": "цукор",
+                "number": 1,
+                "weight_in_g": 8,
+                "units": "г"
+            },
+            {
+                "name": "олія",
+                "number": 0,
+                "weight_in_g": 8,
+                "units": "шт"
+            },
+            {
+                "name": "ванільний цукор",
+                "number": 0,
+                "weight_in_g": 4,
+                "units": "шт"
+            },
+            {
+                "name": "борошно",
+                "number": 0,
+                "weight_in_g": 11,
+                "units": "шт"
+            },
+            {
+                "name": "джем",
+                "number": 0,
+                "weight_in_g": 32,
+                "units": "шт"
+            }
+        ],
+        "steps": [
+            {
+                "id": 1,
+                "description": "Сир з'єднюємо з крупою манною, яйцем, борошном, спеціями."
+            },
+            {
+                "id": 2,
+                "description": "Розминаємо до однорідної консистенії."
+            },
+            {
+                "id": 3,
+                "description": "Формуємо сирники зручним для вас способом."
+            }
+            ,
+            {
+                "id": 4,
+                "description": "Обкатуємо в борошні."
+            },
+            {
+                "id": 5,
+                "description": "Смажимо на олію або запікаємо в духовці при Т 180* 5 -10 хвилин до готовності."
+            },
+            {
+                "id": 6,
+                "description": "Смакуємо з джемом."
+            }
+        ]
+    },
+    {
+        "id": 11,
+        "name": "Печене яблуко з домашнім сиром, горіхами та медом",
+        "type": " Вегетеріанські",
+        "weight_per_portion": 0,
+        "rating": 0,
+        "img": "/img/recipe_11.png",
+        "author": "Руслан Сорочинський",
+        "ingredients": [
+            {
+                "name": "сир зернистий 5%",
+                "number": 0,
+                "weight_in_g": 120,
+                "units": "г"
+            },
+            {
+                "name": "яблуко",
+                "number": 0,
+                "weight_in_g": 170,
+                "units": "г"
+            },
+            {
+                "name": "мед",
+                "number": 1,
+                "weight_in_g": 20,
+                "units": "г"
+            },
+            {
+                "name": "сіль",
+                "number": 0,
+                "weight_in_g": 1,
+                "units": "г"
+            },
+            {
+                "name": "цукор",
+                "number": 1,
+                "weight_in_g": 5,
+                "units": "г"
+            },
+            {
+                "name": "олія",
+                "number": 0,
+                "weight_in_g": 8,
+                "units": "шт"
+            },
+            {
+                "name": "ванільний цукор",
+                "number": 0,
+                "weight_in_g": 1,
+                "units": "шт"
+            },
+            {
+                "name": "горіхи",
+                "number": 0,
+                "weight_in_g": 8,
+                "units": "шт"
+            }
+        ],
+        "steps": [
+            {
+                "id": 1,
+                "description": "Яблуко очищаємо від серцевини."
+            },
+            {
+                "id": 2,
+                "description": "Начиняємо сирною масою (сир, цукор, ванільний цукор з'єднюємо до однорідної маси)."
+            },
+            {
+                "id": 3,
+                "description": "Запікаємо при Т 180* 20-25 хвилин до готовності."
+            },
+            {
+                "id": 4,
+                "description": "При подачі посипаємо горіхами та поливаємо медом."
+            }
+        ]
+    },
+    {
+        "id": 12,
+        "name": "Тушені зерна кукурудзи з беконом та цибулею",
+        "type": " Мʼясні",
+        "weight_per_portion": 0,
+        "rating": 0,
+        "img": "/img/recipe_12.png",
+        "author": "Руслан Сорочинський",
+        "ingredients": [
+            {
+                "name": "кукурудза",
+                "number": 0,
+                "weight_in_g": 110,
+                "units": "г"
+            },
+            {
+                "name": "бекон сиров'ялений",
+                "number": 0,
+                "weight_in_g": 45,
+                "units": "г"
+            },
+            {
+                "name": "цибуля",
+                "number": 1,
+                "weight_in_g": 20,
+                "units": "г"
+            },
+            {
+                "name": "сметана 15%",
+                "number": 1,
+                "weight_in_g": 40,
+                "units": "г"
+            },
+            {
+                "name": "олія",
+                "number": 0,
+                "weight_in_g": 8,
+                "units": "шт"
+            },
+            {
+                "name": "зелень свіжа",
+                "number": 0,
+                "weight_in_g": 10,
+                "units": "шт"
+            }
+        ],
+        "steps": [
+            {
+                "id": 1,
+                "description": "Бекон сиров'ялений нарізаємо кубиком і обсмажуємо до виділення жиру, додаємо нарізану кубиком цибулю і смажимо до золотистого кольору."
+            },
+            {
+                "id": 2,
+                "description": "Додаємо зерна кукурудзи, сметану і тушкуємо до готовності 2-3 хвилини."
+            },
+            {
+                "id": 3,
+                "description": "Спеції не даємо, оскільки бекон солений."
+            },
+            {
+                "id": 4,
+                "description": "Готову страву посипаємо нарізаною свіжою зеленню за смаком."
             }
         ]
     }
