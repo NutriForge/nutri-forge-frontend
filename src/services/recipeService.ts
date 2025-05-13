@@ -1,4 +1,6 @@
-export async function getAllRecipes() {
+import { Recipe, Ingredient } from "../types/recipe";
+
+export async function getAllRecipes(): Promise<Recipe[]>  {
   const response = await fetch('/data/recipes.json');
   if (!response.ok) {
     throw new Error('Failed to fetch recipes');
@@ -6,7 +8,7 @@ export async function getAllRecipes() {
   return response.json();
 }
 
-export async function getAllIngredients() {
+export async function getAllIngredients(): Promise<Ingredient[]> {
   const response = await fetch('/data/ingredients.json');
   if (!response.ok) {
     throw new Error('Failed to fetch ingredients');

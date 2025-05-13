@@ -1,6 +1,16 @@
+type Macros = {
+  proteins: number;
+  fats: number;
+  carbs: number;
+  kcal: number;
+};
+
 export function TotalMacros({
   isOpen,
   totalMacros,
+}:{
+  isOpen: boolean;
+  totalMacros: Macros;
 }) {
   return (
     <div

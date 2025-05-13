@@ -6,6 +6,10 @@ export default function IngredientsCard() {
   const recipes = useRecipes();
   const recipe = recipes.find((r) => r.id === Number(id));
 
+  if (!recipe) {
+    return <div className="p-4 text-red-500">Рецепт не знайдено</div>;
+  }
+
   return (
       <div className="p-4">
         <ul className="space-y-2 text-m text-gray-700">

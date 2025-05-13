@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function LockToggleButton({onChangeLock}) {
+export function LockToggleButton({onChangeLock}: {onChangeLock: (val: boolean) => void}) {
   const [isLocked, setIsLocked] = useState(true);
 
   return (

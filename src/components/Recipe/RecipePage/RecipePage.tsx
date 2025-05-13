@@ -18,6 +18,8 @@ function RecipePage() {
   if (!recipe) return <div>Рецепт не знайдено</div>;
 
   function handleAddToMealPlan() {
+    if (!recipe) return;
+    
     const currentPlan = JSON.parse(localStorage.getItem("mealPlan") || "{}");
 
     // ✅ Ініціалізувати секцію, якщо вона пуста

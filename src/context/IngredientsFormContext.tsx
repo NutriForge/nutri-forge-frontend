@@ -1,6 +1,6 @@
 import { createContext, useReducer, useContext, ReactNode } from 'react';
 import { calculateTotalMacros, calculateTotalWeight, scaleIngredients } from '@/util/recipeCalculations';
-import { Ingredient } from '@/types';
+import { Ingredient } from '@/types/recipe';
 
 const initialState = {
   ingredients: [] as Ingredient[],

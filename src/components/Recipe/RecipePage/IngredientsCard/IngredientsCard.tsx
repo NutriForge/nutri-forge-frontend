@@ -9,7 +9,7 @@ import {TotalBlock} from './IngredientsFooter/TotalBlock';
 export default function IngredientsCard() {
   const { id } = useParams();
   const { state, dispatch } = useIngredientsForm();
-  const { totalMacros, isMacrosOpen } = state;
+  const { isMacrosOpen } = state;
   const recipes = useRecipes();
 
   const recipe = recipes.find((r) => r.id === Number(id));
@@ -36,14 +36,10 @@ export default function IngredientsCard() {
       />
       <div className="p-4">
         <IngredientList
-          recipe_id={id}
           onChange={handleIngredientChange}
           showMacros={isMacrosOpen}
         />
         <TotalBlock
-          recipe_id={id}
-          totalMacros={totalMacros}
-          setTotalWeight={() => {}}
           handleTotalWeight={handleTotalWeight}
         />
       </div>

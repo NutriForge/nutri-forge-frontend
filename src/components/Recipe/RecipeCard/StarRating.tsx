@@ -1,4 +1,8 @@
-export default function StarRating({ rating }){
+type StarRatingProps = {
+  rating: number;
+};
+
+export default function StarRating({ rating }: StarRatingProps){
   const stars = [];
 
   for (let i = 1; i <= 5; i++) {
