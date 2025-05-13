@@ -355,7 +355,7 @@
             {
                 "name": "жовток",
                 "number": 2,
-                "weight_in_g": 0,
+                "weight_in_g": 34,
                 "units": "шт"
             },
             {
@@ -371,13 +371,13 @@
             {
                 "name": "сік лимона",
                 "number": 1,
-                "weight_in_g": 0,
+                "weight_in_g": 10,
                 "units": "ст.л."
             },
             {
                 "name": "сіль",
                 "number": 1,
-                "weight_in_g": 0
+                "weight_in_g": 1
             }
         ],
         "steps": [

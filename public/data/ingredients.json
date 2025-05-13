@@ -1,13 +1,13 @@
 [
   {
-    "name": "яйце",
+    "name": ["яйце", "яйця"],
     "proteins": 12.38,
     "carbs": 0.94,
     "fats": 10.87,
     "kcal": 151
   },
   {
-    "name": "сіль, щіпка",
+    "name": ["сіль, щіпка", "сіль"],
     "proteins": 0,
     "carbs": 0,
     "fats": 0,
@@ -140,7 +140,7 @@
     "kcal": 58.3
   },
   {
-    "name": "ягоди сезонні",
+    "name": ["ягоди сезонні","ягоди"],
     "proteins": 0.8,
     "carbs": 9.1,
     "fats": 0.2,
@@ -187,5 +187,152 @@
     "carbs": 7,
     "fats": 0.2,
     "kcal": 37
-  }
+  },
+  {
+    "name": "борошно",
+    "proteins": 10.3,
+    "carbs": 74.2,
+    "fats": 0.9,
+    "kcal": 327
+  },
+  {
+    "name": ["кефір", "кефір 2,5%"],
+    "proteins": 2.9,
+    "carbs": 3.8,
+    "fats": 2.5,
+    "kcal": 49.2
+  },
+  {
+    "name": "вода",
+    "proteins": 0,
+    "carbs": 0,
+    "fats": 0,
+    "kcal": 0
+  },
+  {
+    "name": "телятина",
+    "proteins": 19.35,
+    "carbs": 0,
+    "fats": 6.77,
+    "kcal": 138
+  },
+  {
+    "name": "спеції: прованські трави",
+    "proteins": 0,
+    "carbs": 0,
+    "fats": 0,
+    "kcal": 0
+  },
+  {
+    "name": "печериці",
+    "proteins": 2.79,
+    "carbs": 3,
+    "fats": 0.24,
+    "kcal": 27.9
+  },
+  {
+    "name": "цукіні",
+    "proteins": 1.5,
+    "carbs": 3,
+    "fats": 0.3,
+    "kcal": 20.1
+  },
+  {
+    "name": "баклажан",
+    "proteins": 1.19,
+    "carbs": 4.45,
+    "fats": 0.2,
+    "kcal": 28.7
+  },
+  {
+    "name": ["масло","масло 73%"],
+    "proteins": 0.9,
+    "carbs": 1.3,
+    "fats": 73,
+    "kcal": 654
+  },
+  {
+    "name": ["хліб", "цільнозерновий хліб"],
+    "proteins": 13,
+    "carbs": 41,
+    "fats": 3.3,
+    "kcal": 237
+  },
+  {
+    "name": "овочева суміш",
+    "proteins": 2.5,
+    "carbs": 7,
+    "fats": 0.4,
+    "kcal": 48
+  },
+  {
+    "name": "сік лимона",
+    "proteins": 2,
+    "carbs": 1,
+    "fats": 0,
+    "kcal": 20
+  },
+  {
+    "name": "мікс салатів",
+    "proteins": 1.3,
+    "carbs": 1.7,
+    "fats": 0.1,
+    "kcal": 15
+  },
+  {
+    "name": "булгур",
+    "proteins": 10.8,
+    "carbs": 75.2,
+    "fats": 1.9,
+    "kcal": 379
+  },
+  {
+    "name": "оцет",
+    "proteins": 0,
+    "carbs": 0.7,
+    "fats": 0,
+    "kcal": 17.9
+  },
+  {
+    "name": "філе індика",
+    "proteins": 24,
+    "carbs": 0.1,
+    "fats": 1,
+    "kcal": 105
+  },
+  {
+    "name": "гречка",
+    "proteins": 12.6,
+    "carbs": 68,
+    "fats": 2.6,
+    "kcal": 329
+  },
+  {
+    "name": "розпушувач",
+    "proteins": 0.1,
+    "carbs": 19.6,
+    "fats": 0,
+    "kcal": 79
+  },
+  {
+    "name": "шоколад",
+    "proteins": 10.2,
+    "carbs": 22.8,
+    "fats": 43.7,
+    "kcal": 551
+  },
+  {
+    "name": "гірчиця",
+    "proteins": 8.8,
+    "carbs": 23,
+    "fats": 6.9,
+    "kcal": 183
+  },
+  {
+    "name": "жовток",
+    "proteins": 16.53,
+    "carbs": 1.23,
+    "fats": 31.48,
+    "kcal": 354
+  } 
 ]
