@@ -4,7 +4,7 @@ import { Ingredient } from '@/types/recipe';
 
 const initialState = {
   ingredients: [] as Ingredient[],
-  totalWeight: '0',
+  totalWeight: 0,
   totalMacros: { proteins: 0, carbs: 0, fats: 0, kcal: 0 },
   isLocked: true,
   isMacrosOpen: false,
@@ -24,20 +24,25 @@ function reducer(state: State, action: Action): State {
     case 'SET_INGREDIENTS': {
       const total = calculateTotalWeight(action.payload);
       const macros = calculateTotalMacros(action.payload);
-      return { ...state, ingredients: action.payload, totalWeight: String(total), totalMacros: macros };
+      return { ...state, ingredients: action.payload, totalWeight: total, totalMacros: macros };
     }
 
     case 'UPDATE_INGREDIENT': {
+      console.log("before")
+      console.log(state.ingredients)
       const original = state.ingredients[action.index];
       const updated = state.isLocked
         ? scaleIngredients(state.ingredients, original.weight_in_g, action.newWeight)
         : state.ingredients.map((ing, i) =>
             i === action.index ? { ...ing, weight_in_g: action.newWeight } : ing
           );
+      console.log("after")
+      console.log(updated)
+      console.log(calculateTotalMacros(updated))
       return {
         ...state,
         ingredients: updated,
-        totalWeight: String(calculateTotalWeight(updated)),
+        totalWeight: calculateTotalWeight(updated),
         totalMacros: calculateTotalMacros(updated),
       };
     }

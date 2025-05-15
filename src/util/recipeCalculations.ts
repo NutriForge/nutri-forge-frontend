@@ -76,11 +76,11 @@ export function scaleIngredients(
 
   return ingredients.map((ing) => ({
     ...ing,
-    weight_in_g: Math.round(ing.weight_in_g * ratio),
-    proteins: Math.round(ing.proteins * ratio),
-    carbs: Math.round(ing.carbs * ratio),
-    fats: Math.round(ing.fats * ratio),
-    kcal: Math.round(ing.kcal * ratio),
+    weight_in_g: ing.weight_in_g * ratio,
+    proteins: ing.proteins * ratio,
+    carbs: ing.carbs * ratio,
+    fats: ing.fats * ratio,
+    kcal: ing.kcal * ratio,
   }));
 }
 

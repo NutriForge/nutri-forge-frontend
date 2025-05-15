@@ -27,7 +27,7 @@ export function IngredientItem({
         <div className="flex items-center gap-1">
           <input
             type="number"
-            value={ingredient.weight_in_g}
+            value={ingredient.weight_in_g.toFixed(0)}
             onChange={(e) => onChange(index, Number(e.target.value))}
             className="w-15 border rounded px-1 py-0.5 text-right"
           />

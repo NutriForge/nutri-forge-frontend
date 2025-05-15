@@ -11,23 +11,19 @@ export function TotalBlock({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const { state } = useIngredientsForm();
-  const { totalWeight, totalMacros } = state;
+  const { totalWeight } = state;
 
   return (
     <div>
       <div className="flex gap-2 items-center justify-end mt-3">
         <ChevronToggle isOpen={isOpen} onClick={() => setIsOpen((prev) => !prev)} />
         <TotalWeightInput
-          totalWeight={Number(totalWeight)}
+          totalWeight={totalWeight.toFixed(0)}
           setTotalWeight={() => {}} // якщо не треба окремо
           handleTotalWeight={handleTotalWeight}
         />
       </div>
-
-      <TotalMacros
-        isOpen={isOpen}
-        totalMacros={totalMacros}
-      />
+      <TotalMacros isOpen={isOpen} />
     </div>
   );
 }

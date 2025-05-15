@@ -4,7 +4,7 @@ export function TotalWeightInput({
   handleTotalWeight,
 }: {
   totalWeight: number;
-  setTotalWeight: (val: string) => void;
+  setTotalWeight: (val: number) => void;
   handleTotalWeight: (val: number) => void;
 }) {
   return (
@@ -14,7 +14,7 @@ export function TotalWeightInput({
         type="number"
         className="w-15 border rounded px-1 justify-end"
         value={totalWeight}
-        onChange={(e) => setTotalWeight(e.target.value)}
+        onChange={(e) => setTotalWeight(Number(e.target.value))}
         onBlur={() => {
           const parsed = totalWeight;
           if (!isNaN(parsed)) handleTotalWeight(parsed);

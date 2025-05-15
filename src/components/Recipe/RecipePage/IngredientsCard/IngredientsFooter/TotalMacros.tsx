@@ -1,17 +1,13 @@
-type Macros = {
-  proteins: number;
-  fats: number;
-  carbs: number;
-  kcal: number;
-};
+import { useIngredientsForm } from "@/context/IngredientsFormContext";
 
 export function TotalMacros({
   isOpen,
-  totalMacros,
 }:{
   isOpen: boolean;
-  totalMacros: Macros;
 }) {
+    const { state } = useIngredientsForm();
+    const { totalMacros } = state;
+    
   return (
     <div
       className={`overflow-hidden transition-all duration-500 ${
