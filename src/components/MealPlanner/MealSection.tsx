@@ -1,6 +1,8 @@
 import { Recipe, MealPlan } from "@/types/recipe";
 import {  Droppable } from "@hello-pangea/dnd";
 import DraggableRecipeCard from "./DraggableRecipeCard";
+import { useState } from "react";
+import AddRecipeModal from "./AddRecipeModal";
 
 export default function MealSection({ title, droppableId, recipes, onDelete }: {
   title: string;
@@ -8,9 +10,29 @@ export default function MealSection({ title, droppableId, recipes, onDelete }: {
   recipes: Recipe[];
   onDelete: (mealType: keyof MealPlan, id: string) => void;
 }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+
+
+  const handleSubmit = () => {
+    console.log("User input:", inputValue); // тут можна зробити fetch, пошук або додавання
+    setInputValue("");
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="bg-white shadow-sm rounded-lg p-4">
-      <h3 className="text-xl font-medium mb-4">{title}</h3>
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-xl font-medium">{title}</h3>
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="text-gray-500 hover:text-teal-600 text-2xl leading-none"
+          aria-label="Add recipe"
+        >
+          +
+        </button>
+      </div>
+
       <Droppable droppableId={droppableId}>
         {(provided, snapshot) => (
           <div
@@ -36,6 +58,14 @@ export default function MealSection({ title, droppableId, recipes, onDelete }: {
           </div>
         )}
       </Droppable>
+
+      {isModalOpen && (
+  <AddRecipeModal
+    isOpen={isModalOpen}
+    onClose={() => setIsModalOpen(false)}
+    mealType={droppableId}
+  />
+)}
     </div>
   );
 }
