@@ -1,21 +1,7 @@
 import { useEffect, useState } from "react";
-import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea/dnd";
-
-type Recipe = {
-  id: string;
-  name: string;
-  kcal: number;
-  proteins: number;
-  fats: number;
-  carbs: number;
-  image: string;
-};
-
-type MealPlan = {
-  breakfast: Recipe[];
-  lunch: Recipe[];
-  dinner: Recipe[];
-};
+import { DragDropContext, DropResult } from "@hello-pangea/dnd";
+import { MealPlan } from "@/types/recipe";
+import MealSection from "./MealSection";
 
 const initialData: MealPlan = {
   breakfast: [],
@@ -36,11 +22,14 @@ export default function MealPlanner() {
     }
   }, []);
 
+  // Calls when drag has done
   const onDragEnd = (result: DropResult) => {
+
+    //If user doesn't drag into destination area - do nothing
     const { source, destination } = result;
     if (!destination) return;
   
-    // ❗ якщо місце не змінилося — нічого не робимо
+    //If user drag the item into the same area - do nothing
     if (
       source.droppableId === destination.droppableId &&
       source.index === destination.index
@@ -48,12 +37,15 @@ export default function MealPlanner() {
       return;
     }
   
+    // Copy source list and cut draggable element from it
     const sourceList = [...meals[source.droppableId as keyof MealPlan]];
     const [movedItem] = sourceList.splice(source.index, 1);
   
+    // Add draggable element into desired list
     const destList = [...meals[destination.droppableId as keyof MealPlan]];
     destList.splice(destination.index, 0, movedItem);
   
+    // Update elements in our mealPlan State
     const updatedMeals = {
       ...meals,
       [source.droppableId]: sourceList,
@@ -61,10 +53,13 @@ export default function MealPlanner() {
     };
   
     setMeals(updatedMeals);
+
+    // Write the new information into local storage
     localStorage.setItem("mealPlan", JSON.stringify(updatedMeals));
   };
 
-  const handleDeleteRecipe = (mealType: keyof MealPlan, id: string) => {
+  // Function to remove recipe
+  const handleDeleteRecipe = (mealType: keyof MealPlan, id: number) => {
     const updatedList = meals[mealType].filter((r) => r.id !== id);
     const updatedMeals = {
       ...meals,
@@ -112,81 +107,5 @@ export default function MealPlanner() {
         </aside>
       </div>
     </div>
-  );
-}
-
-function MealSection({ title, droppableId, recipes, onDelete }: {
-  title: string;
-  droppableId: keyof MealPlan;
-  recipes: Recipe[];
-  onDelete: (mealType: keyof MealPlan, id: string) => void;
-}) {
-  return (
-    <div className="bg-white shadow-sm rounded-lg p-4">
-      <h3 className="text-xl font-medium mb-4">{title}</h3>
-      <Droppable droppableId={droppableId}>
-        {(provided, snapshot) => (
-          <div
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-            className={`min-h-[100px] rounded p-4 transition border ${
-              snapshot.isDraggingOver ? "bg-green-50 border-green-300" : "border-dashed border-gray-300"
-            }`}
-          >
-            {recipes.length === 0 && (
-              <div className="text-sm text-gray-400">No recipes yet</div>
-            )}
-            {recipes.map((recipe, index) => (
-              <DraggableRecipeCard
-                recipe={recipe}
-                index={index}
-                key={recipe.id}
-                mealType={droppableId}
-                onDelete={onDelete}
-              />
-            ))}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    </div>
-  );
-}
-
-function DraggableRecipeCard({ recipe, index, mealType, onDelete }: {
-  recipe: Recipe;
-  index: number;
-  mealType: keyof MealPlan;
-  onDelete: (mealType: keyof MealPlan, id: string) => void;
-}) {
-  return (
-    <Draggable draggableId={recipe.id} index={index}>
-      {(provided) => (
-        <div
-          className="flex items-center bg-white border border-gray-200 rounded-md p-3 mb-3 shadow-sm"
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-        >
-          <img
-            src={recipe.image}
-            alt={recipe.name}
-            className="w-16 h-16 object-cover rounded mr-4"
-          />
-          <div className="flex-1">
-            <div className="text-sm font-semibold text-gray-800">{recipe.name}</div>
-            <div className="text-xs text-gray-500">
-              {recipe.kcal.toFixed(1)} ккал • Б: {recipe.proteins.toFixed(1)}г • Ж: {recipe.fats.toFixed(1)}г • В: {recipe.carbs.toFixed(1)}г
-            </div>
-          </div>
-          <button
-            className="text-gray-400 hover:text-red-500 text-sm"
-            onClick={() => onDelete(mealType, recipe.id)}
-          >
-            ✕
-          </button>
-        </div>
-      )}
-    </Draggable>
   );
 }

@@ -34,3 +34,9 @@ export interface Recipe {
   total_carbs?: number;
   total_kcal?: number;
 }
+
+export interface MealPlan {
+  breakfast: Recipe[];
+  lunch: Recipe[];
+  dinner: Recipe[];
+};
