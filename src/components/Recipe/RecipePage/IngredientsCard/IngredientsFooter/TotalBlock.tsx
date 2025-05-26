@@ -18,8 +18,8 @@ export function TotalBlock({
       <div className="flex gap-2 items-center justify-end mt-3">
         <ChevronToggle isOpen={isOpen} onClick={() => setIsOpen((prev) => !prev)} />
         <TotalWeightInput
-          totalWeight={totalWeight.toFixed(0)}
-          setTotalWeight={() => {}} // якщо не треба окремо
+          totalWeight={Number(totalWeight.toFixed(0))}
+          setTotalWeight={() => {}}
           handleTotalWeight={handleTotalWeight}
         />
       </div>

@@ -56,7 +56,7 @@ function reducer(state: State, action: Action): State {
       return {
         ...state,
         ingredients: updated,
-        totalWeight: String(action.payload),
+        totalWeight: action.payload,
         totalMacros: calculateTotalMacros(updated),
       };
     }

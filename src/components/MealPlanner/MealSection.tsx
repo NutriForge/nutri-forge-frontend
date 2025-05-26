@@ -8,7 +8,7 @@ export default function MealSection({ title, droppableId, recipes, onDelete }: {
   title: string;
   droppableId: keyof MealPlan;
   recipes: Recipe[];
-  onDelete: (mealType: keyof MealPlan, id: string) => void;
+  onDelete: (mealType: keyof MealPlan, id: number) => void;
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -61,7 +61,6 @@ export default function MealSection({ title, droppableId, recipes, onDelete }: {
 
       {isModalOpen && (
   <AddRecipeModal
-    isOpen={isModalOpen}
     onClose={() => setIsModalOpen(false)}
     mealType={droppableId}
   />

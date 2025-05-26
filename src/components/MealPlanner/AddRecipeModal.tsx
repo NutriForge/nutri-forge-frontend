@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRecipes } from "@/context/RecipeContext";
 import { addRecipeToMealPlan } from "@/util/mealPlan";
+import { Recipe } from "@/types/recipe";
 
 export default function AddRecipeModal({
   onClose,
@@ -56,15 +57,9 @@ export default function AddRecipeModal({
     };
   }, [inputValue]);
 
-  const handleExternalClick = (product: any) => {
+  const handleExternalClick = (product: Recipe) => {
     const newRecipe = {
-      id: product.code,
-      name: product.product_name,
-      image: product.image_small_url || "https://placehold.co/80",
-      kcal: parseFloat(product.nutriments["energy-kcal_100g"]) || 0,
-      proteins: parseFloat(product.nutriments.proteins_100g) || 0,
-      fats: parseFloat(product.nutriments.fat_100g) || 0,
-      carbs: parseFloat(product.nutriments.carbohydrates_100g) || 0,
+      ...product
     };
 
     addRecipeToMealPlan(newRecipe, mealType);
