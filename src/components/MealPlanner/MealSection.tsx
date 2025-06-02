@@ -1,18 +1,26 @@
 import { Recipe, MealPlan } from "@/types/recipe";
-import {  Droppable } from "@hello-pangea/dnd";
+import { Droppable } from "@hello-pangea/dnd";
 import DraggableRecipeCard from "./DraggableRecipeCard";
 import { useState } from "react";
 import AddRecipeModal from "./AddRecipeModal";
+import RecipeModal from "./RecipeModal";
 
-export default function MealSection({ title, droppableId, recipes, onDelete }: {
+export default function MealSection({
+  title,
+  droppableId,
+  recipes,
+  onDelete,
+  onUpdateRecipe,
+}: {
   title: string;
   droppableId: keyof MealPlan;
   recipes: Recipe[];
   onDelete: (mealType: keyof MealPlan, id: number) => void;
+  onUpdateRecipe: (mealType: keyof MealPlan, recipe: Recipe) => void;
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
-
+  const [isRecipeModalOpen, setIsRecipeModalOpen] = useState(false);
 
   const handleSubmit = () => {
     console.log("User input:", inputValue); // тут можна зробити fetch, пошук або додавання
@@ -39,7 +47,9 @@ export default function MealSection({ title, droppableId, recipes, onDelete }: {
             ref={provided.innerRef}
             {...provided.droppableProps}
             className={`min-h-[100px] rounded p-4 transition border ${
-              snapshot.isDraggingOver ? "bg-green-50 border-green-300" : "border-dashed border-gray-300"
+              snapshot.isDraggingOver
+                ? "bg-green-50 border-green-300"
+                : "border-dashed border-gray-300"
             }`}
           >
             {recipes.length === 0 && (
@@ -52,6 +62,7 @@ export default function MealSection({ title, droppableId, recipes, onDelete }: {
                 key={recipe.id}
                 mealType={droppableId}
                 onDelete={onDelete}
+                onClick={() => setIsRecipeModalOpen(true)}
               />
             ))}
             {provided.placeholder}
@@ -60,11 +71,13 @@ export default function MealSection({ title, droppableId, recipes, onDelete }: {
       </Droppable>
 
       {isModalOpen && (
-  <AddRecipeModal
-    onClose={() => setIsModalOpen(false)}
-    mealType={droppableId}
-  />
-)}
+        <AddRecipeModal
+          onClose={() => setIsModalOpen(false)}
+          mealType={droppableId}
+          onAddRecipe={onUpdateRecipe}
+        />
+      )}
+      {isRecipeModalOpen && <RecipeModal onClose={() => setIsRecipeModalOpen(false)} />}
     </div>
   );
 }

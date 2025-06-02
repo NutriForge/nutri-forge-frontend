@@ -72,7 +72,6 @@ function reducer(state: State, action: Action): State {
   }
 }
 
-// Без | undefined
 function throwError(): never {
   throw new Error("useIngredientsForm must be used within IngredientsFormProvider");
 }

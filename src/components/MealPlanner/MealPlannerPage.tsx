@@ -71,6 +71,27 @@ export default function MealPlanner() {
     localStorage.setItem("mealPlan", JSON.stringify(updatedMeals));
   };
 
+  const handleUpdateRecipe = (mealType: keyof MealPlan, recipe: Recipe) => {
+    const section = meals[mealType] || [];
+    const existingIndex = section.findIndex((r) => r.id === recipe.id);
+  
+    let updatedSection;
+    if (existingIndex !== -1) {
+      updatedSection = [...section];
+      updatedSection[existingIndex] = recipe;
+    } else {
+      updatedSection = [...section, recipe];
+    }
+  
+    const updatedMeals = {
+      ...meals,
+      [mealType]: updatedSection,
+    };
+  
+    setMeals(updatedMeals);
+    localStorage.setItem("mealPlan", JSON.stringify(updatedMeals));
+  };
+
   const summary = Object.values(meals).flat().reduce(
     (acc, recipe) => ({
       kcal: acc.kcal + recipe.total_kcal,
@@ -87,9 +108,9 @@ export default function MealPlanner() {
       <div className="flex">
         <DragDropContext onDragEnd={onDragEnd}>
           <div className="flex-1 mr-8 grid grid-cols-1 gap-6">
-            <MealSection title="🧃 Сніданок" droppableId="breakfast" recipes={meals.breakfast} onDelete={handleDeleteRecipe} />
-            <MealSection title="🍛 Обід" droppableId="lunch" recipes={meals.lunch} onDelete={handleDeleteRecipe} />
-            <MealSection title="🍲 Вечеря" droppableId="dinner" recipes={meals.dinner} onDelete={handleDeleteRecipe} />
+            <MealSection title="🧃 Сніданок" droppableId="breakfast" recipes={meals.breakfast} onDelete={handleDeleteRecipe} onUpdateRecipe={handleUpdateRecipe} />
+            <MealSection title="🍛 Обід" droppableId="lunch" recipes={meals.lunch} onDelete={handleDeleteRecipe} onUpdateRecipe={handleUpdateRecipe} />
+            <MealSection title="🍲 Вечеря" droppableId="dinner" recipes={meals.dinner} onDelete={handleDeleteRecipe} onUpdateRecipe={handleUpdateRecipe} />
           </div>
         </DragDropContext>
 

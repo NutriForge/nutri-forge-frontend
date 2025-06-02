@@ -23,11 +23,11 @@ export interface Step {
 export interface Recipe {
   id: number;
   name: string;
-  type: string;
-  rating: number;
+  type?: string;
+  rating?: number;
   img: string;
-  ingredients: Ingredient[];
-  steps: Step[];
+  ingredients?: Ingredient[];
+  steps?: Step[];
   weight_per_portion?: number;
   total_proteins?: number;
   total_fats?: number;
@@ -40,3 +40,17 @@ export interface MealPlan {
   lunch: Recipe[];
   dinner: Recipe[];
 };
+
+export interface OpenFoodNutriments {
+  "energy-kcal": number;
+  "carbohydrates": number;
+  "fat": number;
+  "proteins": number;
+}
+export interface OpenFoodIngredient {
+  id: number;
+  product_name: string;
+  image_front_url: string;
+  weight_per_portion: number;
+  nutriments: OpenFoodNutriments;
+}
