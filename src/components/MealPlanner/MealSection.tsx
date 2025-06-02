@@ -19,14 +19,8 @@ export default function MealSection({
   onUpdateRecipe: (mealType: keyof MealPlan, recipe: Recipe) => void;
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [inputValue, setInputValue] = useState("");
   const [isRecipeModalOpen, setIsRecipeModalOpen] = useState(false);
-
-  const handleSubmit = () => {
-    console.log("User input:", inputValue); // тут можна зробити fetch, пошук або додавання
-    setInputValue("");
-    setIsModalOpen(false);
-  };
+  const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
 
   return (
     <div className="bg-white shadow-sm rounded-lg p-4">
@@ -62,7 +56,10 @@ export default function MealSection({
                 key={recipe.id}
                 mealType={droppableId}
                 onDelete={onDelete}
-                onClick={() => setIsRecipeModalOpen(true)}
+                onClick={() => {
+                  setSelectedRecipe(recipe);
+                  setIsRecipeModalOpen(true);
+                }}
               />
             ))}
             {provided.placeholder}
@@ -77,7 +74,17 @@ export default function MealSection({
           onAddRecipe={onUpdateRecipe}
         />
       )}
-      {isRecipeModalOpen && <RecipeModal onClose={() => setIsRecipeModalOpen(false)} />}
+      {isRecipeModalOpen &&
+        <RecipeModal
+          recipe={selectedRecipe}
+          mealType={droppableId}
+          onClose={() => {
+            setIsRecipeModalOpen(false);
+            setSelectedRecipe(null);
+          }}
+          onSaveRecipe={onUpdateRecipe}
+        />
+      }
     </div>
   );
 }

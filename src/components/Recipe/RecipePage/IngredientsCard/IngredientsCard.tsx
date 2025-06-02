@@ -5,14 +5,19 @@ import { useRecipes } from '@/context/RecipeContext';
 import {IngredientsHeader} from './IngredientsHeader/IngredientsHeader';
 import {IngredientList} from './IngredientsList/IngredientsList';
 import {TotalBlock} from './IngredientsFooter/TotalBlock';
+import { Recipe } from '@/types/recipe';
 
-export default function IngredientsCard() {
+export default function IngredientsCard({
+  recipe: propRecipe 
+  }: { 
+    recipe?: Recipe;
+  }) {
   const { id } = useParams();
   const { state, dispatch } = useIngredientsForm();
   const { isMacrosOpen } = state;
   const recipes = useRecipes();
 
-  const recipe = recipes.find((r) => r.id === Number(id));
+  const recipe = propRecipe ?? recipes.find((r) => r.id === Number(id));
 
   useEffect(() => {
     if (recipe) {

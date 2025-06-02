@@ -64,10 +64,21 @@ export default function AddRecipeModal({
       name: product.product_name,
       img: product.image_front_url,
       weight_per_portion: 100,
-      total_proteins: product.nutriments["proteins"] as number,
-      total_fats: product.nutriments["fat"] as number,
-      total_carbs: product.nutriments["carbohydrates"] as number,
-      total_kcal: product.nutriments["energy-kcal"] as number,
+      total_proteins: Number(product.nutriments["proteins"]),
+      total_fats: Number(product.nutriments["fat"]),
+      total_carbs: Number(product.nutriments["carbohydrates"]),
+      total_kcal: Number(product.nutriments["energy-kcal"]),
+      ingredients: [
+        {
+          name: product.product_name,
+          carbs: Number(product.nutriments["carbohydrates"]),
+          fats: Number(product.nutriments["fat"]),
+          kcal: Number(product.nutriments["energy-kcal"]),
+          number: 0,
+          proteins: Number(product.nutriments["proteins"]),
+          weight_in_g: 100
+        }
+      ]
     };
 
     onAddRecipe(mealType, newRecipe);
@@ -206,7 +217,7 @@ export default function AddRecipeModal({
 
           <button
             type="button"
-            className="rounded bg-teal-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+            className="rounded bg-teal-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-teal-700"
           >
             Пошук
           </button>

@@ -1,8 +1,34 @@
-export default function RecipeModal({onClose}:
+import { useEffect } from "react";
+import { MealPlan, Recipe } from "@/types/recipe";
+import IngredientsCard from "../Recipe/RecipePage/IngredientsCard/IngredientsCard";
+import { useIngredientsForm } from "@/context/IngredientsFormContext";
+import { calculateTotalMacros } from "@/util/recipeCalculations";
+
+export default function RecipeModal({mealType, recipe, onClose, onSaveRecipe}:
   {
+    recipe: Recipe;
+    mealType: keyof MealPlan;
     onClose: () => void;
+    onSaveRecipe: (mealType: keyof MealPlan, recipe: Recipe) => void;
   }
 ) {
+  const { state, dispatch } = useIngredientsForm();
+  
+  const handleSave = () => {
+    const updatedMacros = calculateTotalMacros(state.ingredients);
+    const updatedRecipe: Recipe = {
+      ...recipe,
+      ingredients: state.ingredients,
+      total_kcal: updatedMacros.kcal,
+      total_proteins: updatedMacros.proteins,
+      total_fats: updatedMacros.fats,
+      total_carbs: updatedMacros.carbs,
+    };
+
+    onSaveRecipe(mealType, updatedRecipe); // віддаємо наверх
+    onClose(); // закриваємо модалку
+  };
+
   return (
     <div
       className="fixed inset-0 z-50 grid place-content-center bg-black/50 p-4"
@@ -10,13 +36,13 @@ export default function RecipeModal({onClose}:
       aria-modal="true"
       aria-labelledby="modalTitle"
     >
-      <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-lg">
+      <div className="w-[600px] rounded-lg bg-white p-6 shadow-lg">
         <div className="flex items-start justify-between">
           <h2
             id="modalTitle"
             className="text-xl font-bold text-gray-900 sm:text-2xl"
           >
-            Modal Title
+            {recipe.name}
           </h2>
 
           <button
@@ -33,48 +59,35 @@ export default function RecipeModal({onClose}:
               stroke="currentColor"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 d="M6 18L18 6M6 6l12 12"
               />
             </svg>
           </button>
         </div>
 
-        <div className="mt-4">
-          <p className="text-pretty text-gray-700">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Pellentesque euismod, nisi eu consectetur. Sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua.
-          </p>
-
-          <label htmlFor="Confirm" className="mt-4 block">
-            <span className="text-sm font-medium text-gray-700">
-              Please type "Confirm" to complete action
-            </span>
-
-            <input
-              type="text"
-              id="Confirm"
-              className="mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm"
-            />
-          </label>
+        <div className="mt-6">
+          <IngredientsCard recipe={recipe} />
         </div>
+
 
         <footer className="mt-6 flex justify-end gap-2">
           <button
             type="button"
             className="rounded bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200"
+            onClick={onClose}
           >
-            Cancel
+            Відміна
           </button>
 
           <button
             type="button"
-            className="rounded bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+            className="rounded bg-teal-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-teal-700"
+            onClick={handleSave}
           >
-            Done
+            Зберегти
           </button>
         </footer>
       </div>
