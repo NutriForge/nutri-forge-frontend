@@ -5,14 +5,11 @@ import { useRecipes } from "../../../context/RecipeContext";
 import IngredientsCard from "./IngredientsCard/IngredientsCard";
 import StepsCard from "./StepsCard";
 import { Button } from "@/components/ui/button";
-import { useIngredientsForm } from "@/context/IngredientsFormContext";
 
 function RecipePage() {
   const { id } = useParams();
   const recipes = useRecipes();
   const recipe = recipes.find((r) => r.id === Number(id));
-  const { state } = useIngredientsForm();
-  const { ingredients, totalMacros } = state;
   const navigate = useNavigate();
 
   if (!recipe) return <div>Рецепт не знайдено</div>;
@@ -25,27 +22,15 @@ function RecipePage() {
     // ✅ Ініціалізувати секцію, якщо вона пуста
     const breakfast = currentPlan.breakfast || [];
   
-    // ✅ Рецепт, який хочемо додати
-    const newRecipe = {
-      id: recipe.id.toString(),
-      name: recipe.name,
-      image: recipe.img || "https://placehold.co/80",
-      kcal: totalMacros.kcal,
-      proteins: totalMacros.proteins,
-      fats: totalMacros.fats,
-      carbs: totalMacros.carbs,
-      ingredients,
-    };
-  
     // ✅ Перевірка: чи вже є рецепт з таким id
-    const existingIndex = breakfast.findIndex((r: any) => r.id === newRecipe.id);
+    const existingIndex = breakfast.findIndex((r: any) => r.id === recipe.id);
   
     if (existingIndex !== -1) {
       // Якщо є — оновлюємо
-      breakfast[existingIndex] = newRecipe;
+      breakfast[existingIndex] = recipe;
     } else {
       // Інакше додаємо новий
-      breakfast.push(newRecipe);
+      breakfast.push(recipe);
     }
   
     // ✅ Оновити localStorage

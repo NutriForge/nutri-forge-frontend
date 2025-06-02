@@ -15,7 +15,8 @@ export default function MealPlanner() {
   useEffect(() => {
     const storedPlan = JSON.parse(localStorage.getItem("mealPlan") || "{}");
     if (Object.keys(storedPlan).length > 0) {
-      setMeals((prev) => ({
+      setMeals((prev) => (
+        {
         ...prev,
         ...storedPlan,
       }));
@@ -72,10 +73,10 @@ export default function MealPlanner() {
 
   const summary = Object.values(meals).flat().reduce(
     (acc, recipe) => ({
-      kcal: acc.kcal + recipe.kcal,
-      proteins: acc.proteins + recipe.proteins,
-      fats: acc.fats + recipe.fats,
-      carbs: acc.carbs + recipe.carbs,
+      kcal: acc.kcal + recipe.total_kcal,
+      proteins: acc.proteins + recipe.total_proteins,
+      fats: acc.fats + recipe.total_fats,
+      carbs: acc.carbs + recipe.total_carbs,
     }),
     { kcal: 0, proteins: 0, fats: 0, carbs: 0 }
   );
