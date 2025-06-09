@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { DragDropContext, DropResult } from "@hello-pangea/dnd";
-import { MealPlan } from "@/types/recipe";
+import { MealPlan, Recipe } from "@/types/recipe";
 import MealSection from "./MealSection";
 
 const initialData: MealPlan = {

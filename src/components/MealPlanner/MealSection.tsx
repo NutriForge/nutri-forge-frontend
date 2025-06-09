@@ -20,7 +20,18 @@ export default function MealSection({
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isRecipeModalOpen, setIsRecipeModalOpen] = useState(false);
-  const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
+  const [selectedRecipe, setSelectedRecipe] = useState<Recipe>({
+    id: 0,
+    name: "dummy recipe",
+    img: "",
+    ingredients: [],
+    steps: [],
+    weight_per_portion: 0,
+    total_proteins: 0,
+    total_fats: 0,
+    total_carbs: 0,
+    total_kcal: 0,
+  });
 
   return (
     <div className="bg-white shadow-sm rounded-lg p-4">
@@ -80,7 +91,7 @@ export default function MealSection({
           mealType={droppableId}
           onClose={() => {
             setIsRecipeModalOpen(false);
-            setSelectedRecipe(null);
+            setSelectedRecipe(selectedRecipe);
           }}
           onSaveRecipe={onUpdateRecipe}
         />

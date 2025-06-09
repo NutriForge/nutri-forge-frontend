@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRecipes } from "@/context/RecipeContext";
 import { Recipe, OpenFoodIngredient } from "@/types/recipe";
+import { MealPlan } from "@/types/recipe";
 
 export default function AddRecipeModal({
   onClose,
@@ -44,7 +45,7 @@ export default function AddRecipeModal({
 
         setExternalResults(filteredProducts);
       } catch (e) {
-        if (e.name !== "AbortError") console.error("❗Помилка запиту:", e);
+        if (e instanceof Error && e.name !== "AbortError") console.error("❗Помилка запиту:", e);
       } finally {
         setLoading(false);
       }

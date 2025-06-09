@@ -21,7 +21,7 @@ export default function IngredientsCard({
 
   useEffect(() => {
     if (recipe) {
-      dispatch({ type: 'SET_INGREDIENTS', payload: recipe.ingredients });
+      dispatch({ type: 'SET_INGREDIENTS', payload: recipe.ingredients ?? [] });
     }
   }, [recipe]);
 

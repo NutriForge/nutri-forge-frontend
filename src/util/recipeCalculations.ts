@@ -5,7 +5,7 @@ export function enrichRecipesWithMacros(
   ingredientsInfo: IngredientInfo[]
 ): Recipe[] {
   return recipes.map((recipe) => {
-    const enrichedIngredients = recipe.ingredients.map((ing) => {
+    const enrichedIngredients = (recipe.ingredients ?? []).map((ing) => {
       const info = ingredientsInfo.find((i) => {
         if (!i.name) return false;
 

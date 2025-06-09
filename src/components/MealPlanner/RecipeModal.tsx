@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { MealPlan, Recipe } from "@/types/recipe";
 import IngredientsCard from "../Recipe/RecipePage/IngredientsCard/IngredientsCard";
 import { useIngredientsForm } from "@/context/IngredientsFormContext";
@@ -12,7 +11,7 @@ export default function RecipeModal({mealType, recipe, onClose, onSaveRecipe}:
     onSaveRecipe: (mealType: keyof MealPlan, recipe: Recipe) => void;
   }
 ) {
-  const { state, dispatch } = useIngredientsForm();
+  const { state } = useIngredientsForm();
   
   const handleSave = () => {
     const updatedMacros = calculateTotalMacros(state.ingredients);

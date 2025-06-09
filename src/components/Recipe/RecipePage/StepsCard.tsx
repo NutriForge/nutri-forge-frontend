@@ -13,7 +13,7 @@ export default function IngredientsCard() {
   return (
       <div className="p-4">
         <ul className="space-y-2 text-m text-gray-700">
-          {recipe.steps.map((steps, index) => (
+          {(recipe.steps?? []).map((steps, index) => (
             <li key={index} className="flex pb-1">
               <div>
               <h3 className="block text-xl font-semibold text-black mb-2">Крок {steps.id}</h3>
