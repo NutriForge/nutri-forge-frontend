@@ -1,6 +1,7 @@
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { useRecipes } from "../../../context/RecipeContext";
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { getRecipe } from '@/services/recipeService';
+import { Recipe } from "../../../types/recipe";
 
 import IngredientsCard from "./IngredientsCard/IngredientsCard";
 import StepsCard from "./StepsCard";
@@ -8,10 +9,26 @@ import { Button } from "@/components/ui/button";
 
 function RecipePage() {
   const { id } = useParams();
-  const recipes = useRecipes();
-  const recipe = recipes.find((r) => r.id === Number(id));
   const navigate = useNavigate();
 
+  const [recipe, setRecipe] = useState<Recipe | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!id) return;
+
+    getRecipe(id)
+      .then((data) => {
+        setRecipe(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
+  }, [id]);
+
+  if (loading) return <div>Завантаження…</div>;
   if (!recipe) return <div>Рецепт не знайдено</div>;
 
   function handleAddToMealPlan() {

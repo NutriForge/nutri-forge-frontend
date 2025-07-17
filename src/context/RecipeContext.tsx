@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { getAllRecipes, getAllIngredients } from '@/services/recipeService';
-import { enrichRecipesWithMacros } from '@/util/recipeCalculations';
+import { getAllRecipes } from '@/services/recipeService';
 import { Recipe } from '@/types/recipe';
 
 interface RecipeContextType {
@@ -21,11 +20,9 @@ export function RecipeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     async function load() {
-      const rawRecipes = await getAllRecipes();
-      const ingredients = await getAllIngredients();
-
-      const enriched = enrichRecipesWithMacros(rawRecipes, ingredients);
-      setRecipes(enriched);
+      const recipes = await getAllRecipes();
+      console.log(recipes);
+      setRecipes(recipes);
       setIsLoading(false);
     }
 

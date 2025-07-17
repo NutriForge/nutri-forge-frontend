@@ -1,8 +1,8 @@
 import { useRecipe } from "@/context/RecipeContext";
 import StarRating from "./StarRating";
 
-export default function RecipeCard({recipe_id}: { recipe_id: number }) {
-  const recipe = useRecipe(Number(recipe_id));
+export default function RecipeCard({recipe_id}: { recipe_id: string }) {
+  const recipe = useRecipe(recipe_id);
   return (
     <div className="overflow-hidden rounded-lg transition ">
       <img
