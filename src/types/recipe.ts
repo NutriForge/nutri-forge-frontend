@@ -21,7 +21,7 @@ export interface Step {
 }
 
 export interface Recipe {
-  id: number;
+  id: string;
   name: string;
   type?: string;
   rating?: number;

@@ -1,63 +1,77 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getRecipe } from '@/services/recipeService';
-import { Recipe } from "../../../types/recipe";
+import { useRecipe, useIsRecipesLoading } from "@/context/RecipeContext";
+import { useIngredientsForm } from "@/context/IngredientsFormContext";
 
 import IngredientsCard from "./IngredientsCard/IngredientsCard";
 import StepsCard from "./StepsCard";
 import { Button } from "@/components/ui/button";
+import { getRecipe } from "@/services/recipeService";
 
 function RecipePage() {
-  const { id } = useParams();
+  const { id }  = useParams();
   const navigate = useNavigate();
 
-  const [recipe, setRecipe] = useState<Recipe | null>(null);
-  const [loading, setLoading] = useState(true);
+  const isLoading = useIsRecipesLoading();
+  const recipe = useRecipe(id);
+
+  const { dispatch } = useIngredientsForm();
 
   useEffect(() => {
     if (!id) return;
-
+    console.log(id)
     getRecipe(id)
       .then((data) => {
-        setRecipe(data);
-        setLoading(false);
+        dispatch({ type: "SET_INGREDIENTS", payload: data.ingredients });
+          console.log('recipe page dispatched recipes')
+          console.log(data.ingredients)
       })
       .catch((err) => {
         console.error(err);
-        setLoading(false);
       });
+
   }, [id]);
 
-  if (loading) return <div>Завантаження…</div>;
-  if (!recipe) return <div>Рецепт не знайдено</div>;
+  if (isLoading) {
+    return <div>Завантаження…</div>;
+  }
 
-  function handleAddToMealPlan() {
-    if (!recipe) return;
-    
-    const currentPlan = JSON.parse(localStorage.getItem("mealPlan") || "{}");
+  if (!recipe) {
+    return <div>Рецепт не знайдено</div>;
+  }
 
-    // ✅ Ініціалізувати секцію, якщо вона пуста
-    const breakfast = currentPlan.breakfast || [];
-  
-    // ✅ Перевірка: чи вже є рецепт з таким id
-    const existingIndex = breakfast.findIndex((r: any) => r.id === recipe.id);
-  
-    if (existingIndex !== -1) {
-      // Якщо є — оновлюємо
-      breakfast[existingIndex] = recipe;
-    } else {
-      // Інакше додаємо новий
-      breakfast.push(recipe);
-    }
-  
-    // ✅ Оновити localStorage
-    const updatedPlan = { ...currentPlan, breakfast };
-    localStorage.setItem("mealPlan", JSON.stringify(updatedPlan));
-  
-    // ✅ Перенаправлення, якщо потрібно
-    navigate("/planner");
-  
+const { state } = useIngredientsForm();
+
+function handleAddToMealPlan() {
+  const currentPlan = JSON.parse(localStorage.getItem("mealPlan") || "{}");
+  const breakfast = currentPlan.breakfast || [];
+
+  // 🔷 Створюємо оновлений рецепт
+  const updatedRecipe = {
+    ...recipe,
+    ingredients: state.ingredients,
+    weight_per_portion: state.totalWeight,
+    proteins: state.totalMacros.proteins,
+    carbs: state.totalMacros.carbs,
+    fats: state.totalMacros.fats,
+    kcal: state.totalMacros.kcal,
   };
+
+  const existingIndex = breakfast.findIndex(
+    (r: any) => r.id === recipe.id
+  );
+
+  if (existingIndex !== -1) {
+    breakfast[existingIndex] = updatedRecipe;
+  } else {
+    breakfast.push(updatedRecipe);
+  }
+
+  const updatedPlan = { ...currentPlan, breakfast };
+  localStorage.setItem("mealPlan", JSON.stringify(updatedPlan));
+
+  navigate("/planner");
+}
 
   return (
     <div>
@@ -75,7 +89,10 @@ function RecipePage() {
               quisque ut interdum tincidunt duis.
             </p>
           </div>
-          <button onClick={handleAddToMealPlan} className="mt-4 bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-xl transition">
+          <button
+            onClick={handleAddToMealPlan}
+            className="mt-4 bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-xl transition"
+          >
             Додати в план
           </button>
         </div>
@@ -89,6 +106,7 @@ function RecipePage() {
           className="h-56 w-full object-cover sm:h-full"
         />
       </section>
+
       <div className="mt-10 overflow-hidden sm:grid sm:grid-cols-2">
         <div>
           <IngredientsCard />
@@ -99,7 +117,9 @@ function RecipePage() {
           </h2>
           <StepsCard />
           <div className="mt-6 flex justify-end">
-            <Button onClick={handleAddToMealPlan} className="h-12 rounded-xl">Додати в план</Button>
+            <Button onClick={handleAddToMealPlan} className="h-12 rounded-xl">
+              Додати в план
+            </Button>
           </div>
         </div>
       </div>

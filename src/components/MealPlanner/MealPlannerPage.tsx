@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { DragDropContext, DropResult } from "@hello-pangea/dnd";
 import { MealPlan, Recipe } from "@/types/recipe";
 import MealSection from "./MealSection";
+import { useIngredientsForm } from "@/context/IngredientsFormContext";
 
 const initialData: MealPlan = {
   breakfast: [],
@@ -11,6 +12,7 @@ const initialData: MealPlan = {
 
 export default function MealPlanner() {
   const [meals, setMeals] = useState<MealPlan>(initialData);
+  const { state } = useIngredientsForm();
 
   useEffect(() => {
     const storedPlan = JSON.parse(localStorage.getItem("mealPlan") || "{}");

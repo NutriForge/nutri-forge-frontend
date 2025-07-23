@@ -1,29 +1,24 @@
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import { useIngredientsForm } from '@/context/IngredientsFormContext';
-import { useRecipes } from '@/context/RecipeContext';
-import {IngredientsHeader} from './IngredientsHeader/IngredientsHeader';
-import {IngredientList} from './IngredientsList/IngredientsList';
-import {TotalBlock} from './IngredientsFooter/TotalBlock';
+import { IngredientsHeader } from './IngredientsHeader/IngredientsHeader';
+import { IngredientList } from './IngredientsList/IngredientsList';
+import { TotalBlock } from './IngredientsFooter/TotalBlock';
 import { Recipe } from '@/types/recipe';
 
 export default function IngredientsCard({
-  recipe: propRecipe 
-  }: { 
-    recipe?: Recipe;
-  }) {
-  const { id } = useParams();
+  recipe,
+}: {
+  recipe: Recipe;
+}) {
   const { state, dispatch } = useIngredientsForm();
   const { isMacrosOpen } = state;
-  const recipes = useRecipes();
 
-  const recipe = propRecipe ?? recipes.find((r) => r.id === Number(id));
-
+  // ініціалізуємо інгредієнти з переданого рецепта
   useEffect(() => {
     if (recipe) {
       dispatch({ type: 'SET_INGREDIENTS', payload: recipe.ingredients ?? [] });
     }
-  }, [recipe]);
+  }, [recipe, dispatch]);
 
   const handleIngredientChange = (index: number, newWeight: number) => {
     dispatch({ type: 'UPDATE_INGREDIENT', index, newWeight });
@@ -44,9 +39,7 @@ export default function IngredientsCard({
           onChange={handleIngredientChange}
           showMacros={isMacrosOpen}
         />
-        <TotalBlock
-          handleTotalWeight={handleTotalWeight}
-        />
+        <TotalBlock handleTotalWeight={handleTotalWeight} />
       </div>
     </div>
   );

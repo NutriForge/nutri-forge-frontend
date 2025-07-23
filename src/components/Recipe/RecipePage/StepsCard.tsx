@@ -1,10 +1,23 @@
 import { useParams } from "react-router-dom";
-import { useRecipes } from "../../../context/RecipeContext";
+import { useEffect, useState } from 'react';
+import { Recipe } from '@/types/recipe';
+import { getRecipe } from '@/services/recipeService';
 
 export default function IngredientsCard() {
+  const [recipe, setRecipe] = useState<Recipe[]>([]);
   const { id } = useParams();
-  const recipes = useRecipes();
-  const recipe = recipes.find((r) => r.id === Number(id));
+
+  useEffect(() => {
+      if (!id) return;
+  
+      getRecipe(id)
+        .then((data) => {
+          setRecipe(data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }, [id]);
 
   if (!recipe) {
     return <div className="p-4 text-red-500">Рецепт не знайдено</div>;
