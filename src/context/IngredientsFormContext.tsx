@@ -56,13 +56,24 @@ function reducer(state: State, action: Action): State {
     }
 
     case 'UPDATE_INGREDIENT': {
-
       const original = state.ingredients[action.index];
+
       const updated = state.isLocked
         ? scaleIngredients(state.ingredients, original.weight_in_g, action.newWeight)
-        : state.ingredients.map((ing, i) =>
-            i === action.index ? { ...ing, weight_in_g: action.newWeight } : ing
-          );
+        : state.ingredients.map((ing, i) => {
+            if (i !== action.index) return ing;
+
+            const scale = action.newWeight / ing.weight_in_g;
+            return {
+              ...ing,
+              weight_in_g: action.newWeight,
+              proteins: ing.proteins * scale,
+              fats: ing.fats * scale,
+              carbs: ing.carbs * scale,
+              kcal: ing.kcal * scale,
+            };
+          });
+
       return {
         ...state,
         ingredients: updated,
