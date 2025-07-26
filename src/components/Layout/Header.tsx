@@ -25,6 +25,14 @@ export default function Header() {
               <ul className="flex items-center gap-6 text-sm">
                 <li>
                   <Link
+                    to="/recipes/add"
+                    className="text-gray-500 transition hover:text-gray-500/75"
+                  >
+                    Додати рецепт
+                  </Link>
+                </li>
+                <li>
+                  <Link
                     to="/planner"
                     className="text-gray-500 transition hover:text-gray-500/75"
                   >
