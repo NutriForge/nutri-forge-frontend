@@ -72,6 +72,9 @@ export function scaleIngredients(
   originalValue: number,
   newValue: number
 ): Ingredient[] {
+  if (originalValue === 0 || newValue === 0) {
+    return ingredients;
+  }
   const ratio = newValue / originalValue;
 
   return ingredients.map((ing) => ({

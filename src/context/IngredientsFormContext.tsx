@@ -55,32 +55,45 @@ function reducer(state: State, action: Action): State {
       return { ...state, ingredients: action.payload, totalWeight: total, totalMacros: macros };
     }
 
-    case 'UPDATE_INGREDIENT': {
-      const original = state.ingredients[action.index];
+case 'UPDATE_INGREDIENT': {
+  const original = state.ingredients[action.index];
 
-      const updated = state.isLocked
-        ? scaleIngredients(state.ingredients, original.weight_in_g, action.newWeight)
-        : state.ingredients.map((ing, i) => {
-            if (i !== action.index) return ing;
+  const updated = state.isLocked
+    ? scaleIngredients(state.ingredients, original.weight_in_g, action.newWeight)
+    : state.ingredients.map((ing, i) => {
+        if (i !== action.index) return ing;
 
-            const scale = action.newWeight / ing.weight_in_g;
-            return {
-              ...ing,
-              weight_in_g: action.newWeight,
-              proteins: ing.proteins * scale,
-              fats: ing.fats * scale,
-              carbs: ing.carbs * scale,
-              kcal: ing.kcal * scale,
-            };
-          });
+        const oldWeight = ing.weight_in_g;
 
-      return {
-        ...state,
-        ingredients: updated,
-        totalWeight: calculateTotalWeight(updated),
-        totalMacros: calculateTotalMacros(updated),
-      };
-    }
+        // Якщо стара вага 0 або відсутня — просто оновлюємо вагу, без перерахунку макросів
+        if (!oldWeight || oldWeight === 0) {
+          return {
+            ...ing,
+            weight_in_g: action.newWeight,
+            // залишаємо старі макроси як є, бо немає з чого масштабувати
+          };
+        }
+
+        // Інакше масштабуємо як завжди
+        const scale = action.newWeight / oldWeight;
+
+        return {
+          ...ing,
+          weight_in_g: action.newWeight,
+          proteins: ing.proteins * scale,
+          fats: ing.fats * scale,
+          carbs: ing.carbs * scale,
+          kcal: ing.kcal * scale,
+        };
+      });
+
+  return {
+    ...state,
+    ingredients: updated,
+    totalWeight: calculateTotalWeight(updated),
+    totalMacros: calculateTotalMacros(updated),
+  };
+}
 
     case 'UPDATE_TOTAL_WEIGHT': {
       const updated = scaleIngredients(
