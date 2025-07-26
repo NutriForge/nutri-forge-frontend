@@ -11,9 +11,12 @@ export default function RecipeModal({mealType, recipe, onClose, onSaveRecipe}:
     onSaveRecipe: (mealType: keyof MealPlan, recipe: Recipe) => void;
   }
 ) {
+
   const { state } = useIngredientsForm();
   
   const handleSave = () => {
+    console.log("state.ingredients:", state.ingredients);
+    
     const updatedMacros = calculateTotalMacros(state.ingredients);
     const updatedRecipe: Recipe = {
       ...recipe,
@@ -24,8 +27,8 @@ export default function RecipeModal({mealType, recipe, onClose, onSaveRecipe}:
       total_carbs: updatedMacros.carbs,
     };
 
-    onSaveRecipe(mealType, updatedRecipe); // віддаємо наверх
-    onClose(); // закриваємо модалку
+    onSaveRecipe(mealType, updatedRecipe);
+    onClose();
   };
 
   return (

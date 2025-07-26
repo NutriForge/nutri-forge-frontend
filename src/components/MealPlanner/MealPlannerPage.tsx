@@ -3,6 +3,7 @@ import { DragDropContext, DropResult } from "@hello-pangea/dnd";
 import { MealPlan, Recipe } from "@/types/recipe";
 import MealSection from "./MealSection";
 import { useIngredientsForm } from "@/context/IngredientsFormContext";
+import { getRecipe } from "@/services/recipeService";
 
 const initialData: MealPlan = {
   breakfast: [],
@@ -12,7 +13,7 @@ const initialData: MealPlan = {
 
 export default function MealPlanner() {
   const [meals, setMeals] = useState<MealPlan>(initialData);
-  const { state } = useIngredientsForm();
+  const { dispatch } = useIngredientsForm();
 
   useEffect(() => {
     const storedPlan = JSON.parse(localStorage.getItem("mealPlan") || "{}");
@@ -61,6 +62,7 @@ export default function MealPlanner() {
     localStorage.setItem("mealPlan", JSON.stringify(updatedMeals));
   };
 
+
   // Function to remove recipe
   const handleDeleteRecipe = (mealType: keyof MealPlan, id: number) => {
     const updatedList = meals[mealType].filter((r) => r.id !== id);
@@ -73,7 +75,8 @@ export default function MealPlanner() {
     localStorage.setItem("mealPlan", JSON.stringify(updatedMeals));
   };
 
-  const handleUpdateRecipe = (mealType: keyof MealPlan, recipe: Recipe) => {
+const handleUpdateRecipe = async (mealType: keyof MealPlan, recipe: Recipe) => {
+    console.log("handleUpdateRecipe")
     const section = meals[mealType] || [];
     const existingIndex = section.findIndex((r) => r.id === recipe.id);
   
@@ -82,7 +85,9 @@ export default function MealPlanner() {
       updatedSection = [...section];
       updatedSection[existingIndex] = recipe;
     } else {
-      updatedSection = [...section, recipe];
+      const fullRecipe = await getRecipe(recipe.id);
+      updatedSection = [...section, fullRecipe];
+      console.log(recipe)
     }
   
     const updatedMeals = {
@@ -93,6 +98,9 @@ export default function MealPlanner() {
     setMeals(updatedMeals);
     localStorage.setItem("mealPlan", JSON.stringify(updatedMeals));
   };
+  
+
+
 
   const summary = Object.values(meals).flat().reduce(
     (acc, recipe) => ({
