@@ -48,7 +48,6 @@ export function RecipeProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     async function loadRecipes() {
       const recipes = await getAllRecipes();
-      console.log("Loaded recipes:", recipes);
       setRecipes(recipes);
       setIsLoading(false);
     }

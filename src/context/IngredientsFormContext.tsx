@@ -50,29 +50,19 @@ type Action =
 function reducer(state: State, action: Action): State {
   switch (action.type) {
     case 'SET_INGREDIENTS': {
-      console.log('SET_INGREDIENTS')
-      console.log(action.payload)
       const total = calculateTotalWeight(action.payload);
-      console.log('Weight')
-      console.log(total)
       const macros = calculateTotalMacros(action.payload);
-      console.log('Macros')
-      console.log(macros)
       return { ...state, ingredients: action.payload, totalWeight: total, totalMacros: macros };
     }
 
     case 'UPDATE_INGREDIENT': {
-      console.log("before")
-      console.log(state.ingredients)
+
       const original = state.ingredients[action.index];
       const updated = state.isLocked
         ? scaleIngredients(state.ingredients, original.weight_in_g, action.newWeight)
         : state.ingredients.map((ing, i) =>
             i === action.index ? { ...ing, weight_in_g: action.newWeight } : ing
           );
-      console.log("after")
-      console.log(updated)
-      console.log(calculateTotalMacros(updated))
       return {
         ...state,
         ingredients: updated,

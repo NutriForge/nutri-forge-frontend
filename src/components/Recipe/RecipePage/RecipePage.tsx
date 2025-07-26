@@ -19,12 +19,9 @@ function RecipePage() {
 
   useEffect(() => {
     if (!id) return;
-    console.log(id)
     getRecipe(id)
       .then((data) => {
         dispatch({ type: "SET_INGREDIENTS", payload: data.ingredients });
-          console.log('recipe page dispatched recipes')
-          console.log(data.ingredients)
       })
       .catch((err) => {
         console.error(err);
@@ -44,31 +41,30 @@ const { state } = useIngredientsForm();
 
 function handleAddToMealPlan() {
   const currentPlan = JSON.parse(localStorage.getItem("mealPlan") || "{}");
-  const breakfast = currentPlan.breakfast || [];
 
-  // 🔷 Створюємо оновлений рецепт
   const updatedRecipe = {
     ...recipe,
     ingredients: state.ingredients,
     weight_per_portion: state.totalWeight,
-    proteins: state.totalMacros.proteins,
-    carbs: state.totalMacros.carbs,
-    fats: state.totalMacros.fats,
-    kcal: state.totalMacros.kcal,
+    total_proteins: state.totalMacros.proteins,
+    total_carbs: state.totalMacros.carbs,
+    total_fats: state.totalMacros.fats,
+    total_kcal: state.totalMacros.kcal,
   };
 
-  const existingIndex = breakfast.findIndex(
-    (r: any) => r.id === recipe.id
-  );
+  const newBreakfast = [
+    ...(currentPlan.breakfast || []).filter((r: any) => r.id !== recipe.id),
+    updatedRecipe,
+  ];
 
-  if (existingIndex !== -1) {
-    breakfast[existingIndex] = updatedRecipe;
-  } else {
-    breakfast.push(updatedRecipe);
-  }
+  const updatedPlan = {
+    ...currentPlan,
+    breakfast: newBreakfast,
+  };
 
-  const updatedPlan = { ...currentPlan, breakfast };
   localStorage.setItem("mealPlan", JSON.stringify(updatedPlan));
+  console.log("Updated Recipe:", updatedRecipe);
+  console.log("Updated Plan:", updatedPlan);
 
   navigate("/planner");
 }

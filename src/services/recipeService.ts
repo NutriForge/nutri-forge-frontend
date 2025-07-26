@@ -8,7 +8,6 @@ export async function getAllRecipes(): Promise<Recipe[]>  {
 }
 
 export async function getRecipe(id: string): Promise<Recipe> {
-  console.log(id)
   const response = await fetch(`http://localhost:8082/recipe/${id}`);
 
   if (!response.ok) {
