@@ -1,14 +1,17 @@
-import { useState, useRef } from 'react';
-import { Textarea } from '@/components/ui/textarea';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { validateIngredients } from '@/services/recipeService';
+import { useState, useRef } from "react";
+import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { validateIngredients } from "@/services/recipeService";
+import AddMissingIngredientsModal from "./AddMissingIngredientsModal";
 
 export default function AddRecipePage() {
-  const [title, setTitle] = useState('');
-  const [recipeText, setRecipeText] = useState('');
+  const [title, setTitle] = useState("");
+  const [recipeText, setRecipeText] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isIngredientModalOpen, setisIngredientModalOpen] = useState(false);
+  const [missingIngredients, setMissingIngredients] = useState<string[]>([]);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -28,26 +31,30 @@ export default function AddRecipePage() {
   };
 
   const handleSubmit = async () => {
-  try {
+    try {
+      const ingredientNames = ["буряк", "огірки", "сметана 20%", "ананас"];
+      //const ingredientNames = ["огірок"];
+      const missing = await validateIngredients(ingredientNames);
 
-   // const ingredientNames = ["буряк", "огірки", "сметана 20%", "ананас"];
-    const ingredientNames = ["огірок"];
-    const missing = await validateIngredients(ingredientNames);
-
-    if (missing.length > 0) {
-      console.log(`Missing ingredients: ${missing.join(", ")}`);
-    } else {
-      console.log("All ingredients are in DB ✅");
+      if (missing.length > 0) {
+        console.log(`Missing ingredients: ${missing.join(", ")}`);
+        setisIngredientModalOpen(true);
+        setMissingIngredients(missing);
+      } else {
+        console.log("All ingredients are in DB ✅");
+        setMissingIngredients([]);
+      }
+    } catch (error) {
+      console.error("❌ Validation error:", error);
     }
-  } catch (error) {
-    console.error("❌ Validation error:", error);
-  }
-};
+  };
 
   return (
     <div className="bg-[#f8f9fa] min-h-screen py-10 px-4">
       <div className="max-w-4xl mx-auto bg-white rounded-2xl border border-gray-200 p-8 shadow-sm">
-        <h1 className="text-3xl font-bold mb-8 text-gray-900">Додати новий рецепт</h1>
+        <h1 className="text-3xl font-bold mb-8 text-gray-900">
+          Додати новий рецепт
+        </h1>
 
         <div className="mb-6">
           <label className="block text-base font-medium mb-2 text-gray-700">
@@ -124,17 +131,36 @@ export default function AddRecipePage() {
           <div className="flex items-start gap-2 bg-[#f1f5f9] border border-gray-200 text-gray-800 text-sm rounded-xl px-4 py-3">
             <span className="text-xl">💡</span>
             <p>
-              <strong>Підказка:</strong> Healthy breakfast toast with grilled vegetables and boiled egg on a white plate, minimalistic style, top view
+              <strong>Підказка:</strong> Healthy breakfast toast with grilled
+              vegetables and boiled egg on a white plate, minimalistic style,
+              top view
             </p>
           </div>
         </div>
 
         <div className="flex justify-end gap-4 mt-6">
-          <Button className="bg-gray-100 text-gray-800 hover:bg-gray-200">Відміна</Button>
+          <Button className="bg-gray-100 text-gray-800 hover:bg-gray-200">
+            Відміна
+          </Button>
 
-<Button className="bg-teal-600 text-white hover:bg-teal-700" onClick={handleSubmit}>Зберегти</Button>
+          <Button
+            className="bg-teal-600 text-white hover:bg-teal-700"
+            onClick={handleSubmit}
+          >
+            Зберегти
+          </Button>
         </div>
       </div>
+      {isIngredientModalOpen && (
+        <AddMissingIngredientsModal
+          missingIngredients={missingIngredients}
+          onClose={() => setisIngredientModalOpen(false)}
+          onSave={(ingredient) => {
+            console.log("Збережено інгредієнт:", ingredient);
+            // Можна зробити POST на бекенд для збереження
+          }}
+        />
+      )}
     </div>
   );
 }
