@@ -16,3 +16,20 @@ export async function getRecipe(id: string): Promise<Recipe> {
 
   return response.json();
 }
+
+export async function validateIngredients(ingredientNames: string[]): Promise<string[]> {
+  const response = await fetch("http://localhost:8082/ingredients/validate", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ names: ingredientNames }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to validate ingredients");
+  }
+
+  const data = await response.json();
+  return data.missing || [];
+}

@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { validateIngredients } from '@/services/recipeService';
 
 export default function AddRecipePage() {
   const [title, setTitle] = useState('');
@@ -26,9 +27,22 @@ export default function AddRecipePage() {
     e.preventDefault();
   };
 
-  const handleSubmit = () => {
-    console.log({ title, recipeText, image });
-  };
+  const handleSubmit = async () => {
+  try {
+
+   // const ingredientNames = ["буряк", "огірки", "сметана 20%", "ананас"];
+    const ingredientNames = ["огірок"];
+    const missing = await validateIngredients(ingredientNames);
+
+    if (missing.length > 0) {
+      console.log(`Missing ingredients: ${missing.join(", ")}`);
+    } else {
+      console.log("All ingredients are in DB ✅");
+    }
+  } catch (error) {
+    console.error("❌ Validation error:", error);
+  }
+};
 
   return (
     <div className="bg-[#f8f9fa] min-h-screen py-10 px-4">
