@@ -35,16 +35,26 @@ export async function validateIngredients(ingredientNames: string[]): Promise<st
 }
 
 export async function saveIngredients(ingredients: IngredientForm[]): Promise<void> {
- // const response = await fetch("http://localhost:8082/ingredients", {
- //   method: "POST",
- //   headers: {
- //     "Content-Type": "application/json",
- //   },
- //  body: JSON.stringify(ingredients),
- // });
+  const cleaned = ingredients.map((ing) => ({
+    name: ing.name,
+    proteins: parseFloat(ing.proteins),
+    fats: parseFloat(ing.fats),
+    carbs: parseFloat(ing.carbs),
+    kcal: parseFloat(ing.kcal),
+  }));
 
-  //if (!response.ok) {
-  //  throw new Error("Не вдалося зберегти інгредієнти");
- // }
-  console.log(JSON.stringify(ingredients))
+  const response = await fetch("http://localhost:8082/ingredients/save", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(cleaned),
+  });
+
+  if (!response.ok) {
+    throw new Error("Не вдалося зберегти інгредієнти");
+  }
+
+  console.log(JSON.stringify(cleaned));
+
 }
