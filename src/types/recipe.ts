@@ -15,6 +15,14 @@ export interface Ingredient {
   kcal: number;
 }
 
+export interface IngredientForm {
+  name: string;
+  proteins: string;
+  fats: string;
+  carbs: string;
+  kcal: string;
+}
+
 export interface Step {
   id: number;
   description: string;

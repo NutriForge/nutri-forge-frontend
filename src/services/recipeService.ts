@@ -1,4 +1,4 @@
-import { Recipe } from "../types/recipe";
+import { Recipe, IngredientForm } from "../types/recipe";
 
 export async function getAllRecipes(): Promise<Recipe[]>  {
   return await fetch('http://localhost:8082/recipes?limit=100&offset=0')
@@ -32,4 +32,19 @@ export async function validateIngredients(ingredientNames: string[]): Promise<st
 
   const data = await response.json();
   return data.missing || [];
+}
+
+export async function saveIngredients(ingredients: IngredientForm[]): Promise<void> {
+ // const response = await fetch("http://localhost:8082/ingredients", {
+ //   method: "POST",
+ //   headers: {
+ //     "Content-Type": "application/json",
+ //   },
+ //  body: JSON.stringify(ingredients),
+ // });
+
+  //if (!response.ok) {
+  //  throw new Error("Не вдалося зберегти інгредієнти");
+ // }
+  console.log(JSON.stringify(ingredients))
 }

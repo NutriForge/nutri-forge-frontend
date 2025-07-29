@@ -2,8 +2,9 @@ import { useState, useRef } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { validateIngredients } from "@/services/recipeService";
+import { validateIngredients, saveIngredients } from "@/services/recipeService";
 import AddMissingIngredientsModal from "./AddMissingIngredientsModal";
+import { IngredientForm } from "@/types/recipe";
 
 export default function AddRecipePage() {
   const [title, setTitle] = useState("");
@@ -46,6 +47,21 @@ export default function AddRecipePage() {
       }
     } catch (error) {
       console.error("❌ Validation error:", error);
+    }
+  };
+
+  const handleSaveIngredients = async (ingredientsArray: IngredientForm[]) => {
+    try {
+      await saveIngredients(ingredientsArray);
+
+      console.log(ingredientsArray);
+      setisIngredientModalOpen(false);
+
+      // TODO: Тут можна показати наступне модальне вікно, наприклад:
+      // setShowRecipePreview(true);
+
+    } catch (error) {
+      console.error("Unable to save ingredients:", error);
     }
   };
 
@@ -155,10 +171,7 @@ export default function AddRecipePage() {
         <AddMissingIngredientsModal
           missingIngredients={missingIngredients}
           onClose={() => setisIngredientModalOpen(false)}
-          onSave={(ingredient) => {
-            console.log("Збережено інгредієнт:", ingredient);
-            // Можна зробити POST на бекенд для збереження
-          }}
+          onSave={handleSaveIngredients}
         />
       )}
     </div>

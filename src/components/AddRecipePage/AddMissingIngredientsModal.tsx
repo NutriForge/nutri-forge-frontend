@@ -1,13 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-
-interface IngredientForm {
-  name: string;
-  proteins: string;
-  fats: string;
-  carbs: string;
-  kcal: string;
-}
+import { IngredientForm } from "@/types/recipe";
 
 export default function AddMissingIngredientsModal({
   missingIngredients,
@@ -16,7 +9,7 @@ export default function AddMissingIngredientsModal({
 }: {
   missingIngredients: string[];
   onClose: () => void;
-  onSave: (ingredient: IngredientForm) => void;
+  onSave: (ingredient: IngredientForm[]) => void;
 }) {
   const [expanded, setExpanded] = useState<string | null>(null);
   const [formValues, setFormValues] = useState<Record<string, IngredientForm>>(
@@ -53,6 +46,14 @@ export default function AddMissingIngredientsModal({
     }));
   };
 
+  const fieldPlaceholders: Record<keyof IngredientForm, string> = {
+    name: "Назва інгредієнта",
+    proteins: "Білки (на 100 г)",
+    fats: "Жири (на 100 г)",
+    carbs: "Вуглеводи (на 100 г)",
+    kcal: "Калорійність (на 100 г)",
+  };
+
   return (
     <div className="fixed inset-0 z-50 grid place-content-center bg-black/50 p-4">
       <div className="w-[700px] rounded-lg bg-white p-6 shadow-lg">
@@ -80,31 +81,22 @@ export default function AddMissingIngredientsModal({
 
               {expanded === name && (
                 <div className="mt-3 space-y-2 text-sm">
-                  {["name", "proteins", "fats", "carbs", "kcal"].map(
-                    (field) => (
-                      <input
-                        key={field}
-                        type="text"
-                        className="w-full border px-2 py-1 rounded"
-                        placeholder={
-                          field === "name"
-                            ? "Назва інгредієнта"
-                            : `${field} (на 100 г)`
-                        }
-                        value={
-                          formValues[name]?.[field as keyof IngredientForm] ||
-                          ""
-                        }
-                        onChange={(e) =>
-                          handleInputChange(
-                            name,
-                            field as keyof IngredientForm,
-                            e.target.value
-                          )
-                        }
-                      />
-                    )
-                  )}
+                  {Object.entries(fieldPlaceholders).map(([field, placeholder]) => (
+                    <input
+                      key={field}
+                      type="text"
+                      className="w-full border px-2 py-1 rounded"
+                      placeholder={placeholder}
+                      value={formValues[name]?.[field as keyof IngredientForm] ?? ""}
+                      onChange={(e) =>
+                        handleInputChange(
+                          name,
+                          field as keyof IngredientForm,
+                          e.target.value
+                        )
+                      }
+                    />
+                  ))}
                 </div>
               )}
             </li>
@@ -118,8 +110,14 @@ export default function AddMissingIngredientsModal({
           >
             Закрити
           </Button>
-          <Button className="bg-teal-600 text-white hover:bg-teal-700">
-            Зберегти
+          <Button
+            onClick={() => {
+              const ingredientsArray = Object.values(formValues);
+              onSave(ingredientsArray);
+            }}
+            className="bg-teal-600 text-white hover:bg-teal-700"
+          >
+            Відправити
           </Button>
         </div>
       </div>
