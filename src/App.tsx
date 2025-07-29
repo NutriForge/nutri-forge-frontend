@@ -4,6 +4,7 @@ import RecipePage from './components/Recipe/RecipePage/RecipePage';
 import Layout from './components/Layout/Layout';
 import MealPlannerPage from './components/MealPlannerPage/MealPlannerPage';
 import AddRecipePage from './components/AddRecipePage/AddRecipePage';
+import ConfirmRecipePage from './components/AddRecipePage/ConfirmRecipePage';
 
 import { RecipeProvider } from './context/RecipeContext'; 
 import { IngredientsFormProvider } from './context/IngredientsFormContext';
@@ -18,6 +19,7 @@ function App() {
           <Route index element={<RecipeList />} />
           <Route path="recipe/:id" element={<RecipePage />} />
           <Route path="recipes/add" element={<AddRecipePage />} />
+          <Route path="recipes/confirm" element={<ConfirmRecipePage />} />
           <Route path="planner" element={<MealPlannerPage />} />
         </Route>
       </Routes>

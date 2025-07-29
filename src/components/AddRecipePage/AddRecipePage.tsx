@@ -6,6 +6,8 @@ import { validateIngredients, saveIngredients } from "@/services/recipeService";
 import AddMissingIngredientsModal from "./AddMissingIngredientsModal";
 import { IngredientForm } from "@/types/recipe";
 
+import { useNavigate } from "react-router-dom";
+
 export default function AddRecipePage() {
   const [title, setTitle] = useState("");
   const [recipeText, setRecipeText] = useState("");
@@ -13,6 +15,8 @@ export default function AddRecipePage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isIngredientModalOpen, setisIngredientModalOpen] = useState(false);
   const [missingIngredients, setMissingIngredients] = useState<string[]>([]);
+
+  const navigate = useNavigate();
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -44,6 +48,13 @@ export default function AddRecipePage() {
       } else {
         console.log("All ingredients are in DB ✅");
         setMissingIngredients([]);
+        navigate("/recipes/confirm", {
+        state: {
+          title,
+          recipeText,
+          imageUrl: "/img/recipe_13.png", // або шлях, якщо збережено
+        },
+      });
       }
     } catch (error) {
       console.error("❌ Validation error:", error);
@@ -57,8 +68,13 @@ export default function AddRecipePage() {
       console.log(ingredientsArray);
       setisIngredientModalOpen(false);
 
-      // TODO: Тут можна показати наступне модальне вікно, наприклад:
-      // setShowRecipePreview(true);
+      navigate("/recipes/confirm", {
+      state: {
+        title,
+        recipeText,
+        imageUrl: "/img/recipe_13.png", // або шлях, якщо збережено
+      },
+    });
 
     } catch (error) {
       console.error("Unable to save ingredients:", error);
