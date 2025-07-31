@@ -58,3 +58,24 @@ export async function saveIngredients(ingredients: IngredientForm[]): Promise<vo
   console.log(JSON.stringify(cleaned));
 
 }
+
+export async function parseRecipe(title: string, recipeText: string): Promise<Recipe> {
+  console.log(JSON.stringify({ title, recipeText }))
+
+  const response = await fetch("http://localhost:8082/gemini/recipe/parse", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ title, recipeText }),
+  });
+
+  
+
+  if (!response.ok) {
+    throw new Error("Unable to send recipe");
+  }
+
+  const data = await response.json();
+  return data as Recipe;
+}

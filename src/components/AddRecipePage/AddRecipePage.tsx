@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { validateIngredients, saveIngredients } from "@/services/recipeService";
+import { validateIngredients, saveIngredients, parseRecipe } from "@/services/recipeService";
 import AddMissingIngredientsModal from "./AddMissingIngredientsModal";
 import { IngredientForm } from "@/types/recipe";
 
@@ -37,8 +37,11 @@ export default function AddRecipePage() {
 
   const handleSubmit = async () => {
     try {
-      const ingredientNames = ["буряк", "огірки", "сметана 20%", "ананас"];
-      //const ingredientNames = ["огірок"];
+      const structuredRecipe = await parseRecipe(title, recipeText);
+      console.log(structuredRecipe)
+
+      const ingredientNames = structuredRecipe.ingredients?.map(ing => ing.name) || [];
+
       const missing = await validateIngredients(ingredientNames);
 
       if (missing.length > 0) {
@@ -179,7 +182,7 @@ export default function AddRecipePage() {
             className="bg-teal-600 text-white hover:bg-teal-700"
             onClick={handleSubmit}
           >
-            Зберегти
+            Далі
           </Button>
         </div>
       </div>
