@@ -24,33 +24,50 @@ export default function RecipePreviewPage() {
     carbs: 0,
     kcal: 0,
   });
+  const [editableIngredients, setEditableIngredients] = useState(ingredients);
+  const [ingredientInfos, setIngredientInfos] = useState<IngredientInfo[]>([]);
 
-  useEffect(() => {
-    const fetchNutrition = async () => {
-      try {
-        const names = ingredients.map((ing: IngredientInfo) => ing.name);
-        const infos = await getIngredientsInfo(names);
+useEffect(() => {
+  const fetchNutrition = async () => {
+    try {
+      const names = ingredients.map((ing: IngredientInfo) => ing.name);
+      const infos = await getIngredientsInfo(names);
+      setIngredientInfos(infos);
+    } catch (e) {
+      console.error("Помилка при отриманні БЖВК:", e);
+    }
+  };
 
-        const total = infos.reduce(
-          (acc, info, index) => {
-            const weightFactor = ingredients[index].weight_in_g / 100;
-            return {
-              proteins: acc.proteins + info.proteins * weightFactor,
-              fats: acc.fats + info.fats * weightFactor,
-              carbs: acc.carbs + info.carbs * weightFactor,
-              kcal: acc.kcal + info.kcal * weightFactor,
-            };
-          },
-          { proteins: 0, fats: 0, carbs: 0, kcal: 0 }
-        );
+  fetchNutrition();
+}, [ingredients]);
 
-        setTotals(total);
-      } catch (e) {
-        console.error("Помилка при отриманні БЖВК:", e);
-      }
-    };
-    fetchNutrition();
-  }, [ingredients]);
+useEffect(() => {
+  if (ingredientInfos.length === 0) return;
+
+  const total = editableIngredients.reduce((acc, ing) => {
+  const info = ingredientInfos.find((i) => i.name === ing.name);
+  if (!info || ing.weight_in_g === 0) return acc;
+
+  const weightFactor = ing.weight_in_g / 100;
+
+  console.log(
+    `[${ing.name}]`,
+    `→ Білки: ${(info.proteins * weightFactor).toFixed(1)}г`,
+    `Жири: ${(info.fats * weightFactor).toFixed(1)}г`,
+    `Вуглеводи: ${(info.carbs * weightFactor).toFixed(1)}г`,
+    `Ккал: ${(info.kcal * weightFactor).toFixed(1)}`
+  );
+
+  return {
+    proteins: acc.proteins + info.proteins * weightFactor,
+    fats: acc.fats + info.fats * weightFactor,
+    carbs: acc.carbs + info.carbs * weightFactor,
+    kcal: acc.kcal + info.kcal * weightFactor,
+  };
+}, { proteins: 0, fats: 0, carbs: 0, kcal: 0 });
+
+  setTotals(total);
+}, [editableIngredients, ingredientInfos]);
 
   const handleBack = () => {
     navigate("/recipes/add", {
@@ -96,22 +113,33 @@ export default function RecipePreviewPage() {
             Інгредієнти
           </h2>
           <ul className="border rounded-lg p-4 bg-white space-y-3 text-sm text-gray-700">
-            {ingredients.map((ingredient: any, index: number) => (
+            {editableIngredients.map((ingredient: any, index: number) => (
               <li
                 key={index}
                 className="flex flex-col border-b pb-2 gap-1"
               >
                 <div className="flex justify-between items-center gap-2">
                   <span className="w-1/3">{ingredient.name}</span>
-                  <div className="text-right">
-                    {ingredient.weight_in_g} г
+                  <div className="flex items-center gap-1 w-1/3 justify-end">
+                    <input
+                      type="number"
+                      value={ingredient.weight_in_g}
+                      onChange={(e) => {
+                        const newWeight = parseFloat(e.target.value) || 0;
+                        const updated = [...editableIngredients];
+                        updated[index].weight_in_g = newWeight;
+                        setEditableIngredients(updated);
+                      }}
+                      className="w-16 text-right border rounded px-1 py-0.5"
+                    />
+                    <span className="text-sm text-gray-500">г</span>
                   </div>
                 </div>
               </li>
             ))}
             <li className="flex gap-1 py-px -my-0.5">
             <label className="text-s font-medium">Загальна вага:</label>
-            <span className="text-sm text-gray-500"> {ingredients.reduce((sum, ing) => sum + ing.weight_in_g, 0)} г</span>
+            <span className="text-sm text-gray-500"> {editableIngredients.reduce((sum, ing) => sum + ing.weight_in_g, 0)} г</span>
             </li>
             <li className="flex gap-1 py-px -my-0.5">
             <label className="text-s font-medium">Білки:</label>

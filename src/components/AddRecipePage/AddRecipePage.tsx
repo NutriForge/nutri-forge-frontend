@@ -61,8 +61,10 @@ export default function AddRecipePage() {
       setParsedRecipe(structuredRecipe)
 
       const ingredientNames = structuredRecipe.ingredients?.map(ing => ing.name) || [];
+      console.log(ingredientNames)
 
       const missing = await validateIngredients(ingredientNames);
+      console.log(missing)
 
       if (missing.length > 0) {
         console.log(`Missing ingredients: ${missing.join(", ")}`);
