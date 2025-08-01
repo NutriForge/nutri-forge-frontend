@@ -1,22 +1,41 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { validateIngredients, saveIngredients, parseRecipe } from "@/services/recipeService";
 import AddMissingIngredientsModal from "./AddMissingIngredientsModal";
-import { IngredientForm } from "@/types/recipe";
+import { IngredientForm, Recipe } from "@/types/recipe";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function AddRecipePage() {
   const [title, setTitle] = useState("");
   const [recipeText, setRecipeText] = useState("");
+  const [parsedRecipe, setParsedRecipe] = useState<Recipe | null>(null)
   const [image, setImage] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isIngredientModalOpen, setisIngredientModalOpen] = useState(false);
   const [missingIngredients, setMissingIngredients] = useState<string[]>([]);
 
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+  if (location.state) {
+    setTitle(location.state.title || "");
+    setRecipeText(location.state.recipeText || "");
+    setParsedRecipe({
+      id: "",
+      name: title,
+      img: location.state.imageUrl || "",
+      ingredients: location.state.ingredients || [],
+      steps: location.state.steps || [],
+    });
+    if (location.state.imageFile) {
+      setImage(location.state.imageFile);
+    }
+  }
+  }, []);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -39,6 +58,7 @@ export default function AddRecipePage() {
     try {
       const structuredRecipe = await parseRecipe(title, recipeText);
       console.log(structuredRecipe)
+      setParsedRecipe(structuredRecipe)
 
       const ingredientNames = structuredRecipe.ingredients?.map(ing => ing.name) || [];
 
@@ -55,7 +75,12 @@ export default function AddRecipePage() {
         state: {
           title,
           recipeText,
-          imageUrl: "/img/recipe_13.png", // або шлях, якщо збережено
+          imageFile: image,
+          imageUrl: image
+            ? URL.createObjectURL(image)
+            : "https://placehold.co/400x200?text=Фотосесія+триває",
+          ingredients: structuredRecipe.ingredients,
+          steps: structuredRecipe.steps
         },
       });
       }
@@ -72,13 +97,17 @@ export default function AddRecipePage() {
       setisIngredientModalOpen(false);
 
       navigate("/recipes/confirm", {
-      state: {
-        title,
-        recipeText,
-        imageUrl: "/img/recipe_13.png", // або шлях, якщо збережено
-      },
-    });
-
+        state: {
+          title,
+          recipeText,
+          imageFile: image,
+          imageUrl: image
+            ? URL.createObjectURL(image)
+            : "https://placehold.co/400x200?text=Фотосесія+триває",
+          ingredients: parsedRecipe.ingredients,
+          steps: parsedRecipe.steps
+        },
+      });
     } catch (error) {
       console.error("Unable to save ingredients:", error);
     }

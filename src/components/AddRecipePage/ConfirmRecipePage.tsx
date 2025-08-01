@@ -5,27 +5,26 @@ export default function RecipePreviewPage() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const handleBack = () => {
+    navigate("/recipes/add", {
+      state: {
+        title,
+        recipeText,
+        imageFile,
+        ingredients,
+        steps,
+        imageUrl,
+      },
+    });
+  };
+
   const {
     title = "Назва рецепту",
-    imageUrl = "/img/recipe_13.png",
-    ingredients = [
-    { name: "паста", amount: "33 г" },
-    { name: "телятина", amount: "70 г" },
-    { name: "цибуля", amount: "50 г" },
-    { name: "сіль, щіпка", amount: "1 г" },
-    { name: "томатна паста", amount: "20 г" },
-    { name: "олія соняшникова", amount: "8 г" },
-    { name: "часник", amount: "10 г" },
-    { name: "сік лимона", amount: "10 г" },
-    { name: "базилік або кріп", amount: "1 г" },
-    ],
-    steps = [
-      "Пасту відварюємо у підсоленій воді до готовності.",
-    "Обсмажуємо фарш, дрібно нарізану цибулю і часник протягом 5 хв на середньому вогні.",
-    "Додаємо томатну пасту. Якщо вона кисла — лимонний сік не потрібен.",
-    "Візьміть трохи води (близько чверті чашки), в якій вариться паста, і додайте в сковороду.",
-    "Зменшіть вогонь і тушкуйте 3–5 хв. Спробуйте на смак. Якщо сильно кисло — додайте ще води.",
-    ],
+    recipeText = "",
+    imageUrl = "https://placehold.co/400x200?text=Фотосесія+триває",
+    imageFile = null,
+    ingredients = [],
+    steps = [],
   } = location.state || {};
 
   return (
@@ -67,7 +66,7 @@ export default function RecipePreviewPage() {
                 <div className="flex justify-between items-center gap-2">
                   <span className="w-1/3">{ingredient.name}</span>
                   <div className="text-right">
-                    {ingredient.amount}
+                    {ingredient.weight_in_g} г
                   </div>
                 </div>
               </li>
@@ -97,16 +96,16 @@ export default function RecipePreviewPage() {
             Кроки
           </h2>
           <ol className="list-decimal list-inside rounded-lg p-4 bg-white space-y-5 text-m text-gray-700">
-            {steps.map((step: string, index: number) => (
+            {steps.map((step: any, index: number) => (
               <li key={index}>
-                {step}
+                {step.description}
               </li>
             ))}
           </ol>
       </div>
               </div>
             <div className="flex gap-4 justify-end">
-              <Button variant="outline" onClick={() => navigate(-1)}>
+              <Button variant="outline" onClick={handleBack}>
                 Назад
               </Button>
               <Button className="bg-teal-600 text-white hover:bg-teal-700">
