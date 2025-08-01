@@ -1,4 +1,4 @@
-import { Recipe, IngredientForm } from "../types/recipe";
+import { Recipe, IngredientForm, IngredientInfo } from "../types/recipe";
 
 export async function getAllRecipes(): Promise<Recipe[]>  {
   return await fetch('http://localhost:8082/recipes?limit=100&offset=0')
@@ -15,6 +15,22 @@ export async function getRecipe(id: string): Promise<Recipe> {
   }
 
   return response.json();
+}
+
+export async function getIngredientsInfo(names: string[]): Promise<IngredientInfo[]> {
+  const response = await fetch("http://localhost:8082/ingredients/get", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ names }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Unable to get macros from the database");
+  }
+
+  return await response.json();
 }
 
 export async function validateIngredients(ingredientNames: string[]): Promise<string[]> {
