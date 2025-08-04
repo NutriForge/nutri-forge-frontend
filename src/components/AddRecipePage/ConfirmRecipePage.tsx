@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
-import { getIngredientsInfo } from "@/services/recipeService";
+import { getIngredientsInfo, saveRecipeWithImage } from "@/services/recipeService";
 import { IngredientInfo } from "@/types/recipe";
 
 export default function RecipePreviewPage() {
@@ -12,6 +12,7 @@ export default function RecipePreviewPage() {
   const {
     title = "Назва рецепту",
     recipeText = "",
+    type = "",
     imageUrl = "https://placehold.co/400x200?text=Фотосесія+триває",
     imageFile = null,
     ingredients = [],
@@ -81,6 +82,41 @@ useEffect(() => {
       },
     });
   };
+
+  const handleConfirm = async () => {
+  try {
+    const totalWeight = editableIngredients.reduce(
+      (sum, ing) => sum + ing.weight_in_g,
+      0
+    );
+
+    const recipeData = {
+      name: title,
+      type: type,
+      weight_per_portion: totalWeight,
+      total_proteins: totals.proteins,
+      total_fats: totals.fats,
+      total_carbs: totals.carbs,
+      total_kcal: totals.kcal,
+      img_url: imageUrl,
+      author: "",
+      ingredients: editableIngredients,
+      steps: steps.map((s: any, idx: number) => ({
+        id: idx + 1,
+        description: s.description,
+      })),
+    };
+
+    console.log(recipeData);
+
+    const recipeId = await saveRecipeWithImage(recipeData, imageFile);
+
+    navigate(`/recipe/${recipeId}`);
+  } catch (e) {
+    console.error("Помилка при збереженні рецепта:", e);
+    alert("Помилка при збереженні рецепта");
+  }
+};
 
   return (
     <div>
@@ -178,7 +214,9 @@ useEffect(() => {
               <Button variant="outline" onClick={handleBack}>
                 Назад
               </Button>
-              <Button className="bg-teal-600 text-white hover:bg-teal-700">
+              <Button 
+              onClick={handleConfirm}
+              className="bg-teal-600 text-white hover:bg-teal-700">
                 Підтвердити
               </Button>
             </div>

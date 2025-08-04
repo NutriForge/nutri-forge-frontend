@@ -95,3 +95,25 @@ export async function parseRecipe(title: string, recipeText: string): Promise<Re
   const data = await response.json();
   return data as Recipe;
 }
+
+export async function saveRecipeWithImage(recipeData: any, imageFile: File | null): Promise<string> {
+  const formData = new FormData();
+
+  if (imageFile) {
+    formData.append("image", imageFile);
+  }
+
+  formData.append("recipe", JSON.stringify(recipeData));
+
+  const response = await fetch("http://localhost:8082/recipe/save", {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!response.ok) {
+    throw new Error("Не вдалося зберегти рецепт");
+  }
+
+  const data = await response.json();
+  return data.id;
+}

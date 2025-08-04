@@ -77,6 +77,7 @@ export default function AddRecipePage() {
         state: {
           title,
           recipeText,
+          type: structuredRecipe.type,
           imageFile: image,
           imageUrl: image
             ? URL.createObjectURL(image)
@@ -102,6 +103,7 @@ export default function AddRecipePage() {
         state: {
           title,
           recipeText,
+          type: parsedRecipe.type,
           imageFile: image,
           imageUrl: image
             ? URL.createObjectURL(image)
