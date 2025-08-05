@@ -19,7 +19,8 @@ import { Recipe } from '@/types/recipe';
  */
 interface RecipeContextType {
   recipes: Recipe[]; // List of all recipes (summary only)
-  isLoading: boolean; // Whether recipes are still loading
+  isLoading: boolean; // Whether recipes are still loading,
+  reloadRecipes: () => Promise<void>; // Reload recipes when new added
 }
 
 /**
@@ -27,7 +28,8 @@ interface RecipeContextType {
  */
 const defaultValue: RecipeContextType = {
   recipes: [],
-  isLoading: true
+  isLoading: true,
+  reloadRecipes: async () => {},
 };
 
 /**
@@ -45,18 +47,24 @@ export function RecipeProvider({ children }: { children: ReactNode }) {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    async function loadRecipes() {
+  const loadRecipes = async () => {
+    setIsLoading(true);
+    try {
       const recipes = await getAllRecipes();
       setRecipes(recipes);
+    } catch (err) {
+      console.error("Failed to load recipes:", err);
+    } finally {
       setIsLoading(false);
     }
+  };
 
+  useEffect(() => {
     loadRecipes();
   }, []);
 
   return (
-    <RecipeContext.Provider value={{ recipes, isLoading }}>
+    <RecipeContext.Provider value={{ recipes, isLoading, reloadRecipes: loadRecipes }}>
       {children}
     </RecipeContext.Provider>
   );
@@ -95,4 +103,9 @@ export function useIsRecipesLoading() {
 export function useRecipe(recipeId: string): Recipe | undefined {
   const recipes = useRecipes();
   return recipes.find((r) => String(r.id) === recipeId);
+}
+
+export function useReloadRecipes() {
+  const { reloadRecipes } = useContext(RecipeContext);
+  return reloadRecipes;
 }

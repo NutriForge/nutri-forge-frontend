@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useReloadRecipes } from "@/context/RecipeContext";
 
 import { getIngredientsInfo, saveRecipeWithImage } from "@/services/recipeService";
 import { IngredientInfo } from "@/types/recipe";
@@ -27,6 +28,8 @@ export default function RecipePreviewPage() {
   });
   const [editableIngredients, setEditableIngredients] = useState(ingredients);
   const [ingredientInfos, setIngredientInfos] = useState<IngredientInfo[]>([]);
+
+  const reloadRecipes = useReloadRecipes(); 
 
 useEffect(() => {
   const fetchNutrition = async () => {
@@ -110,6 +113,7 @@ useEffect(() => {
     console.log(recipeData);
 
     const recipeId = await saveRecipeWithImage(recipeData, imageFile);
+    await reloadRecipes();
 
     navigate(`/recipe/${recipeId}`);
   } catch (e) {
