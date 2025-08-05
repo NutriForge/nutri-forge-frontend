@@ -199,9 +199,8 @@ export default function AddRecipePage() {
           <div className="flex items-start gap-2 bg-[#f1f5f9] border border-gray-200 text-gray-800 text-sm rounded-xl px-4 py-3">
             <span className="text-xl">💡</span>
             <p>
-              <strong>Підказка:</strong> Healthy breakfast toast with grilled
-              vegetables and boiled egg on a white plate, minimalistic style,
-              top view
+              <strong>Промпт для ChatGPT:</strong> <br></br><br></br>  Згенеруй фото страви.<br></br> A realistic, minimalist photo of a healthy meal served on a plain beige ceramic plate. The plate is placed on a neutral beige linen background. The lighting is natural and soft, with smooth shadows. No additional props or background elements. 
+<br></br><code>{`{Сюди вставте рецепт}`}</code>
             </p>
           </div>
         </div>
