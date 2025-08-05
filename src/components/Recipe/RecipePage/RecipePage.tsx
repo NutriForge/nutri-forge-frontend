@@ -8,8 +8,10 @@ import StepsCard from "./StepsCard";
 import { Button } from "@/components/ui/button";
 import { getRecipe } from "@/services/recipeService";
 
+import { IMAGE_BASE_URL } from "@/services/recipeService";
+
 function RecipePage() {
-  const { id }  = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const isLoading = useIsRecipesLoading();
@@ -26,7 +28,6 @@ function RecipePage() {
       .catch((err) => {
         console.error(err);
       });
-
   }, [id]);
 
   if (isLoading) {
@@ -37,37 +38,37 @@ function RecipePage() {
     return <div>Рецепт не знайдено</div>;
   }
 
-const { state } = useIngredientsForm();
+  const { state } = useIngredientsForm();
 
-function handleAddToMealPlan() {
-  const currentPlan = JSON.parse(localStorage.getItem("mealPlan") || "{}");
+  function handleAddToMealPlan() {
+    const currentPlan = JSON.parse(localStorage.getItem("mealPlan") || "{}");
 
-  const updatedRecipe = {
-    ...recipe,
-    ingredients: state.ingredients,
-    weight_per_portion: state.totalWeight,
-    total_proteins: state.totalMacros.proteins,
-    total_carbs: state.totalMacros.carbs,
-    total_fats: state.totalMacros.fats,
-    total_kcal: state.totalMacros.kcal,
-  };
+    const updatedRecipe = {
+      ...recipe,
+      ingredients: state.ingredients,
+      weight_per_portion: state.totalWeight,
+      total_proteins: state.totalMacros.proteins,
+      total_carbs: state.totalMacros.carbs,
+      total_fats: state.totalMacros.fats,
+      total_kcal: state.totalMacros.kcal,
+    };
 
-  const newBreakfast = [
-    ...(currentPlan.breakfast || []).filter((r: any) => r.id !== recipe.id),
-    updatedRecipe,
-  ];
+    const newBreakfast = [
+      ...(currentPlan.breakfast || []).filter((r: any) => r.id !== recipe.id),
+      updatedRecipe,
+    ];
 
-  const updatedPlan = {
-    ...currentPlan,
-    breakfast: newBreakfast,
-  };
+    const updatedPlan = {
+      ...currentPlan,
+      breakfast: newBreakfast,
+    };
 
-  localStorage.setItem("mealPlan", JSON.stringify(updatedPlan));
-  console.log("Updated Recipe:", updatedRecipe);
-  console.log("Updated Plan:", updatedPlan);
+    localStorage.setItem("mealPlan", JSON.stringify(updatedPlan));
+    console.log("Updated Recipe:", updatedRecipe);
+    console.log("Updated Plan:", updatedPlan);
 
-  navigate("/planner");
-}
+    navigate("/planner");
+  }
 
   return (
     <div>
@@ -96,8 +97,9 @@ function handleAddToMealPlan() {
         <img
           alt=""
           src={
-            recipe.img ||
-            "https://placehold.co/400x300?text=Фотосесія+рецепту+триває"
+            recipe.img
+              ? `${IMAGE_BASE_URL}${recipe.img}`
+              : "https://placehold.co/400?text=Фотосесія+рецепту+триває"
           }
           className="h-56 w-full object-cover sm:h-full"
         />

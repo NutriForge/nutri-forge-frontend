@@ -1,5 +1,6 @@
 import { Recipe, MealPlan } from "@/types/recipe";
 import {  Draggable } from "@hello-pangea/dnd";
+import { IMAGE_BASE_URL } from "@/services/recipeService";
 
 export default function DraggableRecipeCard({ recipe, index, mealType, onDelete, onClick }: {
   recipe: Recipe;
@@ -18,7 +19,7 @@ export default function DraggableRecipeCard({ recipe, index, mealType, onDelete,
           {...provided.dragHandleProps}
         >
           <img
-            src={recipe.img}
+            src={`${IMAGE_BASE_URL}${recipe.img}`}
             alt={recipe.name}
             className="w-16 h-16 object-cover rounded mr-4"
           />

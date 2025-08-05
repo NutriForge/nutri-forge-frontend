@@ -1,14 +1,17 @@
 import { Recipe, IngredientForm, IngredientInfo } from "../types/recipe";
 
+export const BACKEND_URL = "http://localhost:8082";
+export const IMAGE_BASE_URL = `${BACKEND_URL}`;
+
 export async function getAllRecipes(): Promise<Recipe[]>  {
-  return await fetch('http://localhost:8082/recipes?limit=100&offset=0')
+  return await fetch(`${BACKEND_URL}/recipes?limit=100&offset=0`)
   .then((response) => {
     return response.json();
   })
 }
 
 export async function getRecipe(id: string): Promise<Recipe> {
-  const response = await fetch(`http://localhost:8082/recipe/${id}`);
+  const response = await fetch(`${BACKEND_URL}/recipe/${id}`);
 
   if (!response.ok) {
     throw new Error(`Failed to fetch recipe with id ${id}`);
@@ -18,7 +21,7 @@ export async function getRecipe(id: string): Promise<Recipe> {
 }
 
 export async function getIngredientsInfo(names: string[]): Promise<IngredientInfo[]> {
-  const response = await fetch("http://localhost:8082/ingredients/get", {
+  const response = await fetch(`${BACKEND_URL}/ingredients/get`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -34,7 +37,7 @@ export async function getIngredientsInfo(names: string[]): Promise<IngredientInf
 }
 
 export async function validateIngredients(ingredientNames: string[]): Promise<string[]> {
-  const response = await fetch("http://localhost:8082/ingredients/validate", {
+  const response = await fetch(`${BACKEND_URL}/ingredients/validate`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -59,7 +62,7 @@ export async function saveIngredients(ingredients: IngredientForm[]): Promise<vo
     kcal: parseFloat(ing.kcal),
   }));
 
-  const response = await fetch("http://localhost:8082/ingredients/save", {
+  const response = await fetch(`${BACKEND_URL}/ingredients/save`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -78,7 +81,7 @@ export async function saveIngredients(ingredients: IngredientForm[]): Promise<vo
 export async function parseRecipe(title: string, recipeText: string): Promise<Recipe> {
   console.log(JSON.stringify({ title, recipeText }))
 
-  const response = await fetch("http://localhost:8082/gemini/recipe/parse", {
+  const response = await fetch(`${BACKEND_URL}/gemini/recipe/parse`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -105,7 +108,7 @@ export async function saveRecipeWithImage(recipeData: any, imageFile: File | nul
 
   formData.append("recipe", JSON.stringify(recipeData));
 
-  const response = await fetch("http://localhost:8082/recipe/save", {
+  const response = await fetch(`${BACKEND_URL}/recipe/save`, {
     method: "POST",
     body: formData,
   });
