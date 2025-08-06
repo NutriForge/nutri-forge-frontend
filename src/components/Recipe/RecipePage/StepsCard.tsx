@@ -4,7 +4,7 @@ import { Recipe } from '@/types/recipe';
 import { getRecipe } from '@/services/recipeService';
 
 export default function IngredientsCard() {
-  const [recipe, setRecipe] = useState<Recipe[]>([]);
+  const [recipe, setRecipe] = useState<Recipe | null>(null);
   const { id } = useParams();
 
   useEffect(() => {

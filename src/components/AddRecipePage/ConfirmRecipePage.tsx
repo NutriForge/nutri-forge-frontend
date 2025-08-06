@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useReloadRecipes } from "@/context/RecipeContext";
 
 import { getIngredientsInfo, saveRecipeWithImage } from "@/services/recipeService";
-import { IngredientInfo } from "@/types/recipe";
+import { IngredientInfo, Ingredient, Step } from "@/types/recipe";
 
 export default function RecipePreviewPage() {
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ useEffect(() => {
 useEffect(() => {
   if (ingredientInfos.length === 0) return;
 
-  const total = editableIngredients.reduce((acc, ing) => {
+  const total = editableIngredients.reduce((acc: typeof totals, ing: Ingredient) => {
   const info = ingredientInfos.find((i) => i.name === ing.name);
   if (!info || ing.weight_in_g === 0) return acc;
 
@@ -89,7 +89,7 @@ useEffect(() => {
   const handleConfirm = async () => {
   try {
     const totalWeight = editableIngredients.reduce(
-      (sum, ing) => sum + ing.weight_in_g,
+      (sum: number, ing: Ingredient) => sum + ing.weight_in_g,
       0
     );
 
@@ -104,7 +104,7 @@ useEffect(() => {
       img_url: imageUrl,
       author: "",
       ingredients: editableIngredients,
-      steps: steps.map((s: any, idx: number) => ({
+      steps: steps.map((s: Step, idx: number) => ({
         id: idx + 1,
         description: s.description,
       })),
@@ -179,7 +179,7 @@ useEffect(() => {
             ))}
             <li className="flex gap-1 py-px -my-0.5">
             <label className="text-s font-medium">Загальна вага:</label>
-            <span className="text-sm text-gray-500"> {editableIngredients.reduce((sum, ing) => sum + ing.weight_in_g, 0)} г</span>
+            <span className="text-sm text-gray-500"> {editableIngredients.reduce((sum: number, ing: Ingredient) => sum + ing.weight_in_g, 0)} г</span>
             </li>
             <li className="flex gap-1 py-px -my-0.5">
             <label className="text-s font-medium">Білки:</label>

@@ -15,7 +15,8 @@ function RecipePage() {
   const navigate = useNavigate();
 
   const isLoading = useIsRecipesLoading();
-  const recipe = useRecipe(id);
+
+  const recipe = useRecipe(id || "");
 
   const { dispatch } = useIngredientsForm();
 
@@ -23,7 +24,7 @@ function RecipePage() {
     if (!id) return;
     getRecipe(id)
       .then((data) => {
-        dispatch({ type: "SET_INGREDIENTS", payload: data.ingredients });
+        dispatch({ type: "SET_INGREDIENTS", payload: data.ingredients ?? [] });
       })
       .catch((err) => {
         console.error(err);
@@ -54,7 +55,7 @@ function RecipePage() {
     };
 
     const newBreakfast = [
-      ...(currentPlan.breakfast || []).filter((r: any) => r.id !== recipe.id),
+      ...(currentPlan.breakfast || []).filter((r: any) => r.id !== recipe!.id),
       updatedRecipe,
     ];
 
@@ -107,7 +108,7 @@ function RecipePage() {
 
       <div className="mt-10 overflow-hidden sm:grid sm:grid-cols-2">
         <div>
-          <IngredientsCard />
+          <IngredientsCard recipe={recipe} />
         </div>
         <div>
           <h2 className="text-xl font-bold text-gray-900 sm:text-3xl pb-4">

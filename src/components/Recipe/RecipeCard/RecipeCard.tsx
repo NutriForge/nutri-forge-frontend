@@ -4,6 +4,9 @@ import { IMAGE_BASE_URL } from "@/services/recipeService";
 
 export default function RecipeCard({ recipe_id }: { recipe_id: string }) {
   const recipe = useRecipe(recipe_id);
+
+  if (!recipe) return null;
+  
   return (
     <div className="overflow-hidden rounded-lg transition ">
       <img

@@ -62,7 +62,7 @@ export default function MealPlanner() {
 
 
   // Function to remove recipe
-  const handleDeleteRecipe = (mealType: keyof MealPlan, id: number) => {
+  const handleDeleteRecipe = (mealType: keyof MealPlan, id: string) => {
     const updatedList = meals[mealType].filter((r) => r.id !== id);
     const updatedMeals = {
       ...meals,

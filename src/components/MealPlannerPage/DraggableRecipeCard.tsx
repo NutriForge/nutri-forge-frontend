@@ -6,11 +6,11 @@ export default function DraggableRecipeCard({ recipe, index, mealType, onDelete,
   recipe: Recipe;
   index: number;
   mealType: keyof MealPlan;
-  onDelete: (mealType: keyof MealPlan, id: number) => void;
+  onDelete: (mealType: keyof MealPlan, id: string) => void;
   onClick: () => void;
 }) {
   return (
-    <Draggable draggableId={String(recipe.id)} index={index}>
+    <Draggable draggableId={recipe.id} index={index}>
       {(provided) => (
         <div
           className="flex items-center bg-white border border-gray-200 rounded-md p-3 mb-3 shadow-sm"

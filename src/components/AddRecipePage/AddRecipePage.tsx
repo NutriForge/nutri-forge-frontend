@@ -96,6 +96,11 @@ export default function AddRecipePage() {
     try {
       await saveIngredients(ingredientsArray);
 
+    if (!parsedRecipe) {
+      console.error("parsedRecipe is null");
+      return;
+    }
+
       console.log(ingredientsArray);
       setisIngredientModalOpen(false);
 

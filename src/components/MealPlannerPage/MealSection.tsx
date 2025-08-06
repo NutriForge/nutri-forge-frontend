@@ -15,13 +15,13 @@ export default function MealSection({
   title: string;
   droppableId: keyof MealPlan;
   recipes: Recipe[];
-  onDelete: (mealType: keyof MealPlan, id: number) => void;
+  onDelete: (mealType: keyof MealPlan, id: string) => void;
   onUpdateRecipe: (mealType: keyof MealPlan, recipe: Recipe) => void;
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isRecipeModalOpen, setIsRecipeModalOpen] = useState(false);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe>({
-    id: 0,
+    id: "",
     name: "dummy recipe",
     img: "",
     ingredients: [],

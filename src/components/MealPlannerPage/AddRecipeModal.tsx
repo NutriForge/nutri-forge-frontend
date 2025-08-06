@@ -60,7 +60,7 @@ export default function AddRecipeModal({
 
   const handleExternalClick = (product: OpenFoodIngredient) => {
     const newRecipe = {
-      id: product.id as number,
+      id: String(product.id),
       name: product.product_name,
       img: product.image_front_url,
       weight_per_portion: 100,
