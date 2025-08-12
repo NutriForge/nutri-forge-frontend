@@ -10,7 +10,7 @@ export function TotalBlock({
   handleTotalWeight: (val: number) => void;
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const { state } = useIngredientsForm();
+  const { state, dispatch } = useIngredientsForm();
   const { totalWeight } = state;
 
   return (
@@ -19,7 +19,7 @@ export function TotalBlock({
         <ChevronToggle isOpen={isOpen} onClick={() => setIsOpen((prev) => !prev)} />
         <TotalWeightInput
           totalWeight={Number(totalWeight.toFixed(0))}
-          setTotalWeight={() => {}}
+          setTotalWeight={(val) => dispatch({ type: 'UPDATE_TOTAL_WEIGHT', payload: val })}
           handleTotalWeight={handleTotalWeight}
         />
       </div>
