@@ -5,44 +5,49 @@ import { Button } from "@/components/ui/button";
 import { validateIngredients, saveIngredients, parseRecipe } from "@/services/recipeService";
 import AddMissingIngredientsModal from "./AddMissingIngredientsModal";
 import { IngredientForm, Recipe } from "@/types/recipe";
-
 import { useNavigate, useLocation } from "react-router-dom";
 
 export default function AddRecipePage() {
+  // Form states
   const [title, setTitle] = useState("");
   const [recipeText, setRecipeText] = useState("");
-  const [parsedRecipe, setParsedRecipe] = useState<Recipe | null>(null)
+  const [parsedRecipe, setParsedRecipe] = useState<Recipe | null>(null);
   const [image, setImage] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Modal for adding missing ingredients
   const [isIngredientModalOpen, setisIngredientModalOpen] = useState(false);
   const [missingIngredients, setMissingIngredients] = useState<string[]>([]);
 
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Pre-fill data if navigated from another page with state
   useEffect(() => {
-  if (location.state) {
-    setTitle(location.state.title || "");
-    setRecipeText(location.state.recipeText || "");
-    setParsedRecipe({
-      id: "",
-      name: title,
-      img: location.state.imageUrl || "",
-      ingredients: location.state.ingredients || [],
-      steps: location.state.steps || [],
-    });
-    if (location.state.imageFile) {
-      setImage(location.state.imageFile);
+    if (location.state) {
+      setTitle(location.state.title || "");
+      setRecipeText(location.state.recipeText || "");
+      setParsedRecipe({
+        id: "",
+        name: title,
+        img: location.state.imageUrl || "",
+        ingredients: location.state.ingredients || [],
+        steps: location.state.steps || [],
+      });
+      if (location.state.imageFile) {
+        setImage(location.state.imageFile);
+      }
     }
-  }
   }, []);
 
+  // Handle image selection
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setImage(e.target.files[0]);
     }
   };
 
+  // Handle drag & drop
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
@@ -54,54 +59,56 @@ export default function AddRecipePage() {
     e.preventDefault();
   };
 
+  // Remove selected image
+  const handleRemoveImage = (e: React.MouseEvent) => {
+    e.stopPropagation(); // prevent file picker on click
+    setImage(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  // Handle form submission
   const handleSubmit = async () => {
     try {
       const structuredRecipe = await parseRecipe(title, recipeText);
-      console.log(structuredRecipe)
-      setParsedRecipe(structuredRecipe)
+      setParsedRecipe(structuredRecipe);
 
-      const ingredientNames = structuredRecipe.ingredients?.map(ing => ing.name) || [];
-      console.log(ingredientNames)
-
+      const ingredientNames = structuredRecipe.ingredients?.map((ing) => ing.name) || [];
       const missing = await validateIngredients(ingredientNames);
-      console.log(missing)
 
       if (missing.length > 0) {
-        console.log(`Missing ingredients: ${missing.join(", ")}`);
         setisIngredientModalOpen(true);
         setMissingIngredients(missing);
       } else {
-        console.log("All ingredients are in DB ✅");
         setMissingIngredients([]);
         navigate("/recipes/confirm", {
-        state: {
-          title,
-          recipeText,
-          type: structuredRecipe.type,
-          imageFile: image,
-          imageUrl: image
-            ? URL.createObjectURL(image)
-            : "https://placehold.co/400x200?text=Фотосесія+триває",
-          ingredients: structuredRecipe.ingredients,
-          steps: structuredRecipe.steps
-        },
-      });
+          state: {
+            title,
+            recipeText,
+            type: structuredRecipe.type,
+            imageFile: image,
+            imageUrl: image
+              ? URL.createObjectURL(image)
+              : "https://placehold.co/400x200?text=Photo+in+progress",
+            ingredients: structuredRecipe.ingredients,
+            steps: structuredRecipe.steps,
+          },
+        });
       }
     } catch (error) {
       console.error("❌ Validation error:", error);
     }
   };
 
+  // Save missing ingredients to DB
   const handleSaveIngredients = async (ingredientsArray: IngredientForm[]) => {
     try {
       await saveIngredients(ingredientsArray);
 
-    if (!parsedRecipe) {
-      console.error("parsedRecipe is null");
-      return;
-    }
+      if (!parsedRecipe) {
+        console.error("parsedRecipe is null");
+        return;
+      }
 
-      console.log(ingredientsArray);
       setisIngredientModalOpen(false);
 
       navigate("/recipes/confirm", {
@@ -112,9 +119,9 @@ export default function AddRecipePage() {
           imageFile: image,
           imageUrl: image
             ? URL.createObjectURL(image)
-            : "https://placehold.co/400x200?text=Фотосесія+триває",
+            : "https://placehold.co/400x200?text=Photo+in+progress",
           ingredients: parsedRecipe.ingredients,
-          steps: parsedRecipe.steps
+          steps: parsedRecipe.steps,
         },
       });
     } catch (error) {
@@ -126,49 +133,79 @@ export default function AddRecipePage() {
     <div className="bg-[#f8f9fa] min-h-screen py-10 px-4">
       <div className="max-w-4xl mx-auto bg-white rounded-2xl border border-gray-200 p-8 shadow-sm">
         <h1 className="text-3xl font-bold mb-8 text-gray-900">
-          Додати новий рецепт
+          Add a New Recipe
         </h1>
 
+        {/* Recipe title */}
         <div className="mb-6">
           <label className="block text-base font-medium mb-2 text-gray-700">
-            Назва рецепта
+            Recipe Title
           </label>
           <Input
-            placeholder="Наприклад, Тост із сиром і овочами"
+            placeholder="E.g., Toast with cheese and vegetables"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             className="rounded-xl text-base py-2"
           />
         </div>
 
+        {/* Recipe text */}
         <div className="mb-6">
           <label className="block text-base font-medium mb-2 text-gray-700">
-            Рецепт (інгредієнти + кроки)
+            Recipe (ingredients + steps)
           </label>
           <Textarea
             className="w-full min-h-[300px] rounded-xl text-base py-2"
             value={recipeText}
             onChange={(e) => setRecipeText(e.target.value)}
-            placeholder="Введіть весь рецепт - перелік інгридієнтів і опис"
+            placeholder="Enter the full recipe - ingredient list and instructions"
           />
         </div>
 
+        {/* Image upload */}
         <div className="mb-4">
           <label className="block text-base font-medium mb-2 text-gray-700">
-            Зображення
+            Image
           </label>
           <div
             onDrop={handleDrop}
             onDragOver={handleDragOver}
-            onClick={() => fileInputRef.current?.click()}
-            className="w-1/2 h-60 border border-dashed border-gray-300 rounded-xl flex flex-col justify-center items-center cursor-pointer bg-gray-50 hover:bg-gray-100 transition"
+            onClick={() => {
+              if (!image) fileInputRef.current?.click();
+            }}
+            className="relative w-1/2 h-60 border border-dashed border-gray-300 rounded-xl flex flex-col justify-center items-center cursor-pointer bg-gray-50 hover:bg-gray-100 transition group"
           >
             {image ? (
-              <img
-                src={URL.createObjectURL(image)}
-                alt="preview"
-                className="w-full h-full object-cover rounded-xl"
-              />
+              <>
+                <img
+                  src={URL.createObjectURL(image)}
+                  alt="preview"
+                  className="w-full h-full object-cover rounded-xl"
+                />
+                {/* Trash button appears on hover */}
+                <button
+                  type="button"
+                  onClick={handleRemoveImage}
+                  className="absolute top-2 right-2 bg-gray-200 hover:bg-gray-300 text-gray-700 p-2 rounded-full shadow opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                  title="Remove image"
+                >
+                  {/* Trash icon */}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={2}
+                    stroke="currentColor"
+                    className="w-5 h-5"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6 7h12M9 7V4h6v3m2 0v13a1 1 0 01-1 1H8a1 1 0 01-1-1V7h10z"
+                    />
+                  </svg>
+                </button>
+              </>
             ) : (
               <>
                 <svg
@@ -186,7 +223,7 @@ export default function AddRecipePage() {
                   />
                 </svg>
                 <span className="text-gray-600 text-sm text-center px-4">
-                  Натисни або перетягни зображення сюди
+                  Click or drag image here
                 </span>
                 <input
                   ref={fileInputRef}
@@ -200,29 +237,38 @@ export default function AddRecipePage() {
           </div>
         </div>
 
+        {/* Prompt helper */}
         <div className="mb-6">
           <div className="flex items-start gap-2 bg-[#f1f5f9] border border-gray-200 text-gray-800 text-sm rounded-xl px-4 py-3">
             <span className="text-xl">💡</span>
             <p>
-              <strong>Промпт для ChatGPT:</strong> <br></br><br></br>  Згенеруй фото страви.<br></br> A realistic, minimalist photo of a healthy meal served on a plain beige ceramic plate. The plate is placed on a neutral beige linen background. The lighting is natural and soft, with smooth shadows. No additional props or background elements. 
-<br></br><code>{`{Сюди вставте рецепт}`}</code>
+              <strong>Prompt for ChatGPT:</strong> <br /><br />
+              Generate a photo of the dish. <br />
+              A realistic, minimalist photo of a healthy meal served on a plain beige ceramic plate. 
+              The plate is placed on a neutral beige linen background. The lighting is natural and soft, 
+              with smooth shadows. No additional props or background elements. 
+              <br />
+              <code>{`{Insert recipe here}`}</code>
             </p>
           </div>
         </div>
 
+        {/* Action buttons */}
         <div className="flex justify-end gap-4 mt-6">
           <Button className="bg-gray-100 text-gray-800 hover:bg-gray-200">
-            Відміна
+            Cancel
           </Button>
 
           <Button
             className="bg-teal-600 text-white hover:bg-teal-700"
             onClick={handleSubmit}
           >
-            Далі
+            Next
           </Button>
         </div>
       </div>
+
+      {/* Modal for missing ingredients */}
       {isIngredientModalOpen && (
         <AddMissingIngredientsModal
           missingIngredients={missingIngredients}
