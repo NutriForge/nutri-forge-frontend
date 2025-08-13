@@ -48,22 +48,9 @@ function RecipePage() {
   // --- Initial fetch for contextual data (ingredients + per-user flags) ---
   useEffect(() => {
     if (!id) return;
-    getRecipe(id)
-      .then((data) => {
-        // populate UI state from API (if backend returns these fields)
-        if (typeof data.is_favorite === "boolean") setIsFavorite(data.is_favorite);
-        if (typeof data.avg_rating === "number") setAvgRating(data.avg_rating);
-        if (typeof data.rating_count === "number") setRatingCount(data.rating_count);
-        if (typeof data.user_rating === "number") setUserRating(data.user_rating);
-        if (typeof data.img === "string") setImgPath(data.img ?? null);
-
-        dispatch({ type: "SET_INGREDIENTS", payload: data.ingredients ?? [] });
-        setSteps(data.steps ?? [] )
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, [id, dispatch]);
+    syncRecipeFromApi(id).catch(console.error);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   // keep local image in sync with recipe if context changes
   useEffect(() => {
@@ -74,6 +61,21 @@ function RecipePage() {
 
   if (isLoading) return <div>Завантаження…</div>;
   if (!recipe || !id) return <div>Рецепт не знайдено</div>;
+
+  async function syncRecipeFromApi(recipeId: string) {
+    const data = await getRecipe(recipeId);
+
+    if (typeof data.is_favorite === "boolean") setIsFavorite(data.is_favorite);
+    if (typeof data.avg_rating === "number") setAvgRating(data.avg_rating);
+    if (typeof data.rating_count === "number") setRatingCount(data.rating_count);
+    if (typeof data.user_rating === "number") setUserRating(data.user_rating);
+    if (typeof data.img === "string") setImgPath(data.img ?? null);
+
+    dispatch({ type: "SET_INGREDIENTS", payload: data.ingredients ?? [] });
+    setSteps(data.steps ?? []);
+
+    return data;
+  }
 
   // --- Meal plan integration ---
   function handleAddToMealPlan() {
@@ -108,6 +110,7 @@ function RecipePage() {
       setIsBusy(true);
       await deleteRecipe(id);
       await reloadRecipes();
+      await syncRecipeFromApi(id);
       navigate("/recipes");
     } catch (e) {
       console.error(e);
@@ -174,6 +177,7 @@ function RecipePage() {
       if (result?.img) {
         setImgPath(result.img);
         await reloadRecipes();
+        await syncRecipeFromApi(id);
       } else {
         // fallback: force reload
         setImgPath((prev) => prev ? `${prev}?t=${Date.now()}` : prev);
@@ -201,6 +205,7 @@ function RecipePage() {
       await deleteRecipeImage(id);
       setImgPath(null);
       await reloadRecipes();
+      await syncRecipeFromApi(id);
     } catch (e) {
       console.error(e);
       alert("Не вдалося видалити зображення.");
