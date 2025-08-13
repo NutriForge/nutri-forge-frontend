@@ -1,6 +1,6 @@
 import { Recipe, IngredientForm, IngredientInfo } from "../types/recipe";
 
-export const BACKEND_URL = "";
+export const BACKEND_URL = "http://localhost:8082";
 export const IMAGE_BASE_URL = `${BACKEND_URL}`;
 
 export async function getAllRecipes(): Promise<Recipe[]>  {
@@ -19,6 +19,20 @@ export async function getRecipe(id: string): Promise<Recipe> {
 
   return response.json();
 }
+
+// delete recipe; 204 expected
+export async function deleteRecipe(id: string): Promise<void> { /* ... */ }
+
+// set rating; returns updated aggregates: { avg_rating, rating_count, user_rating }
+export async function setRecipeRating(id: string, stars: number): Promise<{avg_rating:number; rating_count:number; user_rating:number}> { /* ... */ }
+
+// favorites toggles
+export async function addFavorite(id: string): Promise<void> { /* ... */ }
+export async function removeFavorite(id: string): Promise<void> { /* ... */ }
+
+// returns { img: string } with a relative path like "/images/recipe_8.png"
+export async function uploadRecipeImage(id: string, file: File): Promise<{ img: string }> {}
+export async function deleteRecipeImage(id: string): Promise<void> {}
 
 export async function getIngredientsInfo(names: string[]): Promise<IngredientInfo[]> {
   const response = await fetch(`${BACKEND_URL}/api/ingredients/get`, {
@@ -119,4 +133,13 @@ export async function saveRecipeWithImage(recipeData: any, imageFile: File | nul
 
   const data = await response.json();
   return data.id;
+}
+
+export async function updateRecipeSteps(
+  recipeId: string,
+  steps: { id?: string | null; step_number: number; description: string }[]
+): Promise<{ steps: { id: string; step_number: number; description: string }[] }> {
+  // реалізуй виклик PATCH/PUT, наприклад:
+  // return fetchJSON(`/recipe/${recipeId}/steps`, { method: "PUT", body: JSON.stringify({ steps }) })
+  throw new Error("not implemented");
 }
