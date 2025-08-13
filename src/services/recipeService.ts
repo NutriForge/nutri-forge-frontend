@@ -48,7 +48,14 @@ export async function uploadRecipeImage(id: string, file: File): Promise<{ img: 
   return res.json();
 }
 
-export async function deleteRecipeImage(id: string): Promise<void> {}
+export async function deleteRecipeImage(id: string): Promise<void> {
+  const res = await fetch(`${BACKEND_URL}/api/recipe/image?id=${encodeURIComponent(id)}`, {
+    method: "DELETE",
+  });
+  if (!res.ok) {
+    throw new Error(`Failed to delete image: ${await res.text()}`);
+  }
+}
 
 export async function getIngredientsInfo(names: string[]): Promise<IngredientInfo[]> {
   const response = await fetch(`${BACKEND_URL}/api/ingredients/get`, {

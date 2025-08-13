@@ -200,6 +200,7 @@ function RecipePage() {
       setIsBusy(true);
       await deleteRecipeImage(id);
       setImgPath(null);
+      await reloadRecipes();
     } catch (e) {
       console.error(e);
       alert("Не вдалося видалити зображення.");
