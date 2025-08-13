@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useRecipe, useIsRecipesLoading } from "@/context/RecipeContext";
+import { useRecipe, useIsRecipesLoading, useReloadRecipes } from "@/context/RecipeContext";
 import { useIngredientsForm } from "@/context/IngredientsFormContext";
 
 import IngredientsCard from "./IngredientsCard/IngredientsCard";
@@ -27,6 +27,7 @@ function RecipePage() {
   const recipe = useRecipe(id || "");
   const { dispatch } = useIngredientsForm();
   const { state } = useIngredientsForm();
+  const reloadRecipes = useReloadRecipes(); 
 
   // --- Local UI state ---
   const [isEditMode, setIsEditMode] = useState(false);
@@ -106,6 +107,7 @@ function RecipePage() {
     try {
       setIsBusy(true);
       await deleteRecipe(id);
+      await reloadRecipes();
       navigate("/recipes");
     } catch (e) {
       console.error(e);
@@ -171,6 +173,7 @@ function RecipePage() {
       const result = await uploadRecipeImage(id, file); // expect { img: string }
       if (result?.img) {
         setImgPath(result.img);
+        await reloadRecipes();
       } else {
         // fallback: force reload
         setImgPath((prev) => prev ? `${prev}?t=${Date.now()}` : prev);

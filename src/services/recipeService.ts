@@ -31,7 +31,23 @@ export async function addFavorite(id: string): Promise<void> { /* ... */ }
 export async function removeFavorite(id: string): Promise<void> { /* ... */ }
 
 // returns { img: string } with a relative path like "/images/recipe_8.png"
-export async function uploadRecipeImage(id: string, file: File): Promise<{ img: string }> {}
+export async function uploadRecipeImage(id: string, file: File): Promise<{ img: string }> {
+  const formData = new FormData();
+  formData.append("id", id);
+  formData.append("image", file);
+
+  const res = await fetch(`${BACKEND_URL}/api/recipe/image`, {
+    method: "PUT",
+    body: formData,
+  });
+
+  if (!res.ok) {
+    throw new Error(`Failed to upload image: ${await res.text()}`);
+  }
+
+  return res.json();
+}
+
 export async function deleteRecipeImage(id: string): Promise<void> {}
 
 export async function getIngredientsInfo(names: string[]): Promise<IngredientInfo[]> {
