@@ -41,6 +41,10 @@ export interface Recipe {
   total_fats?: number;
   total_carbs?: number;
   total_kcal?: number;
+  is_favorite?: boolean;
+  avg_rating?: number;
+  rating_count?: number;
+  user_rating?: number;
 }
 
 export interface MealPlan {

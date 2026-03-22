@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { updateRecipeSteps } from "@/services/recipeService";
 
 type Step = {
-  id?: string;              // UUID з БД; для нових може бути undefined (тимчасовий)
+  id?: number;              // UUID з БД; для нових може бути undefined (тимчасовий)
   step_number?: number;     // 1..N
   description: string;
 };

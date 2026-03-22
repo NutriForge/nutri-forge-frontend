@@ -1,4 +1,4 @@
-import { Recipe, IngredientForm, IngredientInfo } from "../types/recipe";
+import { Recipe, IngredientForm, IngredientInfo } from "@/types/recipe";
 
 export const BACKEND_URL = "http://localhost:8082";
 export const IMAGE_BASE_URL = `${BACKEND_URL}`;
@@ -21,14 +21,30 @@ export async function getRecipe(id: string): Promise<Recipe> {
 }
 
 // delete recipe; 204 expected
-export async function deleteRecipe(id: string): Promise<void> { /* ... */ }
+export async function deleteRecipe(id: string): Promise<void> { 
+  console.warn("deleteRecipe not implemented yet", id);
+  return;
+}
 
 // set rating; returns updated aggregates: { avg_rating, rating_count, user_rating }
-export async function setRecipeRating(id: string, stars: number): Promise<{avg_rating:number; rating_count:number; user_rating:number}> { /* ... */ }
+export async function setRecipeRating(id: string, stars: number): Promise<{avg_rating:number; rating_count:number; user_rating:number}> { 
+  console.warn("setRecipeRating not implemented yet", id, stars);
+  return {
+    avg_rating: 0,
+    rating_count: 0,
+    user_rating: stars,
+  };
+ }
 
 // favorites toggles
-export async function addFavorite(id: string): Promise<void> { /* ... */ }
-export async function removeFavorite(id: string): Promise<void> { /* ... */ }
+export async function addFavorite(id: string): Promise<void> { 
+  console.warn("addFavorite not implemented yet", id);
+  return;
+}
+export async function removeFavorite(id: string): Promise<void> { 
+  console.warn("removeFavorite not implemented yet", id);
+  return; 
+}
 
 // returns { img: string } with a relative path like "/images/recipe_8.png"
 export async function uploadRecipeImage(id: string, file: File): Promise<{ img: string }> {
@@ -160,9 +176,15 @@ export async function saveRecipeWithImage(recipeData: any, imageFile: File | nul
 
 export async function updateRecipeSteps(
   recipeId: string,
-  steps: { id?: string | null; step_number: number; description: string }[]
-): Promise<{ steps: { id: string; step_number: number; description: string }[] }> {
-  // реалізуй виклик PATCH/PUT, наприклад:
-  // return fetchJSON(`/recipe/${recipeId}/steps`, { method: "PUT", body: JSON.stringify({ steps }) })
-  throw new Error("not implemented");
+  steps: { id?: number | null; step_number: number; description: string }[]
+): Promise<{ steps: { id: number; step_number: number; description: string }[] }> {
+  console.warn("updateRecipeSteps not implemented yet", recipeId, steps);
+
+  return {
+    steps: steps.map((step, index) => ({
+      id: step.id ?? index + 1,
+      step_number: step.step_number,
+      description: step.description,
+    })),
+  };
 }

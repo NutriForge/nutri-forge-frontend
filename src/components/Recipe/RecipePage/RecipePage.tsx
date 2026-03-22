@@ -79,6 +79,11 @@ function RecipePage() {
 
   // --- Meal plan integration ---
   function handleAddToMealPlan() {
+    if (!recipe || !id) {
+      console.log("handleAddToMealPlan recipe or id - undefined")
+      return;
+    };
+
     const currentPlan = JSON.parse(localStorage.getItem("mealPlan") || "{}");
 
     const updatedRecipe = {
@@ -108,9 +113,9 @@ function RecipePage() {
 
     try {
       setIsBusy(true);
-      await deleteRecipe(id);
+      await deleteRecipe(id!);
       await reloadRecipes();
-      await syncRecipeFromApi(id);
+      await syncRecipeFromApi(id!);
       navigate("/recipes");
     } catch (e) {
       console.error(e);
@@ -125,8 +130,8 @@ function RecipePage() {
     const next = !isFavorite;
     setIsFavorite(next);
     try {
-      if (next) await addFavorite(id);
-      else await removeFavorite(id);
+      if (next) await addFavorite(id!);
+      else await removeFavorite(id!);
     } catch (e) {
       console.error(e);
       setIsFavorite(!next); // revert
@@ -139,7 +144,7 @@ function RecipePage() {
     const prevUserRating = userRating;
     setUserRating(stars);
     try {
-      const updated = await setRecipeRating(id, stars);
+      const updated = await setRecipeRating(id!, stars);
       if (updated?.avg_rating != null) setAvgRating(updated.avg_rating);
       if (updated?.rating_count != null) setRatingCount(updated.rating_count);
       if (updated?.user_rating != null) setUserRating(updated.user_rating);
@@ -173,11 +178,11 @@ function RecipePage() {
 
     try {
       setIsBusy(true);
-      const result = await uploadRecipeImage(id, file); // expect { img: string }
+      const result = await uploadRecipeImage(id!, file); // expect { img: string }
       if (result?.img) {
         setImgPath(result.img);
         await reloadRecipes();
-        await syncRecipeFromApi(id);
+        await syncRecipeFromApi(id!);
       } else {
         // fallback: force reload
         setImgPath((prev) => prev ? `${prev}?t=${Date.now()}` : prev);
@@ -202,10 +207,10 @@ function RecipePage() {
 
     try {
       setIsBusy(true);
-      await deleteRecipeImage(id);
+      await deleteRecipeImage(id!);
       setImgPath(null);
       await reloadRecipes();
-      await syncRecipeFromApi(id);
+      await syncRecipeFromApi(id!);
     } catch (e) {
       console.error(e);
       alert("Не вдалося видалити зображення.");
