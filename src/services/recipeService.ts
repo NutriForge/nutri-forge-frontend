@@ -1,6 +1,6 @@
 import { Recipe, IngredientForm, IngredientInfo } from "@/types/recipe";
 
-export const BACKEND_URL = "http://localhost:8082";
+export const BACKEND_URL = import.meta.env.VITE_API_URL;
 export const IMAGE_BASE_URL = `${BACKEND_URL}`;
 
 export async function getAllRecipes(): Promise<Recipe[]>  {
