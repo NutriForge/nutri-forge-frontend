@@ -1,7 +1,7 @@
 import { Recipe, IngredientForm, IngredientInfo } from "@/types/recipe";
 
 export const BACKEND_URL = import.meta.env.VITE_API_URL;
-export const IMAGE_BASE_URL = `${BACKEND_URL}`;
+export const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_S3_URL;
 
 export async function getAllRecipes(): Promise<Recipe[]>  {
   return await fetch(`${BACKEND_URL}/api/recipes?limit=100&offset=0`)
